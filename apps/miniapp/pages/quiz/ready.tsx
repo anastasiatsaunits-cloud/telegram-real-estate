@@ -47,7 +47,7 @@ export default function ReadyPage() {
 
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
           <Link
-            href="/"
+            href="/quiz/contact"
             style={{
               background: '#1f1f1f',
               color: '#ffffff',
@@ -57,7 +57,7 @@ export default function ReadyPage() {
               fontWeight: 600,
             }}
           >
-            На главную
+            Получить подборку
           </Link>
           <Link
             href="/quiz/region"
