@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { AppShell } from '../../components/app-shell';
+import { BackLink } from '../../components/back-link';
 import type { PropertyDetails } from '../../lib/properties';
 
 export default function PropertyDetailsPage() {
@@ -19,32 +21,27 @@ export default function PropertyDetailsPage() {
   }, [slug]);
 
   return (
-    <main style={{ minHeight: '100vh', padding: '24px 20px 40px', fontFamily: 'Inter, Arial, sans-serif', color: '#1f1f1f' }}>
-      <div style={{ marginBottom: 20 }}>
-        <Link href={region ? `/properties?region=${region}&regionName=${encodeURIComponent(regionName)}` : '/properties'} style={{ color: '#8b7355', textDecoration: 'none', fontWeight: 600 }}>
-          ← К подборке
-        </Link>
-      </div>
+    <AppShell eyebrow={property?.region.name ?? 'Объект'} title={property?.title ?? 'Карточка объекта'} description={property?.description ?? 'Загружаю карточку объекта...'}>
+      <BackLink href={region ? `/properties?region=${region}&regionName=${encodeURIComponent(regionName)}` : '/properties'} />
 
-      <section style={{ background: '#ffffff', borderRadius: 24, padding: 24, boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
-        {!property ? (
-          <div style={{ color: '#7d7367' }}>Загружаю карточку...</div>
-        ) : (
-          <>
-            <p style={{ margin: '0 0 8px', color: '#8b7355', fontWeight: 600 }}>{property.region.name}</p>
-            <h1 style={{ margin: '0 0 12px', fontSize: 30 }}>{property.title}</h1>
-            <p style={{ margin: '0 0 18px', color: '#5c5348', lineHeight: 1.5 }}>{property.description}</p>
-
-            <div style={{ display: 'grid', gap: 12, marginBottom: 18 }}>
-              <div><strong>Город:</strong> {property.city ?? '—'}</div>
-              <div><strong>Адрес:</strong> {property.address ?? '—'}</div>
-              <div><strong>Цена:</strong> от {property.priceFrom ?? '—'} до {property.priceTo ?? '—'} {property.currency ?? ''}</div>
-              <div><strong>Площадь:</strong> {property.areaFrom ?? '—'}–{property.areaTo ?? '—'} м²</div>
-              <div><strong>Тип:</strong> {property.propertyType ?? '—'}</div>
+      {!property ? (
+        <div style={{ color: '#7d7367' }}>Загружаю карточку...</div>
+      ) : (
+        <>
+          <div style={{ display: 'grid', gap: 12, marginBottom: 18 }}>
+            <div style={{ padding: 16, borderRadius: 18, background: '#fffaf6', border: '1px solid #eadfce' }}>
+              <div style={{ fontSize: 13, color: '#8f7658', fontWeight: 700, marginBottom: 8 }}>Основная информация</div>
+              <div style={{ display: 'grid', gap: 8, color: '#4d443b', lineHeight: 1.6 }}>
+                <div><strong>Город:</strong> {property.city ?? '—'}</div>
+                <div><strong>Адрес:</strong> {property.address ?? '—'}</div>
+                <div><strong>Цена:</strong> от {property.priceFrom ?? '—'} до {property.priceTo ?? '—'} {property.currency ?? ''}</div>
+                <div><strong>Площадь:</strong> {property.areaFrom ?? '—'}–{property.areaTo ?? '—'} м²</div>
+                <div><strong>Тип:</strong> {property.propertyType ?? '—'}</div>
+              </div>
             </div>
 
             {property.metrics ? (
-              <div style={{ border: '1px solid #eadfce', borderRadius: 18, padding: 16, background: '#fffaf6', marginBottom: 18 }}>
+              <div style={{ border: '1px solid #eadfce', borderRadius: 18, padding: 16, background: 'linear-gradient(180deg, #fffaf6 0%, #fff2e6 100%)', marginBottom: 6 }}>
                 <div style={{ fontWeight: 700, marginBottom: 10 }}>Инвестиционные метрики</div>
                 <div style={{ display: 'grid', gap: 8, color: '#4f473d' }}>
                   <div>Аренда: {property.metrics.rentalYield ?? '—'}%</div>
@@ -55,13 +52,13 @@ export default function PropertyDetailsPage() {
                 </div>
               </div>
             ) : null}
+          </div>
 
-            <Link href={`/quiz/contact?propertySlug=${property.slug}&propertyTitle=${encodeURIComponent(property.title)}${region ? `&region=${region}` : ''}${regionName ? `&regionName=${encodeURIComponent(regionName)}` : ''}`} style={{ background: '#1f1f1f', color: '#ffffff', textDecoration: 'none', padding: '14px 18px', borderRadius: 14, fontWeight: 600, display: 'inline-block' }}>
-              Хочу этот объект
-            </Link>
-          </>
-        )}
-      </section>
-    </main>
+          <Link href={`/quiz/contact?propertySlug=${property.slug}&propertyTitle=${encodeURIComponent(property.title)}${region ? `&region=${region}` : ''}${regionName ? `&regionName=${encodeURIComponent(regionName)}` : ''}`} style={{ background: 'linear-gradient(90deg, #1f1f1f 0%, #444 100%)', color: '#ffffff', textDecoration: 'none', padding: '15px 18px', borderRadius: 16, fontWeight: 700, display: 'inline-block', boxShadow: '0 10px 24px rgba(0,0,0,0.12)' }}>
+            Хочу этот объект
+          </Link>
+        </>
+      )}
+    </AppShell>
   );
 }

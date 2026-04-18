@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
+import { AppShell } from '../../components/app-shell';
+import { BackLink } from '../../components/back-link';
 import { submitLead } from '../../lib/leads';
 import { getBudgetByKey, getTimelineByKey } from '../../lib/quiz-options';
 
@@ -47,67 +49,72 @@ export default function ContactQuizPage() {
   }
 
   return (
-    <main style={{ minHeight: '100vh', padding: '24px 20px 40px', fontFamily: 'Inter, Arial, sans-serif', color: '#1f1f1f' }}>
-      <div style={{ marginBottom: 20 }}>
-        <Link href={`/quiz/ready?region=${regionSlug}&regionName=${encodeURIComponent(region)}&budgetKey=${budget.key}&timelineKey=${timeline.key}`} style={{ color: '#8b7355', textDecoration: 'none', fontWeight: 600 }}>
-          ← Назад
-        </Link>
-      </div>
+    <AppShell
+      eyebrow="Последний шаг"
+      title="Оставь телефон, и мы покажем подборку"
+      description="Это уже живой submit в backend. Для MVP используем demo session из seed-данных. Сейчас можно отправить либо общий запрос по подборке, либо заявку на конкретный объект."
+    >
+      <BackLink href={`/quiz/ready?region=${regionSlug}&regionName=${encodeURIComponent(region)}&budgetKey=${budget.key}&timelineKey=${timeline.key}`} />
 
-      <section style={{ background: '#ffffff', borderRadius: 24, padding: 24, boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
-        <p style={{ margin: '0 0 8px', color: '#8b7355', fontWeight: 600 }}>Последний шаг</p>
-        <h1 style={{ margin: '0 0 12px', fontSize: 30 }}>Оставь телефон, и мы покажем подборку</h1>
-        <p style={{ margin: '0 0 20px', color: '#5c5348', lineHeight: 1.5 }}>
-          Это уже живой submit в backend. Для MVP используем demo session из seed-данных. Сейчас можно
-          отправить либо общий запрос по подборке, либо заявку на конкретный объект.
-        </p>
+      <div style={{ display: 'grid', gap: 12, marginBottom: 18 }}>
+        <div style={{ padding: 16, borderRadius: 18, background: '#fff8f0', border: '1px solid #ebddcb' }}>
+          <div style={{ fontSize: 13, color: '#8f7658', fontWeight: 700, marginBottom: 6 }}>Параметры запроса</div>
+          <div style={{ color: '#4d443b', lineHeight: 1.6 }}>
+            <div><strong>Регион:</strong> {region}</div>
+            <div><strong>Бюджет:</strong> {budget.title}</div>
+            <div><strong>Срок:</strong> {timeline.title}</div>
+          </div>
+        </div>
 
         {propertyTitle ? (
-          <div style={{ marginBottom: 16, padding: 14, borderRadius: 14, background: '#fffaf6', border: '1px solid #ece3d7' }}>
-            <strong>Выбранный объект:</strong> {propertyTitle}
+          <div style={{ padding: 16, borderRadius: 18, background: '#fffaf6', border: '1px solid #ece3d7' }}>
+            <div style={{ fontSize: 13, color: '#8f7658', fontWeight: 700, marginBottom: 6 }}>Выбранный объект</div>
+            <div style={{ fontWeight: 700, lineHeight: 1.5 }}>{propertyTitle}</div>
           </div>
         ) : null}
+      </div>
 
-        <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 14 }}>
-          <label style={{ display: 'grid', gap: 8 }}>
-            <span style={{ fontWeight: 600 }}>Телефон</span>
-            <input
-              type="tel"
-              value={phone}
-              onChange={(event) => setPhone(event.target.value)}
-              placeholder="+7 999 123-45-67"
-              required
-              style={{
-                border: '1px solid #d9cdbd',
-                borderRadius: 14,
-                padding: '14px 16px',
-                fontSize: 16,
-                outline: 'none',
-              }}
-            />
-          </label>
-
-          <button
-            type="submit"
-            disabled={submitting}
+      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 14 }}>
+        <label style={{ display: 'grid', gap: 8 }}>
+          <span style={{ fontWeight: 700 }}>Телефон</span>
+          <input
+            type="tel"
+            value={phone}
+            onChange={(event) => setPhone(event.target.value)}
+            placeholder="+7 999 123-45-67"
+            required
             style={{
-              background: '#1f1f1f',
-              color: '#ffffff',
-              border: 'none',
-              borderRadius: 14,
-              padding: '14px 18px',
+              border: '1px solid #d9cdbd',
+              borderRadius: 16,
+              padding: '15px 16px',
               fontSize: 16,
-              fontWeight: 700,
-              cursor: 'pointer',
-              opacity: submitting ? 0.7 : 1,
+              outline: 'none',
+              background: '#fffdfb',
             }}
-          >
-            {submitting ? 'Отправляю...' : 'Получить подборку'}
-          </button>
+          />
+        </label>
 
-          {error ? <div style={{ color: '#b94a48', fontSize: 14 }}>{error}</div> : null}
-        </form>
-      </section>
-    </main>
+        <button
+          type="submit"
+          disabled={submitting}
+          style={{
+            background: 'linear-gradient(90deg, #1f1f1f 0%, #444 100%)',
+            color: '#ffffff',
+            border: 'none',
+            borderRadius: 16,
+            padding: '15px 18px',
+            fontSize: 16,
+            fontWeight: 700,
+            cursor: 'pointer',
+            opacity: submitting ? 0.75 : 1,
+            boxShadow: '0 10px 24px rgba(0,0,0,0.12)',
+          }}
+        >
+          {submitting ? 'Отправляю...' : propertyTitle ? 'Отправить заявку на объект' : 'Получить подборку'}
+        </button>
+
+        {error ? <div style={{ color: '#b94a48', fontSize: 14 }}>{error}</div> : null}
+      </form>
+    </AppShell>
   );
 }

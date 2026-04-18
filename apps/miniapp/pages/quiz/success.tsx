@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { AppShell } from '../../components/app-shell';
 import { getBudgetByKey, getTimelineByKey } from '../../lib/quiz-options';
 
 export default function SuccessPage() {
@@ -13,36 +14,35 @@ export default function SuccessPage() {
   const propertyTitle = typeof router.query.propertyTitle === 'string' ? router.query.propertyTitle : null;
 
   return (
-    <main style={{ minHeight: '100vh', padding: '24px 20px 40px', fontFamily: 'Inter, Arial, sans-serif', color: '#1f1f1f' }}>
-      <section style={{ background: '#fffaf2', borderRadius: 24, padding: 24, boxShadow: '0 10px 30px rgba(0,0,0,0.06)' }}>
-        <p style={{ margin: '0 0 8px', color: '#8b7355', fontWeight: 600 }}>Заявка отправлена</p>
-        <h1 style={{ margin: '0 0 12px', fontSize: 32, lineHeight: 1.1 }}>Готово, мы получили твой контакт</h1>
-        <p style={{ margin: '0 0 20px', color: '#5c5348', lineHeight: 1.5 }}>
-          Теперь уже можно перейти к живой подборке объектов из backend. Сейчас откроем её с учётом региона {regionName}, бюджета {budget.title} и срока {timeline.title}.
-        </p>
-
-        {leadId ? (
-          <div style={{ marginBottom: 16, padding: 14, borderRadius: 14, background: '#ffffff', border: '1px solid #ece3d7' }}>
-            <strong>Lead ID:</strong> {leadId}
-            {propertyTitle ? <div style={{ marginTop: 8 }}><strong>Объект:</strong> {propertyTitle}</div> : null}
+    <AppShell
+      eyebrow="Заявка отправлена"
+      title="Готово, мы получили твой контакт"
+      description={`Теперь можно перейти к живой подборке объектов из backend. Регион: ${regionName}. Бюджет: ${budget.title}. Срок: ${timeline.title}.`}
+    >
+      {leadId ? (
+        <div style={{ marginBottom: 18, padding: 16, borderRadius: 18, background: '#fffaf6', border: '1px solid #ece3d7' }}>
+          <div style={{ fontSize: 13, color: '#8f7658', fontWeight: 700, marginBottom: 8 }}>Данные заявки</div>
+          <div style={{ lineHeight: 1.7, color: '#4d443b' }}>
+            <div><strong>Lead ID:</strong> {leadId}</div>
+            {propertyTitle ? <div><strong>Объект:</strong> {propertyTitle}</div> : null}
           </div>
-        ) : null}
-
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-          {propertySlug ? (
-            <Link href={`/properties/${propertySlug}?region=${region}&regionName=${encodeURIComponent(regionName)}&budgetKey=${budget.key}&timelineKey=${timeline.key}`} style={{ background: '#1f1f1f', color: '#ffffff', textDecoration: 'none', padding: '14px 18px', borderRadius: 14, fontWeight: 600 }}>
-              Вернуться к объекту
-            </Link>
-          ) : (
-            <Link href={`/properties?region=${region}&regionName=${encodeURIComponent(regionName)}&budgetKey=${budget.key}&timelineKey=${timeline.key}`} style={{ background: '#1f1f1f', color: '#ffffff', textDecoration: 'none', padding: '14px 18px', borderRadius: 14, fontWeight: 600 }}>
-              Смотреть объекты
-            </Link>
-          )}
-          <Link href="/quiz/region" style={{ background: '#efe7db', color: '#1f1f1f', textDecoration: 'none', padding: '14px 18px', borderRadius: 14, fontWeight: 600 }}>
-            Пройти заново
-          </Link>
         </div>
-      </section>
-    </main>
+      ) : null}
+
+      <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+        {propertySlug ? (
+          <Link href={`/properties/${propertySlug}?region=${region}&regionName=${encodeURIComponent(regionName)}&budgetKey=${budget.key}&timelineKey=${timeline.key}`} style={{ background: 'linear-gradient(90deg, #1f1f1f 0%, #444 100%)', color: '#ffffff', textDecoration: 'none', padding: '14px 18px', borderRadius: 16, fontWeight: 700, boxShadow: '0 10px 24px rgba(0,0,0,0.12)' }}>
+            Вернуться к объекту
+          </Link>
+        ) : (
+          <Link href={`/properties?region=${region}&regionName=${encodeURIComponent(regionName)}&budgetKey=${budget.key}&timelineKey=${timeline.key}`} style={{ background: 'linear-gradient(90deg, #1f1f1f 0%, #444 100%)', color: '#ffffff', textDecoration: 'none', padding: '14px 18px', borderRadius: 16, fontWeight: 700, boxShadow: '0 10px 24px rgba(0,0,0,0.12)' }}>
+            Смотреть объекты
+          </Link>
+        )}
+        <Link href="/quiz/region" style={{ background: '#efe7db', color: '#1f1f1f', textDecoration: 'none', padding: '14px 18px', borderRadius: 16, fontWeight: 700 }}>
+          Пройти заново
+        </Link>
+      </div>
+    </AppShell>
   );
 }
