@@ -12,6 +12,8 @@ export default function ContactQuizPage() {
   const budget = getBudgetByKey(typeof router.query.budgetKey === 'string' ? router.query.budgetKey : 'under-10m');
   const timeline = getTimelineByKey(typeof router.query.timelineKey === 'string' ? router.query.timelineKey : '3-months');
   const regionSlug = typeof router.query.region === 'string' ? router.query.region : 'crimea';
+  const propertySlug = typeof router.query.propertySlug === 'string' ? router.query.propertySlug : undefined;
+  const propertyTitle = typeof router.query.propertyTitle === 'string' ? router.query.propertyTitle : undefined;
 
   const [phone, setPhone] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -30,11 +32,12 @@ export default function ContactQuizPage() {
         budgetRange: budget.title,
         purchaseTerm: timeline.title,
         source: 'miniapp-mvp',
+        propertySlug,
       });
 
       const leadId = response?.item?.id;
       window.location.href = leadId
-        ? `/quiz/success?leadId=${leadId}&region=${regionSlug}&regionName=${encodeURIComponent(region)}&budgetKey=${budget.key}&timelineKey=${timeline.key}`
+        ? `/quiz/success?leadId=${leadId}&region=${regionSlug}&regionName=${encodeURIComponent(region)}&budgetKey=${budget.key}&timelineKey=${timeline.key}${propertySlug ? `&propertySlug=${propertySlug}` : ''}${propertyTitle ? `&propertyTitle=${encodeURIComponent(propertyTitle)}` : ''}`
         : '/quiz/success';
     } catch {
       setError('Не удалось отправить заявку. Попробуй ещё раз.');
@@ -55,9 +58,15 @@ export default function ContactQuizPage() {
         <p style={{ margin: '0 0 8px', color: '#8b7355', fontWeight: 600 }}>Последний шаг</p>
         <h1 style={{ margin: '0 0 12px', fontSize: 30 }}>Оставь телефон, и мы покажем подборку</h1>
         <p style={{ margin: '0 0 20px', color: '#5c5348', lineHeight: 1.5 }}>
-          Это уже живой submit в backend. Для MVP используем demo session из seed-данных. Сейчас подборка
-          будет открываться с учётом выбранного региона.
+          Это уже живой submit в backend. Для MVP используем demo session из seed-данных. Сейчас можно
+          отправить либо общий запрос по подборке, либо заявку на конкретный объект.
         </p>
+
+        {propertyTitle ? (
+          <div style={{ marginBottom: 16, padding: 14, borderRadius: 14, background: '#fffaf6', border: '1px solid #ece3d7' }}>
+            <strong>Выбранный объект:</strong> {propertyTitle}
+          </div>
+        ) : null}
 
         <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 14 }}>
           <label style={{ display: 'grid', gap: 8 }}>

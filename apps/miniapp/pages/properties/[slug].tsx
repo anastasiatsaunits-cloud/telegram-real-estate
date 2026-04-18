@@ -56,8 +56,8 @@ export default function PropertyDetailsPage() {
               </div>
             ) : null}
 
-            <Link href="/quiz/contact" style={{ background: '#1f1f1f', color: '#ffffff', textDecoration: 'none', padding: '14px 18px', borderRadius: 14, fontWeight: 600, display: 'inline-block' }}>
-              Оставить заявку
+            <Link href={`/quiz/contact?propertySlug=${property.slug}&propertyTitle=${encodeURIComponent(property.title)}${region ? `&region=${region}` : ''}${regionName ? `&regionName=${encodeURIComponent(regionName)}` : ''}`} style={{ background: '#1f1f1f', color: '#ffffff', textDecoration: 'none', padding: '14px 18px', borderRadius: 14, fontWeight: 600, display: 'inline-block' }}>
+              Хочу этот объект
             </Link>
           </>
         )}

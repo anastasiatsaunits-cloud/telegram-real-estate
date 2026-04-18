@@ -24,4 +24,8 @@ export class CreateLeadDto {
   @IsOptional()
   @IsString()
   source?: string;
+
+  @IsOptional()
+  @IsString()
+  propertySlug?: string;
 }

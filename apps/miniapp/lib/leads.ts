@@ -5,6 +5,7 @@ export type CreateLeadPayload = {
   budgetRange?: string;
   purchaseTerm?: string;
   source?: string;
+  propertySlug?: string;
 };
 
 export async function submitLead(payload: CreateLeadPayload) {

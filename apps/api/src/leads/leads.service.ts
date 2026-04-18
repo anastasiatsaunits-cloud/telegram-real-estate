@@ -16,6 +16,13 @@ export class LeadsService {
       throw new NotFoundException('Session not found');
     }
 
+    const property = dto.propertySlug
+      ? await this.prisma.property.findUnique({
+          where: { slug: dto.propertySlug },
+          select: { id: true, slug: true, title: true },
+        })
+      : null;
+
     const lead = await this.prisma.lead.create({
       data: {
         userId: session.userId,
@@ -34,7 +41,29 @@ export class LeadsService {
       },
     });
 
-    return { item: lead };
+    if (property) {
+      await this.prisma.application.create({
+        data: {
+          leadId: lead.id,
+          propertyId: property.id,
+          applicationType: 'PROPERTY_REQUEST',
+          comment: `Lead created from miniapp for property ${property.slug}`,
+        },
+      });
+    }
+
+    return {
+      item: {
+        ...lead,
+        property: property
+          ? {
+              id: property.id,
+              slug: property.slug,
+              title: property.title,
+            }
+          : null,
+      },
+    };
   }
 
   getHealth() {
