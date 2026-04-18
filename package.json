@@ -11,6 +11,6 @@
     "dev:api": "pnpm --filter api dev",
     "lint": "echo 'lint to be configured'",
     "test": "echo 'tests to be configured'",
-    "build": "echo 'build to be configured'"
+    "build": "pnpm --filter miniapp build"
   }
 }
