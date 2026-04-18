@@ -11,7 +11,7 @@ export default function SuccessPage() {
         <p style={{ margin: '0 0 8px', color: '#8b7355', fontWeight: 600 }}>Заявка отправлена</p>
         <h1 style={{ margin: '0 0 12px', fontSize: 32, lineHeight: 1.1 }}>Готово, мы получили твой контакт</h1>
         <p style={{ margin: '0 0 20px', color: '#5c5348', lineHeight: 1.5 }}>
-          Следующим шагом сюда подключим показ персональной подборки объектов и сценарий передачи в CRM.
+          Теперь уже можно перейти к живой подборке объектов из backend.
         </p>
 
         {leadId ? (
@@ -21,8 +21,8 @@ export default function SuccessPage() {
         ) : null}
 
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-          <Link href="/" style={{ background: '#1f1f1f', color: '#ffffff', textDecoration: 'none', padding: '14px 18px', borderRadius: 14, fontWeight: 600 }}>
-            На главную
+          <Link href="/properties" style={{ background: '#1f1f1f', color: '#ffffff', textDecoration: 'none', padding: '14px 18px', borderRadius: 14, fontWeight: 600 }}>
+            Смотреть объекты
           </Link>
           <Link href="/quiz/region" style={{ background: '#efe7db', color: '#1f1f1f', textDecoration: 'none', padding: '14px 18px', borderRadius: 14, fontWeight: 600 }}>
             Пройти заново

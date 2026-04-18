@@ -1,0 +1,44 @@
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { PropertyCardLink } from '../../components/property-card-link';
+import type { PropertyListItem } from '../../lib/properties';
+
+export default function PropertiesPage() {
+  const [items, setItems] = useState<PropertyListItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/properties')
+      .then((res) => res.json())
+      .then((data) => setItems(data.items ?? []))
+      .finally(() => setLoading(false));
+  }, []);
+
+  return (
+    <main style={{ minHeight: '100vh', padding: '24px 20px 40px', fontFamily: 'Inter, Arial, sans-serif', color: '#1f1f1f' }}>
+      <div style={{ marginBottom: 20 }}>
+        <Link href="/quiz/success" style={{ color: '#8b7355', textDecoration: 'none', fontWeight: 600 }}>
+          ← Назад
+        </Link>
+      </div>
+
+      <section style={{ background: '#ffffff', borderRadius: 24, padding: 24, boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+        <p style={{ margin: '0 0 8px', color: '#8b7355', fontWeight: 600 }}>Подборка объектов</p>
+        <h1 style={{ margin: '0 0 12px', fontSize: 30 }}>Подходящие варианты</h1>
+        <p style={{ margin: '0 0 20px', color: '#5c5348', lineHeight: 1.5 }}>
+          Здесь уже живая выдача из backend. Следующим шагом можно подключить фильтрацию под ответы квиза.
+        </p>
+
+        {loading ? (
+          <div style={{ color: '#7d7367' }}>Загружаю объекты...</div>
+        ) : (
+          <div style={{ display: 'grid', gap: 12 }}>
+            {items.map((property) => (
+              <PropertyCardLink key={property.id} property={property} />
+            ))}
+          </div>
+        )}
+      </section>
+    </main>
+  );
+}
