@@ -28,7 +28,7 @@ export default function RegionQuizPage() {
           {regions.map((region) => (
             <Link
               key={region.id}
-              href="/quiz/budget"
+              href={`/quiz/budget?region=${region.slug}&regionName=${encodeURIComponent(region.name)}`}
               style={{
                 display: 'block',
                 textAlign: 'left',

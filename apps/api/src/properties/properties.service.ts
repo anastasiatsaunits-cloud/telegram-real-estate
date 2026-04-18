@@ -5,9 +5,12 @@ import { PrismaService } from '../prisma/prisma.service';
 export class PropertiesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll() {
+  async findAll(regionSlug?: string) {
     const items = await this.prisma.property.findMany({
-      where: { isActive: true },
+      where: {
+        isActive: true,
+        ...(regionSlug ? { region: { slug: regionSlug } } : {}),
+      },
       orderBy: { createdAt: 'desc' },
       select: {
         id: true,

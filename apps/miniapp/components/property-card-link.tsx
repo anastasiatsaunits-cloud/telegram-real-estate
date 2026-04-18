@@ -1,10 +1,18 @@
 import Link from 'next/link';
 import type { PropertyListItem } from '../lib/properties';
 
-export function PropertyCardLink({ property }: { property: PropertyListItem }) {
+export function PropertyCardLink({
+  property,
+  regionQuery,
+  regionName,
+}: {
+  property: PropertyListItem;
+  regionQuery?: string;
+  regionName?: string;
+}) {
   return (
     <Link
-      href={`/properties/${property.slug}`}
+      href={regionQuery ? `/properties/${property.slug}?region=${regionQuery}&regionName=${encodeURIComponent(regionName ?? '')}` : `/properties/${property.slug}`}
       style={{
         display: 'block',
         textDecoration: 'none',

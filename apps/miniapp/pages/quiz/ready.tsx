@@ -1,6 +1,12 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function ReadyPage() {
+  const router = useRouter();
+  const region = typeof router.query.region === 'string' ? router.query.region : 'crimea';
+  const regionName = typeof router.query.regionName === 'string' ? router.query.regionName : 'Крым';
+  const budget = typeof router.query.budget === 'string' ? router.query.budget : '10–20 млн ₽';
+  const timeline = typeof router.query.timeline === 'string' ? router.query.timeline : 'В течение 3 месяцев';
   return (
     <main
       style={{
@@ -38,16 +44,16 @@ export default function ReadyPage() {
         >
           <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 8 }}>Что уже подготовлено</div>
           <ul style={{ margin: 0, paddingLeft: 18, color: '#5c5348', lineHeight: 1.6 }}>
-            <li>подключён backend</li>
-            <li>живые регионы из базы</li>
-            <li>карточки объектов в API</li>
-            <li>реальная запись лидов в БД</li>
+            <li>регион: {regionName}</li>
+            <li>бюджет: {budget}</li>
+            <li>срок покупки: {timeline}</li>
+            <li>подборка будет открыта с фильтром по региону</li>
           </ul>
         </div>
 
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
           <Link
-            href="/quiz/contact"
+            href={`/quiz/contact?region=${region}&regionName=${encodeURIComponent(regionName)}&budget=${encodeURIComponent(budget)}&timeline=${encodeURIComponent(timeline)}`}
             style={{
               background: '#1f1f1f',
               color: '#ffffff',

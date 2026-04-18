@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { OptionCardLink } from '../../components/option-card-link';
 import { QuizLayout } from '../../components/quiz-layout';
 
@@ -10,6 +11,11 @@ const timelineOptions = [
 ];
 
 export default function TimelineQuizPage() {
+  const router = useRouter();
+  const region = typeof router.query.region === 'string' ? router.query.region : 'crimea';
+  const regionName = typeof router.query.regionName === 'string' ? router.query.regionName : 'Крым';
+  const budget = typeof router.query.budget === 'string' ? router.query.budget : '10–20 млн ₽';
+
   return (
     <QuizLayout
       step="Шаг 3 из 3"
@@ -19,7 +25,11 @@ export default function TimelineQuizPage() {
     >
       <div style={{ display: 'grid', gap: 12 }}>
         {timelineOptions.map((option) => (
-          <OptionCardLink key={option} href="/quiz/ready" title={option} />
+          <OptionCardLink
+            key={option}
+            href={`/quiz/ready?region=${region}&regionName=${encodeURIComponent(regionName)}&budget=${encodeURIComponent(budget)}&timeline=${encodeURIComponent(option)}`}
+            title={option}
+          />
         ))}
       </div>
     </QuizLayout>

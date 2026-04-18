@@ -6,6 +6,8 @@ import type { PropertyDetails } from '../../lib/properties';
 export default function PropertyDetailsPage() {
   const router = useRouter();
   const slug = typeof router.query.slug === 'string' ? router.query.slug : null;
+  const region = typeof router.query.region === 'string' ? router.query.region : '';
+  const regionName = typeof router.query.regionName === 'string' ? router.query.regionName : '';
   const [property, setProperty] = useState<PropertyDetails | null>(null);
 
   useEffect(() => {
@@ -19,7 +21,7 @@ export default function PropertyDetailsPage() {
   return (
     <main style={{ minHeight: '100vh', padding: '24px 20px 40px', fontFamily: 'Inter, Arial, sans-serif', color: '#1f1f1f' }}>
       <div style={{ marginBottom: 20 }}>
-        <Link href="/properties" style={{ color: '#8b7355', textDecoration: 'none', fontWeight: 600 }}>
+        <Link href={region ? `/properties?region=${region}&regionName=${encodeURIComponent(regionName)}` : '/properties'} style={{ color: '#8b7355', textDecoration: 'none', fontWeight: 600 }}>
           ← К подборке
         </Link>
       </div>
