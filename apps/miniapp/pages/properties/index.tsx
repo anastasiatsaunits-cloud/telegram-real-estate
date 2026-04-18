@@ -9,7 +9,7 @@ export default function PropertiesPage() {
   const router = useRouter();
   const region = typeof router.query.region === 'string' ? router.query.region : '';
   const regionName = typeof router.query.regionName === 'string' ? router.query.regionName : '';
-  const budget = getBudgetByKey(typeof router.query.budgetKey === 'string' ? router.query.budgetKey : '10m-20m');
+  const budget = getBudgetByKey(typeof router.query.budgetKey === 'string' ? router.query.budgetKey : 'under-10m');
   const timeline = getTimelineByKey(typeof router.query.timelineKey === 'string' ? router.query.timelineKey : '3-months');
   const [items, setItems] = useState<PropertyListItem[]>([]);
   const [loading, setLoading] = useState(true);

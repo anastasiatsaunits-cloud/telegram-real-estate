@@ -7,7 +7,7 @@ export default function SuccessPage() {
   const leadId = typeof router.query.leadId === 'string' ? router.query.leadId : null;
   const region = typeof router.query.region === 'string' ? router.query.region : 'crimea';
   const regionName = typeof router.query.regionName === 'string' ? router.query.regionName : 'Крым';
-  const budget = getBudgetByKey(typeof router.query.budgetKey === 'string' ? router.query.budgetKey : '10m-20m');
+  const budget = getBudgetByKey(typeof router.query.budgetKey === 'string' ? router.query.budgetKey : 'under-10m');
   const timeline = getTimelineByKey(typeof router.query.timelineKey === 'string' ? router.query.timelineKey : '3-months');
 
   return (
