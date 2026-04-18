@@ -13,134 +13,137 @@ export default function HomePage() {
 
   const featured = items[0];
   const sideTop = items[1];
-  const sideMiddle = items[2];
-  const sideBottom = items[3];
+  const sideBottom = items[2];
 
   return (
     <main
       style={{
         minHeight: '100vh',
         margin: 0,
-        padding: '16px 14px 28px',
+        padding: '14px 14px 28px',
         fontFamily: 'Inter, Arial, sans-serif',
         color: '#f7f3ee',
         background: '#050505',
       }}
     >
       <div style={{ maxWidth: 560, margin: '0 auto' }}>
-        <section style={{ marginBottom: 16 }}>
+        <section style={{ marginBottom: 14 }}>
           <div style={{ fontSize: 28, fontWeight: 700, lineHeight: 1.1 }}>FlatHouse</div>
           <div style={{ color: 'rgba(255,255,255,0.62)', fontSize: 14, marginTop: 4 }}>Каталог недвижимости</div>
         </section>
 
-        <section style={{ display: 'grid', gridTemplateColumns: '1.08fr 0.92fr', gap: 10, marginBottom: 16 }}>
-          <div style={{ display: 'grid', gap: 10 }}>
-            {featured ? (
-              <div
-                style={{
-                  minHeight: 340,
-                  borderRadius: 24,
-                  overflow: 'hidden',
-                  background: 'linear-gradient(180deg, rgba(107,124,173,0.28) 0%, rgba(10,10,10,0.96) 100%)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  boxShadow: '0 18px 40px rgba(0,0,0,0.3)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'flex-end',
-                }}
-              >
-                <div style={{ padding: 18 }}>
-                  <div style={{ fontSize: 12, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.72)', marginBottom: 8 }}>
-                    {featured.region.name.toUpperCase()}
-                  </div>
-                  <div style={{ fontSize: 28, fontWeight: 700, lineHeight: 1.08 }}>{featured.title}</div>
-                  <div style={{ marginTop: 8, color: 'rgba(255,255,255,0.72)', fontSize: 16 }}>
-                    от {featured.priceFrom ?? 'по запросу'} {featured.currency ?? ''}
-                  </div>
-                  <div style={{ marginTop: 14, display: 'grid', gap: 10 }}>
-                    <Link
-                      href="/quiz/region"
-                      style={{
-                        display: 'block',
-                        textAlign: 'center',
-                        textDecoration: 'none',
-                        background: '#0f0f10',
-                        color: '#ffffff',
-                        padding: '14px 16px',
-                        borderRadius: 16,
-                        fontWeight: 700,
-                      }}
-                    >
-                      Подобрать объект
-                    </Link>
-                    <Link
-                      href="/properties"
-                      style={{
-                        display: 'block',
-                        textAlign: 'center',
-                        textDecoration: 'none',
-                        background: 'rgba(255,255,255,0.08)',
-                        color: '#f5efe8',
-                        padding: '13px 16px',
-                        borderRadius: 16,
-                        fontWeight: 700,
-                        border: '1px solid rgba(255,255,255,0.08)',
-                      }}
-                    >
-                      Каталог
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ) : null}
-          </div>
-
-          <div style={{ display: 'grid', gap: 10 }}>
-            <Link
-              href="/properties"
+        {featured ? (
+          <section
+            style={{
+              marginBottom: 14,
+              borderRadius: 28,
+              overflow: 'hidden',
+              background: 'linear-gradient(180deg, rgba(111,132,188,0.34) 0%, rgba(10,10,10,0.96) 100%)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              boxShadow: '0 18px 40px rgba(0,0,0,0.34)',
+            }}
+          >
+            <div
               style={{
-                minHeight: 106,
-                borderRadius: 22,
-                background: '#111111',
-                border: '1px solid rgba(255,255,255,0.08)',
-                textDecoration: 'none',
-                color: '#f5efe8',
+                minHeight: 360,
+                padding: 18,
                 display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                textAlign: 'center',
-                fontWeight: 700,
-                fontSize: 17,
-                padding: 14,
+                alignItems: 'flex-end',
               }}
             >
-              Все объекты
-            </Link>
+              <div>
+                <div style={{ fontSize: 12, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.72)', marginBottom: 8 }}>
+                  {featured.region.name.toUpperCase()}
+                </div>
+                <div style={{ fontSize: 30, fontWeight: 700, lineHeight: 1.08 }}>{featured.title}</div>
+                <div style={{ marginTop: 8, color: 'rgba(255,255,255,0.72)', fontSize: 16 }}>
+                  от {featured.priceFrom ?? 'по запросу'} {featured.currency ?? ''}
+                </div>
+              </div>
+            </div>
 
-            {[sideTop, sideMiddle, sideBottom].map((item, index) =>
+            <div style={{ padding: 14, display: 'grid', gap: 10 }}>
+              <Link
+                href="/quiz/region"
+                style={{
+                  display: 'block',
+                  textAlign: 'center',
+                  textDecoration: 'none',
+                  background: '#0f0f10',
+                  color: '#ffffff',
+                  padding: '15px 16px',
+                  borderRadius: 18,
+                  fontWeight: 700,
+                  fontSize: 17,
+                }}
+              >
+                Подобрать объект
+              </Link>
+              <Link
+                href="/properties"
+                style={{
+                  display: 'block',
+                  textAlign: 'center',
+                  textDecoration: 'none',
+                  background: 'rgba(255,255,255,0.08)',
+                  color: '#f5efe8',
+                  padding: '14px 16px',
+                  borderRadius: 18,
+                  fontWeight: 700,
+                  border: '1px solid rgba(255,255,255,0.08)',
+                }}
+              >
+                Открыть каталог
+              </Link>
+            </div>
+          </section>
+        ) : null}
+
+        <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 14 }}>
+          <Link
+            href="/properties"
+            style={{
+              minHeight: 118,
+              borderRadius: 22,
+              background: '#111111',
+              border: '1px solid rgba(255,255,255,0.08)',
+              textDecoration: 'none',
+              color: '#f5efe8',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
+              fontWeight: 700,
+              fontSize: 18,
+              padding: 14,
+            }}
+          >
+            Все объекты
+          </Link>
+
+          <div style={{ display: 'grid', gap: 10 }}>
+            {[sideTop, sideBottom].map((item, index) =>
               item ? (
                 <div
                   key={item.id}
                   style={{
-                    minHeight: index === 0 ? 106 : 92,
-                    borderRadius: 20,
-                    padding: 14,
+                    minHeight: 54,
+                    borderRadius: 18,
+                    padding: 12,
                     background:
                       index === 0
                         ? 'linear-gradient(180deg, rgba(47,112,128,0.35) 0%, rgba(10,10,10,0.96) 100%)'
-                        : index === 1
-                          ? 'linear-gradient(180deg, rgba(80,117,86,0.35) 0%, rgba(10,10,10,0.96) 100%)'
-                          : 'linear-gradient(180deg, rgba(82,90,112,0.35) 0%, rgba(10,10,10,0.96) 100%)',
+                        : 'linear-gradient(180deg, rgba(82,90,112,0.35) 0%, rgba(10,10,10,0.96) 100%)',
                     border: '1px solid rgba(255,255,255,0.08)',
                     display: 'flex',
                     alignItems: 'flex-end',
                   }}
                 >
                   <div>
-                    <div style={{ fontSize: 11, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.68)', marginBottom: 4 }}>
+                    <div style={{ fontSize: 10, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.68)', marginBottom: 3 }}>
                       {item.region.name.toUpperCase()}
                     </div>
-                    <div style={{ fontSize: 18, fontWeight: 700, lineHeight: 1.05 }}>{item.title}</div>
+                    <div style={{ fontSize: 15, fontWeight: 700, lineHeight: 1.05 }}>{item.title}</div>
                   </div>
                 </div>
               ) : null,
