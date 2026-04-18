@@ -1,0 +1,16 @@
+{
+  "name": "telegram-real-estate",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Telegram bot + mini app + backend for real estate catalog",
+  "packageManager": "pnpm@10.8.1",
+  "scripts": {
+    "dev": "echo 'Use workspace scripts: dev:bot, dev:miniapp, dev:api'",
+    "dev:bot": "pnpm --filter bot dev",
+    "dev:miniapp": "pnpm --filter miniapp dev",
+    "dev:api": "pnpm --filter api dev",
+    "lint": "echo 'lint to be configured'",
+    "test": "echo 'tests to be configured'",
+    "build": "echo 'build to be configured'"
+  }
+}
