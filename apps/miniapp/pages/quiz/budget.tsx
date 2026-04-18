@@ -1,14 +1,7 @@
 import { useRouter } from 'next/router';
 import { OptionCardLink } from '../../components/option-card-link';
 import { QuizLayout } from '../../components/quiz-layout';
-
-const budgetOptions = [
-  { title: 'До 5 млн ₽', description: 'Бюджет для стартового подбора' },
-  { title: '5–10 млн ₽', description: 'Популярный диапазон для инвест-покупки' },
-  { title: '10–20 млн ₽', description: 'Расширенный подбор по ликвидным объектам' },
-  { title: '20+ млн ₽', description: 'Премиальный сегмент и точечный подбор' },
-  { title: 'Нужен индивидуальный подбор', description: 'Подойдёт, если пока без точного бюджета' },
-];
+import { budgetOptions } from '../../lib/quiz-options';
 
 export default function BudgetQuizPage() {
   const router = useRouter();
@@ -25,8 +18,8 @@ export default function BudgetQuizPage() {
       <div style={{ display: 'grid', gap: 12 }}>
         {budgetOptions.map((option) => (
           <OptionCardLink
-            key={option.title}
-            href={`/quiz/timeline?region=${region}&regionName=${encodeURIComponent(regionName)}&budget=${encodeURIComponent(option.title)}`}
+            key={option.key}
+            href={`/quiz/timeline?region=${region}&regionName=${encodeURIComponent(regionName)}&budgetKey=${option.key}`}
             title={option.title}
             description={option.description}
           />

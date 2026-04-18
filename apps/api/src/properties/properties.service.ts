@@ -5,11 +5,16 @@ import { PrismaService } from '../prisma/prisma.service';
 export class PropertiesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(regionSlug?: string) {
+  async findAll(regionSlug?: string, budgetMin?: string, budgetMax?: string) {
+    const min = budgetMin ? Number(budgetMin) : undefined;
+    const max = budgetMax ? Number(budgetMax) : undefined;
+
     const items = await this.prisma.property.findMany({
       where: {
         isActive: true,
         ...(regionSlug ? { region: { slug: regionSlug } } : {}),
+        ...(Number.isFinite(min) ? { priceFrom: { gte: min } } : {}),
+        ...(Number.isFinite(max) ? { priceFrom: { lte: max } } : {}),
       },
       orderBy: { createdAt: 'desc' },
       select: {

@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { getBudgetByKey, getTimelineByKey } from '../../lib/quiz-options';
 
 export default function ReadyPage() {
   const router = useRouter();
   const region = typeof router.query.region === 'string' ? router.query.region : 'crimea';
   const regionName = typeof router.query.regionName === 'string' ? router.query.regionName : 'Крым';
-  const budget = typeof router.query.budget === 'string' ? router.query.budget : '10–20 млн ₽';
-  const timeline = typeof router.query.timeline === 'string' ? router.query.timeline : 'В течение 3 месяцев';
+  const budget = getBudgetByKey(typeof router.query.budgetKey === 'string' ? router.query.budgetKey : '10m-20m');
+  const timeline = getTimelineByKey(typeof router.query.timelineKey === 'string' ? router.query.timelineKey : '3-months');
   return (
     <main
       style={{
@@ -45,15 +46,15 @@ export default function ReadyPage() {
           <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 8 }}>Что уже подготовлено</div>
           <ul style={{ margin: 0, paddingLeft: 18, color: '#5c5348', lineHeight: 1.6 }}>
             <li>регион: {regionName}</li>
-            <li>бюджет: {budget}</li>
-            <li>срок покупки: {timeline}</li>
+            <li>бюджет: {budget.title}</li>
+            <li>срок покупки: {timeline.title}</li>
             <li>подборка будет открыта с фильтром по региону</li>
           </ul>
         </div>
 
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
           <Link
-            href={`/quiz/contact?region=${region}&regionName=${encodeURIComponent(regionName)}&budget=${encodeURIComponent(budget)}&timeline=${encodeURIComponent(timeline)}`}
+            href={`/quiz/contact?region=${region}&regionName=${encodeURIComponent(regionName)}&budgetKey=${budget.key}&timelineKey=${timeline.key}`}
             style={{
               background: '#1f1f1f',
               color: '#ffffff',

@@ -3,8 +3,12 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000/api';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const region = typeof req.query.region === 'string' ? req.query.region : '';
-  const url = region ? `${API_BASE_URL}/properties?region=${encodeURIComponent(region)}` : `${API_BASE_URL}/properties`;
+  const params = new URLSearchParams();
+  if (typeof req.query.region === 'string') params.set('region', req.query.region);
+  if (typeof req.query.budgetMin === 'string') params.set('budgetMin', req.query.budgetMin);
+  if (typeof req.query.budgetMax === 'string') params.set('budgetMax', req.query.budgetMax);
+  const query = params.toString();
+  const url = query ? `${API_BASE_URL}/properties?${query}` : `${API_BASE_URL}/properties`;
 
   try {
     const response = await fetch(url);

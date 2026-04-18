@@ -6,8 +6,12 @@ export class PropertiesController {
   constructor(private readonly propertiesService: PropertiesService) {}
 
   @Get()
-  getProperties(@Query('region') regionSlug?: string) {
-    return this.propertiesService.findAll(regionSlug);
+  getProperties(
+    @Query('region') regionSlug?: string,
+    @Query('budgetMin') budgetMin?: string,
+    @Query('budgetMax') budgetMax?: string,
+  ) {
+    return this.propertiesService.findAll(regionSlug, budgetMin, budgetMax);
   }
 
   @Get(':slug')

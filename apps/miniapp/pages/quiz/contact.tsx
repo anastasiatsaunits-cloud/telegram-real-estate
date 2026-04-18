@@ -2,14 +2,15 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
 import { submitLead } from '../../lib/leads';
+import { getBudgetByKey, getTimelineByKey } from '../../lib/quiz-options';
 
 const DEMO_SESSION_ID = 'session_seed_demo';
 
 export default function ContactQuizPage() {
   const router = useRouter();
   const region = typeof router.query.regionName === 'string' ? router.query.regionName : 'Крым';
-  const budget = typeof router.query.budget === 'string' ? router.query.budget : '10–20 млн ₽';
-  const timeline = typeof router.query.timeline === 'string' ? router.query.timeline : 'В течение 3 месяцев';
+  const budget = getBudgetByKey(typeof router.query.budgetKey === 'string' ? router.query.budgetKey : '10m-20m');
+  const timeline = getTimelineByKey(typeof router.query.timelineKey === 'string' ? router.query.timelineKey : '3-months');
   const regionSlug = typeof router.query.region === 'string' ? router.query.region : 'crimea';
 
   const [phone, setPhone] = useState('');
@@ -26,14 +27,14 @@ export default function ContactQuizPage() {
         sessionId: DEMO_SESSION_ID,
         phone,
         regionInterest: region,
-        budgetRange: budget,
-        purchaseTerm: timeline,
+        budgetRange: budget.title,
+        purchaseTerm: timeline.title,
         source: 'miniapp-mvp',
       });
 
       const leadId = response?.item?.id;
       window.location.href = leadId
-        ? `/quiz/success?leadId=${leadId}&region=${regionSlug}&regionName=${encodeURIComponent(region)}&budget=${encodeURIComponent(budget)}&timeline=${encodeURIComponent(timeline)}`
+        ? `/quiz/success?leadId=${leadId}&region=${regionSlug}&regionName=${encodeURIComponent(region)}&budgetKey=${budget.key}&timelineKey=${timeline.key}`
         : '/quiz/success';
     } catch {
       setError('Не удалось отправить заявку. Попробуй ещё раз.');
@@ -45,7 +46,7 @@ export default function ContactQuizPage() {
   return (
     <main style={{ minHeight: '100vh', padding: '24px 20px 40px', fontFamily: 'Inter, Arial, sans-serif', color: '#1f1f1f' }}>
       <div style={{ marginBottom: 20 }}>
-        <Link href={`/quiz/ready?region=${regionSlug}&regionName=${encodeURIComponent(region)}&budget=${encodeURIComponent(budget)}&timeline=${encodeURIComponent(timeline)}`} style={{ color: '#8b7355', textDecoration: 'none', fontWeight: 600 }}>
+        <Link href={`/quiz/ready?region=${regionSlug}&regionName=${encodeURIComponent(region)}&budgetKey=${budget.key}&timelineKey=${timeline.key}`} style={{ color: '#8b7355', textDecoration: 'none', fontWeight: 600 }}>
           ← Назад
         </Link>
       </div>
