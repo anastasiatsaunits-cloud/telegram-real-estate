@@ -11,26 +11,34 @@ if (!token) {
 
 const bot = new Bot(token);
 
-bot.command('start', async (ctx) => {
-  const keyboard = new InlineKeyboard()
-    .webApp('Открыть каталог', miniAppUrl)
+function mainKeyboard() {
+  return new InlineKeyboard()
+    .text('Подобрать объект', 'start подбор')
     .row()
-    .text('Подобрать объект', 'open_miniapp');
+    .webApp('Открыть каталог', miniAppUrl);
+}
+
+bot.command('start', async (ctx) => {
+  await ctx.reply(
+    'Здравствуйте 👋\n\nЯ помогу подобрать недвижимость под вашу цель, бюджет и срок покупки.',
+  );
 
   await ctx.reply(
-    'Подберу недвижимость внутри Telegram. Можно сразу открыть mini app и пройти подбор.',
+    'Можно быстро пройти короткий подбор и сразу посмотреть подходящие объекты в каталоге.',
     {
-      reply_markup: keyboard,
+      reply_markup: mainKeyboard(),
     },
   );
 });
 
-bot.callbackQuery('open_miniapp', async (ctx) => {
-  const keyboard = new InlineKeyboard().webApp('Открыть mini app', miniAppUrl);
+bot.callbackQuery('start подбор', async (ctx) => {
   await ctx.answerCallbackQuery();
-  await ctx.reply('Открой mini app по кнопке ниже.', {
-    reply_markup: keyboard,
-  });
+  await ctx.reply(
+    'Сначала задам несколько коротких вопросов, после этого открою для вас каталог с подходящими вариантами.',
+    {
+      reply_markup: new InlineKeyboard().webApp('Начать подбор', `${miniAppUrl}/quiz/region`),
+    },
+  );
 });
 
 bot.catch((error) => {
