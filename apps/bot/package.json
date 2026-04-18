@@ -4,5 +4,8 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "node src/main.js"
+  },
+  "dependencies": {
+    "grammy": "^1.38.3"
   }
 }
