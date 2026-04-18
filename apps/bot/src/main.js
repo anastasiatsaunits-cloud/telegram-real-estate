@@ -1,8 +1,9 @@
-const { Bot, InlineKeyboard } = require('grammy');
+const { Bot, InlineKeyboard, InputFile } = require('grammy');
 
 const token = process.env.TELEGRAM_BOT_TOKEN;
 const miniAppUrl = process.env.TELEGRAM_WEBAPP_URL || 'http://localhost:3000';
 const dryRun = process.env.TELEGRAM_BOT_DRY_RUN === '1';
+const welcomeRenderPath = `${__dirname}/../welcome-render.jpg`;
 
 if (!token) {
   console.error('TELEGRAM_BOT_TOKEN is missing');
@@ -19,17 +20,17 @@ function mainKeyboard() {
 }
 
 bot.command('start', async (ctx) => {
-  await ctx.reply(
-    '🔐 Доступ к каталогу недвижимости открыт.\n\n' +
-      'Этот бот поможет быстро найти объекты для жизни, инвестиций и сохранения капитала.',
-  );
+  await ctx.replyWithPhoto(new InputFile(welcomeRenderPath), {
+    caption:
+      '🔐 Доступ к каталогу недвижимости открыт.\n\n' +
+      'Подборки по Крыму и Сочи, актуальные объекты под разный бюджет и быстрый вход в подбор по вашей цели.',
+  });
 
   await ctx.reply(
-    '💎 Что внутри:\n' +
-      '— подборки по Крыму и Сочи\n' +
-      '— актуальные предложения под разный бюджет\n' +
-      '— вход в подбор по вашей цели: жить, инвестировать, сохранить капитал\n' +
-      '— быстрый переход к объектам и заявке\n\n' +
+    '💎 В этом боте:\n' +
+      '— предложения для жизни, инвестиций и сохранения капитала\n' +
+      '— объекты, которые удобно смотреть прямо в Telegram\n' +
+      '— быстрый переход к каталогу и заявке\n\n' +
       'Всё собрано в одном месте, чтобы не искать варианты вручную.',
   );
 
