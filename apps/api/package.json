@@ -4,5 +4,9 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "node src/main.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.7.0",
+    "prisma": "^7.7.0"
   }
 }

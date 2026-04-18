@@ -1,0 +1,1 @@
+ALTER TYPE "ApplicationType" RENAME VALUE 'подборка' TO 'CURATED_SELECTION';
