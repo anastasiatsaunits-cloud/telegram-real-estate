@@ -4,8 +4,10 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "nest start --watch",
-    "build": "nest build",
+    "build": "prisma generate && nest build",
     "start": "node dist/main.js",
+    "start:prod": "node dist/main.js",
+    "postinstall": "prisma generate",
     "seed": "docker exec -i telegram-real-estate-postgres psql -U postgres -d telegram_real_estate < prisma/seed.sql"
   },
   "dependencies": {
