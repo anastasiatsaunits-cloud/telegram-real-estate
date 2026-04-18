@@ -25,17 +25,21 @@ export function PropertyCardLink({
         display: 'block',
         textDecoration: 'none',
         border: '1px solid #eadfce',
-        borderRadius: 20,
+        borderRadius: 22,
         padding: 18,
-        background: '#fffaf6',
+        background: 'linear-gradient(180deg, #fffaf6 0%, #fff4ea 100%)',
         color: '#1f1f1f',
+        boxShadow: '0 10px 24px rgba(0,0,0,0.05)',
       }}
     >
-      <div style={{ fontWeight: 700, fontSize: 18 }}>{property.title}</div>
-      <div style={{ marginTop: 8, color: '#7d7367', fontSize: 14 }}>
-        {property.region.name}{property.city ? `, ${property.city}` : ''}
+      <div style={{ display: 'inline-flex', marginBottom: 10, padding: '6px 10px', borderRadius: 999, background: '#f1e3d3', color: '#8c6a48', fontSize: 12, fontWeight: 700 }}>
+        {property.region.name}
       </div>
-      <div style={{ marginTop: 10, fontSize: 16, fontWeight: 600 }}>
+      <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.35 }}>{property.title}</div>
+      <div style={{ marginTop: 8, color: '#7d7367', fontSize: 14 }}>
+        {property.city ? property.city : 'Локация уточняется'}
+      </div>
+      <div style={{ marginTop: 12, fontSize: 17, fontWeight: 700 }}>
         от {property.priceFrom ?? 'по запросу'} {property.currency ?? ''}
       </div>
     </Link>

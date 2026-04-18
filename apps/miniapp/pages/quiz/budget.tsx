@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
+import { AppShell } from '../../components/app-shell';
+import { BackLink } from '../../components/back-link';
 import { OptionCardLink } from '../../components/option-card-link';
-import { QuizLayout } from '../../components/quiz-layout';
+import { ProgressBar } from '../../components/progress-bar';
 import { budgetOptions } from '../../lib/quiz-options';
 
 export default function BudgetQuizPage() {
@@ -9,12 +11,9 @@ export default function BudgetQuizPage() {
   const regionName = typeof router.query.regionName === 'string' ? router.query.regionName : 'Крым';
 
   return (
-    <QuizLayout
-      step="Шаг 2 из 3"
-      title="Какой бюджет рассматриваешь?"
-      description="Пока делаем линейный MVP-сценарий. Следующим экраном идёт срок покупки."
-      backHref="/quiz/region"
-    >
+    <AppShell eyebrow="Подборка" title="Какой бюджет рассматриваешь?" description={`Регион уже выбран: ${regionName}. Следующим шагом уточним срок покупки.`}>
+      <BackLink href="/quiz/region" />
+      <ProgressBar step={2} total={3} />
       <div style={{ display: 'grid', gap: 12 }}>
         {budgetOptions.map((option) => (
           <OptionCardLink
@@ -25,6 +24,6 @@ export default function BudgetQuizPage() {
           />
         ))}
       </div>
-    </QuizLayout>
+    </AppShell>
   );
 }

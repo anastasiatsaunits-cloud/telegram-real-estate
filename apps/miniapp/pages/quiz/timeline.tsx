@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
+import { AppShell } from '../../components/app-shell';
+import { BackLink } from '../../components/back-link';
 import { OptionCardLink } from '../../components/option-card-link';
-import { QuizLayout } from '../../components/quiz-layout';
+import { ProgressBar } from '../../components/progress-bar';
 import { getBudgetByKey, timelineOptions } from '../../lib/quiz-options';
 
 export default function TimelineQuizPage() {
@@ -11,12 +13,9 @@ export default function TimelineQuizPage() {
   const budget = getBudgetByKey(budgetKey);
 
   return (
-    <QuizLayout
-      step="Шаг 3 из 3"
-      title="Когда планируешь покупку?"
-      description="После этого шага ведём пользователя на экран готовой подборки."
-      backHref="/quiz/budget"
-    >
+    <AppShell eyebrow="Подборка" title="Когда планируешь покупку?" description={`Регион: ${regionName}. Бюджет: ${budget.title}.`}>
+      <BackLink href="/quiz/budget" />
+      <ProgressBar step={3} total={3} />
       <div style={{ display: 'grid', gap: 12 }}>
         {timelineOptions.map((option) => (
           <OptionCardLink
@@ -26,6 +25,6 @@ export default function TimelineQuizPage() {
           />
         ))}
       </div>
-    </QuizLayout>
+    </AppShell>
   );
 }
