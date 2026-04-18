@@ -9,12 +9,20 @@ export class PropertiesService {
     const min = budgetMin ? Number(budgetMin) : undefined;
     const max = budgetMax ? Number(budgetMax) : undefined;
 
+    const priceFilter =
+      Number.isFinite(min) && Number.isFinite(max)
+        ? { gte: min, lte: max }
+        : Number.isFinite(min)
+          ? { gte: min }
+          : Number.isFinite(max)
+            ? { lte: max }
+            : undefined;
+
     const items = await this.prisma.property.findMany({
       where: {
         isActive: true,
         ...(regionSlug ? { region: { slug: regionSlug } } : {}),
-        ...(Number.isFinite(min) ? { priceFrom: { gte: min } } : {}),
-        ...(Number.isFinite(max) ? { priceFrom: { lte: max } } : {}),
+        ...(priceFilter ? { priceFrom: priceFilter } : {}),
       },
       orderBy: { createdAt: 'desc' },
       select: {

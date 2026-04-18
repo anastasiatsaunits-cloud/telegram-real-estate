@@ -45,6 +45,20 @@ INSERT INTO "Property" (
 )
 VALUES
   (
+    'property_crimea_studio', 'region_crimea', 'Студия у моря, Крым', 'studio-u-morya-crimea', 'Евпатория', 'Евпатория, 10 минут до моря',
+    4700000.00, 5200000.00, 'RUB', 24.00, 29.00, 'studio', 'active',
+    'Тестовый объект для бюджетной подборки по Крыму.',
+    '["Рассрочка", "100% оплата"]'::jsonb,
+    true, NOW(), NOW()
+  ),
+  (
+    'property_crimea_apart', 'region_crimea', 'Апартаменты, Крым', 'apartments-crimea-invest', 'Алушта', 'Алушта, курортная зона',
+    8900000.00, 9600000.00, 'RUB', 36.00, 44.00, 'apartment', 'active',
+    'Тестовый объект для диапазона до 10 млн по Крыму.',
+    '["Ипотека", "Рассрочка"]'::jsonb,
+    true, NOW(), NOW()
+  ),
+  (
     'property_crimea_villa', 'region_crimea', 'Вилла у моря, Крым', 'villa-u-morya-crimea', 'Ялта', 'Ялта, первая линия',
     12500000.00, 15800000.00, 'RUB', 48.00, 72.00, 'villa', 'active',
     'Тестовый объект для MVP-проверки каталога и лида.',
@@ -56,6 +70,13 @@ VALUES
     9800000.00, 12100000.00, 'RUB', 32.00, 45.00, 'apartment', 'active',
     'Тестовый объект для выдачи properties и карточки по slug.',
     '["Ипотека", "100% оплата"]'::jsonb,
+    true, NOW(), NOW()
+  ),
+  (
+    'property_sochi_premium', 'region_sochi', 'Премиум-резиденция, Сочи', 'premium-residence-sochi', 'Сочи', 'Сочи, первая береговая линия',
+    21800000.00, 28900000.00, 'RUB', 54.00, 88.00, 'residence', 'active',
+    'Тестовый объект под диапазон 20+ млн.',
+    '["100% оплата"]'::jsonb,
     true, NOW(), NOW()
   )
 ON CONFLICT ("slug") DO UPDATE SET
@@ -79,11 +100,23 @@ INSERT INTO "PropertyMetric" (
 )
 VALUES
   (
+    'metric_crimea_studio', 'property_crimea_studio', 6.80, 9.20, 10.50, 41.00, 97.00, 9100000.00,
+    '{"note":"seed metric"}'::jsonb, NOW()
+  ),
+  (
+    'metric_crimea_apart', 'property_crimea_apart', 7.40, 10.10, 11.20, 49.00, 118.00, 16400000.00,
+    '{"note":"seed metric"}'::jsonb, NOW()
+  ),
+  (
     'metric_crimea_villa', 'property_crimea_villa', 8.50, 12.00, 14.50, 62.00, 148.00, 28600000.00,
     '{"note":"seed metric"}'::jsonb, NOW()
   ),
   (
     'metric_sochi_invest', 'property_sochi_invest', 7.20, 10.30, 11.80, 54.00, 131.00, 21900000.00,
+    '{"note":"seed metric"}'::jsonb, NOW()
+  ),
+  (
+    'metric_sochi_premium', 'property_sochi_premium', 9.10, 12.40, 15.30, 66.00, 159.00, 47200000.00,
     '{"note":"seed metric"}'::jsonb, NOW()
   )
 ON CONFLICT ("propertyId") DO UPDATE SET
