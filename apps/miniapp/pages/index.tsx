@@ -5,32 +5,25 @@ import { RegionsList } from '../components/regions-list';
 export default function HomePage() {
   return (
     <AppShell
-      eyebrow="Персональный подбор"
-      title="Подберём недвижимость под вашу цель, бюджет и срок покупки"
-      description="Ответьте на несколько коротких вопросов и получите подборку объектов, которые действительно подходят именно вам."
+      eyebrow="Недвижимость под ваш запрос"
+      title="Поможем подобрать объект для жизни, инвестиций или сохранения капитала"
+      description="Короткий подбор займёт меньше минуты. После этого вы увидите варианты, которые действительно подходят по цели, бюджету и сроку покупки."
     >
-      <div
+      <section
         style={{
-          display: 'grid',
-          gap: 14,
           marginBottom: 18,
+          padding: 20,
+          borderRadius: 24,
+          background: 'linear-gradient(180deg, #fff8f1 0%, #f7ebde 100%)',
+          border: '1px solid #eadfce',
+          boxShadow: '0 14px 30px rgba(70, 49, 22, 0.08)',
         }}
       >
-        <div
-          style={{
-            padding: 18,
-            borderRadius: 22,
-            background: 'linear-gradient(180deg, #fff7ef 0%, #f8ede1 100%)',
-            border: '1px solid #eadfce',
-            boxShadow: '0 12px 28px rgba(77, 53, 24, 0.06)',
-          }}
-        >
-          <div style={{ color: '#8d6f50', fontWeight: 700, fontSize: 13, marginBottom: 10 }}>Что внутри</div>
-          <div style={{ display: 'grid', gap: 10, color: '#54493d', lineHeight: 1.5, fontSize: 15 }}>
-            <div>• короткий подбор по вашим параметрам</div>
-            <div>• актуальные варианты по направлениям</div>
-            <div>• понятный следующий шаг без лишней переписки</div>
-          </div>
+        <div style={{ color: '#9b7956', fontSize: 13, fontWeight: 700, marginBottom: 10 }}>Персональный сценарий подбора</div>
+        <div style={{ display: 'grid', gap: 10, color: '#54493d', lineHeight: 1.55, fontSize: 15, marginBottom: 16 }}>
+          <div>• подберём направление под вашу цель</div>
+          <div>• покажем актуальные объекты без лишнего шума</div>
+          <div>• сразу проведём к следующему шагу, если объект понравится</div>
         </div>
 
         <div style={{ display: 'grid', gap: 10 }}>
@@ -47,13 +40,13 @@ export default function HomePage() {
               boxShadow: '0 12px 28px rgba(0,0,0,0.15)',
             }}
           >
-            Начать подбор
+            Подобрать объект
           </Link>
 
           <Link
             href="/properties"
             style={{
-              background: '#ffffff',
+              background: 'rgba(255,255,255,0.88)',
               color: '#2b241d',
               textDecoration: 'none',
               padding: '15px 18px',
@@ -63,10 +56,10 @@ export default function HomePage() {
               border: '1px solid #eadfce',
             }}
           >
-            Смотреть каталог
+            Открыть каталог
           </Link>
         </div>
-      </div>
+      </section>
 
       <section
         style={{
@@ -78,11 +71,42 @@ export default function HomePage() {
           boxShadow: '0 10px 24px rgba(0,0,0,0.05)',
         }}
       >
-        <h2 style={{ margin: '0 0 10px', fontSize: 22 }}>Как это работает</h2>
-        <div style={{ display: 'grid', gap: 10, color: '#605548', lineHeight: 1.55 }}>
-          <div><strong>1.</strong> Вы отвечаете на 3 коротких вопроса</div>
-          <div><strong>2.</strong> Мы формируем релевантную подборку объектов</div>
-          <div><strong>3.</strong> Вы переходите к просмотру и оставляете заявку на понравившийся вариант</div>
+        <h2 style={{ margin: '0 0 12px', fontSize: 22 }}>Как проходит подбор</h2>
+        <div style={{ display: 'grid', gap: 12 }}>
+          {[
+            'Вы отвечаете на несколько коротких вопросов',
+            'Мы формируем подборку по вашим параметрам',
+            'Вы переходите к объектам и оставляете заявку на понравившийся вариант',
+          ].map((item, index) => (
+            <div
+              key={item}
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '34px 1fr',
+                gap: 12,
+                alignItems: 'start',
+                color: '#5f5548',
+                lineHeight: 1.5,
+              }}
+            >
+              <div
+                style={{
+                  width: 34,
+                  height: 34,
+                  borderRadius: 12,
+                  background: '#f3e7d9',
+                  color: '#8f6d49',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 700,
+                }}
+              >
+                {index + 1}
+              </div>
+              <div>{item}</div>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -97,7 +121,7 @@ export default function HomePage() {
       >
         <h2 style={{ margin: '0 0 8px', fontSize: 22 }}>Популярные направления</h2>
         <p style={{ margin: '0 0 16px', color: '#6c5f52', lineHeight: 1.5 }}>
-          Начните с направления, которое вам ближе, или сразу переходите в короткий подбор.
+          Можно начать с направления, которое тебе ближе, или сразу пройти короткий подбор.
         </p>
         <RegionsList />
       </section>

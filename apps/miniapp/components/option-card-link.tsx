@@ -14,15 +14,20 @@ export function OptionCardLink({ href, title, description }: OptionCardLinkProps
         display: 'block',
         textDecoration: 'none',
         border: '1px solid #eadfce',
-        borderRadius: 20,
+        borderRadius: 22,
         padding: 18,
-        background: 'linear-gradient(180deg, #fffaf6 0%, #fff5ea 100%)',
+        background: 'linear-gradient(180deg, #fffaf6 0%, #fff1e4 100%)',
         color: '#1f1f1f',
-        boxShadow: '0 8px 20px rgba(0,0,0,0.04)',
+        boxShadow: '0 10px 24px rgba(62, 42, 16, 0.06)',
       }}
     >
-      <div style={{ fontSize: 17, fontWeight: 700 }}>{title}</div>
-      {description ? <div style={{ marginTop: 6, color: '#7d7367', fontSize: 14, lineHeight: 1.5 }}>{description}</div> : null}
+      <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, alignItems: 'flex-start' }}>
+        <div>
+          <div style={{ fontSize: 17, fontWeight: 700 }}>{title}</div>
+          {description ? <div style={{ marginTop: 6, color: '#7d7367', fontSize: 14, lineHeight: 1.5 }}>{description}</div> : null}
+        </div>
+        <div style={{ color: '#a1815f', fontWeight: 700, fontSize: 18 }}>→</div>
+      </div>
     </Link>
   );
 }
