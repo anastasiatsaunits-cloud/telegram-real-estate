@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '../generated/prisma/client';
-import { PrismaService } from '../prisma/prisma.service';
+import { Client } from 'pg';
 
 type ImportProperty = {
   id: string;
@@ -18,72 +17,107 @@ type ImportProperty = {
 
 @Injectable()
 export class ImportService {
-  constructor(private readonly prisma: PrismaService) {}
-
   async importN93Curated(items: ImportProperty[]) {
-    await this.prisma.$executeRaw`
-      INSERT INTO "Region" ("id", "name", "slug", "isActive", "sortOrder")
-      VALUES ('region_sochi', 'Сочи', 'sochi', true, 2)
-      ON CONFLICT ("slug") DO UPDATE SET
-        "name" = EXCLUDED."name",
-        "isActive" = EXCLUDED."isActive",
-        "sortOrder" = EXCLUDED."sortOrder"
-    `;
+    const connectionString = process.env.DATABASE_URL;
 
-    let imported = 0;
-
-    for (const item of items) {
-      const priceFrom = item.priceFrom ? Number(item.priceFrom) : null;
-      const priceTo = item.priceTo ? Number(item.priceTo) : null;
-      const areaFrom = item.areaFrom ? Number(item.areaFrom) : null;
-      const areaTo = item.areaTo ? Number(item.areaTo) : null;
-
-      await this.prisma.$executeRaw`
-        INSERT INTO "Property" (
-          "id", "regionId", "title", "slug", "city", "address", "priceFrom", "priceTo", "currency",
-          "areaFrom", "areaTo", "propertyType", "status", "description", "purchaseOptionsJson", "isActive", "createdAt", "updatedAt"
-        ) VALUES (
-          ${item.id}, 'region_sochi', ${item.title}, ${item.slug}, ${item.city || 'Сочи'}, ${item.address}, ${priceFrom}, ${priceTo}, 'RUB',
-          ${areaFrom}, ${areaTo}, 'apartment', 'active', ${item.description || ''}, '[]'::jsonb, true, NOW(), NOW()
-        )
-        ON CONFLICT ("slug") DO UPDATE SET
-          "title" = EXCLUDED."title",
-          "city" = EXCLUDED."city",
-          "address" = EXCLUDED."address",
-          "priceFrom" = EXCLUDED."priceFrom",
-          "priceTo" = EXCLUDED."priceTo",
-          "currency" = EXCLUDED."currency",
-          "areaFrom" = EXCLUDED."areaFrom",
-          "areaTo" = EXCLUDED."areaTo",
-          "propertyType" = EXCLUDED."propertyType",
-          "status" = EXCLUDED."status",
-          "description" = EXCLUDED."description",
-          "purchaseOptionsJson" = EXCLUDED."purchaseOptionsJson",
-          "isActive" = EXCLUDED."isActive",
-          "updatedAt" = NOW()
-      `;
-
-      await this.prisma.$executeRaw`
-        DELETE FROM "PropertyMedia" WHERE "propertyId" = ${item.id}
-      `;
-
-      for (let i = 0; i < item.media.length; i += 1) {
-        await this.prisma.$executeRaw`
-          INSERT INTO "PropertyMedia" ("id", "propertyId", "mediaType", "url", "sortOrder", "createdAt")
-          VALUES (${`media_${item.id}_${i + 1}`}, ${item.id}, 'image', ${item.media[i]}, ${i + 1}, NOW())
-        `;
-      }
-
-      imported += 1;
+    if (!connectionString) {
+      throw new Error('DATABASE_URL is missing');
     }
 
-    const countRows = await this.prisma.$queryRaw<Array<{ count: bigint }>>`
-      SELECT COUNT(*)::bigint AS count FROM "Property" WHERE "regionId" = 'region_sochi'
-    `;
+    const client = new Client({
+      connectionString,
+      ssl: false,
+    });
 
-    return {
-      imported,
-      totalSochiProperties: Number(countRows[0]?.count ?? 0),
-    };
+    await client.connect();
+
+    try {
+      await client.query('BEGIN');
+
+      await client.query(
+        `INSERT INTO "Region" ("id", "name", "slug", "isActive", "sortOrder")
+         VALUES ($1, $2, $3, $4, $5)
+         ON CONFLICT ("slug") DO UPDATE SET
+           "name" = EXCLUDED."name",
+           "isActive" = EXCLUDED."isActive",
+           "sortOrder" = EXCLUDED."sortOrder"`,
+        ['region_sochi', 'Сочи', 'sochi', true, 2],
+      );
+
+      let imported = 0;
+
+      for (const item of items) {
+        const priceFrom = item.priceFrom ? Number(item.priceFrom) : null;
+        const priceTo = item.priceTo ? Number(item.priceTo) : null;
+        const areaFrom = item.areaFrom ? Number(item.areaFrom) : null;
+        const areaTo = item.areaTo ? Number(item.areaTo) : null;
+
+        await client.query(
+          `INSERT INTO "Property" (
+            "id", "regionId", "title", "slug", "city", "address", "priceFrom", "priceTo", "currency",
+            "areaFrom", "areaTo", "propertyType", "status", "description", "purchaseOptionsJson", "isActive", "createdAt", "updatedAt"
+          ) VALUES (
+            $1, 'region_sochi', $2, $3, $4, $5, $6, $7, 'RUB',
+            $8, $9, 'apartment', 'active', $10, '[]'::jsonb, true, NOW(), NOW()
+          )
+          ON CONFLICT ("slug") DO UPDATE SET
+            "title" = EXCLUDED."title",
+            "city" = EXCLUDED."city",
+            "address" = EXCLUDED."address",
+            "priceFrom" = EXCLUDED."priceFrom",
+            "priceTo" = EXCLUDED."priceTo",
+            "currency" = EXCLUDED."currency",
+            "areaFrom" = EXCLUDED."areaFrom",
+            "areaTo" = EXCLUDED."areaTo",
+            "propertyType" = EXCLUDED."propertyType",
+            "status" = EXCLUDED."status",
+            "description" = EXCLUDED."description",
+            "purchaseOptionsJson" = EXCLUDED."purchaseOptionsJson",
+            "isActive" = EXCLUDED."isActive",
+            "updatedAt" = NOW()`,
+          [
+            item.id,
+            item.title,
+            item.slug,
+            item.city || 'Сочи',
+            item.address || null,
+            priceFrom,
+            priceTo,
+            areaFrom,
+            areaTo,
+            item.description || '',
+          ],
+        );
+
+        await client.query('DELETE FROM "PropertyMedia" WHERE "propertyId" = $1', [item.id]);
+
+        for (let i = 0; i < item.media.length; i += 1) {
+          await client.query(
+            `INSERT INTO "PropertyMedia" ("id", "propertyId", "mediaType", "url", "sortOrder", "createdAt")
+             VALUES ($1, $2, 'image', $3, $4, NOW())`,
+            [`media_${item.id}_${i + 1}`, item.id, item.media[i], i + 1],
+          );
+        }
+
+        imported += 1;
+      }
+
+      const countRes = await client.query(
+        'SELECT COUNT(*)::int AS count FROM "Property" WHERE "regionId" = $1',
+        ['region_sochi'],
+      );
+
+      await client.query('COMMIT');
+
+      return {
+        imported,
+        totalSochiProperties: countRes.rows[0]?.count ?? 0,
+      };
+    } catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+    } finally {
+      await client.end();
+    }
   }
 }
