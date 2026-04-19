@@ -20,7 +20,7 @@ export class ImportService {
   constructor(private readonly prisma: PrismaService) {}
 
   async importN93Curated(items: ImportProperty[]) {
-    const region = await this.prisma.region.findUnique({
+    const region = await this.prisma.region.findFirst({
       where: { slug: 'sochi' },
       select: { id: true },
     });
