@@ -15,6 +15,12 @@ type ImportProperty = {
   areaTo: string | null;
   description: string;
   media: string[];
+  regionId?: string;
+};
+
+const REGION_MAP: Record<string, { id: string; name: string; slug: string; sortOrder: number }> = {
+  region_sochi: { id: 'region_sochi', name: 'Сочи', slug: 'sochi', sortOrder: 2 },
+  region_crimea: { id: 'region_crimea', name: 'Крым', slug: 'crimea', sortOrder: 3 },
 };
 
 @Injectable()
@@ -54,15 +60,17 @@ export class ImportService {
     try {
       await client.query('BEGIN');
 
-      await client.query(
-        `INSERT INTO "Region" ("id", "name", "slug", "isActive", "sortOrder")
-         VALUES ($1, $2, $3, $4, $5)
-         ON CONFLICT ("slug") DO UPDATE SET
-           "name" = EXCLUDED."name",
-           "isActive" = EXCLUDED."isActive",
-           "sortOrder" = EXCLUDED."sortOrder"`,
-        ['region_sochi', 'Сочи', 'sochi', true, 2],
-      );
+      for (const region of Object.values(REGION_MAP)) {
+        await client.query(
+          `INSERT INTO "Region" ("id", "name", "slug", "isActive", "sortOrder")
+           VALUES ($1, $2, $3, $4, $5)
+           ON CONFLICT ("slug") DO UPDATE SET
+             "name" = EXCLUDED."name",
+             "isActive" = EXCLUDED."isActive",
+             "sortOrder" = EXCLUDED."sortOrder"`,
+          [region.id, region.name, region.slug, true, region.sortOrder],
+        );
+      }
 
       let imported = 0;
 
@@ -71,16 +79,18 @@ export class ImportService {
         const priceTo = item.priceTo ? Number(item.priceTo) : null;
         const areaFrom = item.areaFrom ? Number(item.areaFrom) : null;
         const areaTo = item.areaTo ? Number(item.areaTo) : null;
+        const regionId = item.regionId && REGION_MAP[item.regionId] ? item.regionId : item.city === 'Крым' ? 'region_crimea' : 'region_sochi';
 
         await client.query(
           `INSERT INTO "Property" (
             "id", "regionId", "title", "slug", "city", "address", "priceFrom", "priceTo", "currency",
             "areaFrom", "areaTo", "propertyType", "status", "description", "purchaseOptionsJson", "isActive", "createdAt", "updatedAt"
           ) VALUES (
-            $1, 'region_sochi', $2, $3, $4, $5, $6, $7, 'RUB',
-            $8, $9, 'apartment', 'active', $10, '[]'::jsonb, true, NOW(), NOW()
+            $1, $2, $3, $4, $5, $6, $7, $8, 'RUB',
+            $9, $10, 'apartment', 'active', $11, '[]'::jsonb, true, NOW(), NOW()
           )
           ON CONFLICT ("slug") DO UPDATE SET
+            "regionId" = EXCLUDED."regionId",
             "title" = EXCLUDED."title",
             "city" = EXCLUDED."city",
             "address" = EXCLUDED."address",
@@ -97,6 +107,7 @@ export class ImportService {
             "updatedAt" = NOW()`,
           [
             item.id,
+            regionId,
             item.title,
             item.slug,
             item.city || 'Сочи',
@@ -122,16 +133,19 @@ export class ImportService {
         imported += 1;
       }
 
-      const countRes = await client.query(
-        'SELECT COUNT(*)::int AS count FROM "Property" WHERE "regionId" = $1',
-        ['region_sochi'],
+      const totals = await client.query(
+        `SELECT r.slug, COUNT(p.*)::int AS count
+         FROM "Region" r
+         LEFT JOIN "Property" p ON p."regionId" = r.id
+         GROUP BY r.slug
+         ORDER BY r.slug ASC`,
       );
 
       await client.query('COMMIT');
 
       return {
         imported,
-        totalSochiProperties: countRes.rows[0]?.count ?? 0,
+        totals: totals.rows,
       };
     } catch (error) {
       await client.query('ROLLBACK');
