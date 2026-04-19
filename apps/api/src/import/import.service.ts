@@ -20,17 +20,27 @@ export class ImportService {
   constructor(private readonly prisma: PrismaService) {}
 
   async importN93Curated(items: ImportProperty[]) {
-    await this.prisma.region.upsert({
+    const region = await this.prisma.region.findUnique({
       where: { slug: 'sochi' },
-      update: { name: 'Сочи', isActive: true, sortOrder: 2 },
-      create: {
-        id: 'region_sochi',
-        name: 'Сочи',
-        slug: 'sochi',
-        isActive: true,
-        sortOrder: 2,
-      },
+      select: { id: true },
     });
+
+    if (!region) {
+      await this.prisma.region.create({
+        data: {
+          id: 'region_sochi',
+          name: 'Сочи',
+          slug: 'sochi',
+          isActive: true,
+          sortOrder: 2,
+        },
+      });
+    } else if (region.id !== 'region_sochi') {
+      await this.prisma.region.update({
+        where: { id: region.id },
+        data: { name: 'Сочи', isActive: true, sortOrder: 2 },
+      });
+    }
 
     let imported = 0;
 
