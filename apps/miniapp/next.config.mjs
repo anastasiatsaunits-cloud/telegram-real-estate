@@ -8,9 +8,7 @@ const repoRoot = path.resolve(__dirname, '../..');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  experimental: {
-    outputFileTracingRoot: repoRoot,
-  },
+  outputFileTracingRoot: repoRoot,
   turbopack: {
     root: repoRoot,
   },
