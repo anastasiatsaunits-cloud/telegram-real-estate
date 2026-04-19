@@ -1,0 +1,16 @@
+{
+  "projectId": "prj_7XMsS5FctHESQCofGIo34zFiR1hH",
+  "orgId": "team_ohBZCUNYuuoZ6Gw5jzrvKggZ",
+  "projectName": "telegram-real-estate-miniapp",
+  "settings": {
+    "createdAt": 1776544749169,
+    "framework": "nextjs",
+    "devCommand": null,
+    "installCommand": "cd ../.. && pnpm install --no-frozen-lockfile",
+    "buildCommand": "cd ../.. && pnpm --filter miniapp build",
+    "outputDirectory": ".next",
+    "rootDirectory": "",
+    "directoryListing": false,
+    "nodeVersion": "24.x"
+  }
+}
