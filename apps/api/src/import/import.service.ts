@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Client } from 'pg';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
 type ImportProperty = {
   id: string;
@@ -17,7 +19,7 @@ type ImportProperty = {
 
 @Injectable()
 export class ImportService {
-  async importN93Curated(items: ImportProperty[]) {
+  private async getClient() {
     const connectionString = process.env.DATABASE_URL;
 
     if (!connectionString) {
@@ -30,6 +32,24 @@ export class ImportService {
     });
 
     await client.connect();
+    return client;
+  }
+
+  async applySchema() {
+    const client = await this.getClient();
+
+    try {
+      const sqlPath = join(process.cwd(), 'prisma', 'render_init.sql');
+      const sql = readFileSync(sqlPath, 'utf8');
+      await client.query(sql);
+      return { ok: true };
+    } finally {
+      await client.end();
+    }
+  }
+
+  async importN93Curated(items: ImportProperty[]) {
+    const client = await this.getClient();
 
     try {
       await client.query('BEGIN');

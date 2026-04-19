@@ -22,6 +22,15 @@ type ImportPayload = {
 export class ImportController {
   constructor(private readonly importService: ImportService) {}
 
+  @Post('apply-schema')
+  async applySchema(@Body() payload: ImportPayload) {
+    if (!payload.secret || payload.secret !== process.env.IMPORT_SECRET) {
+      throw new UnauthorizedException('Invalid import secret');
+    }
+
+    return this.importService.applySchema();
+  }
+
   @Post('n93-curated')
   async importN93Curated(@Body() payload: ImportPayload) {
     if (!payload.secret || payload.secret !== process.env.IMPORT_SECRET) {

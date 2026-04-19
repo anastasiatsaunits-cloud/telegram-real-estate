@@ -116,12 +116,34 @@ model Property {
   address             String?
   priceFrom           Decimal?         @db.Decimal(14, 2)
   priceTo             Decimal?         @db.Decimal(14, 2)
+  pricePerM2          Decimal?         @db.Decimal(14, 2)
   currency            String?          @default("RUB")
   areaFrom            Decimal?         @db.Decimal(10, 2)
   areaTo              Decimal?         @db.Decimal(10, 2)
+  areaText            String?
+  flatCount           Int?
+  deadlineText        String?
+  objectType          String?
+  developerName       String?
+  mortgageText        String?
+  installmentText     String?
+  promoText           String?
+  badgesJson          Json?
+  isSoon              Boolean          @default(false)
+  seaDistanceM        Int?
+  parkingJson         Json?
+  territoryText       String?
+  ceilingHeight       Decimal?         @db.Decimal(6, 2)
+  serviceCostPerM2    Decimal?         @db.Decimal(10, 2)
+  gasText             String?
+  heatingText         String?
+  electricityText     String?
+  canalizationText    String?
+  waterText           String?
   propertyType        String?
   status              String?
   description         String?
+  descriptionExtra    String?
   purchaseOptionsJson Json?
   isActive            Boolean          @default(true)
   createdAt           DateTime         @default(now())
