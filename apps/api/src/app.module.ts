@@ -5,6 +5,7 @@ import { RegionsModule } from './regions/regions.module';
 import { PropertiesModule } from './properties/properties.module';
 import { LeadsModule } from './leads/leads.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { ImportModule } from './import/import.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { PrismaModule } from './prisma/prisma.module';
     RegionsModule,
     PropertiesModule,
     LeadsModule,
+    ImportModule,
   ],
 })
 export class AppModule {}
