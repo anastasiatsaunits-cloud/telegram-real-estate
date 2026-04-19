@@ -1,265 +1,135 @@
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import type { PropertyListItem } from '../lib/properties';
+
+const markets = [
+  { key: 'crimea', title: 'Крым', subtitle: 'Первая линия, курортные комплексы, Ялта и южный берег', href: '/properties?regionName=Крым' },
+  { key: 'sochi', title: 'Сочи', subtitle: 'Проверенные проекты и инвестиционные лоты', href: '/properties?region=sochi&regionName=Сочи' },
+  { key: 'thailand', title: 'Таиланд', subtitle: 'Подготовим международное направление следующим этапом', href: '/quiz/region' },
+  { key: 'mountains', title: 'Горный кластер', subtitle: 'Подборка под отдых, аренду и капитализацию', href: '/quiz/region' },
+];
+
+const bottomLinks = [
+  { title: 'О компании', href: '/quiz/ready' },
+  { title: 'Отзывы', href: '/quiz/success' },
+  { title: 'Заработать', href: '/quiz/contact' },
+];
 
 export default function HomePage() {
-  const [items, setItems] = useState<PropertyListItem[]>([]);
-
-  useEffect(() => {
-    fetch('/api/properties')
-      .then((res) => res.json())
-      .then((data) => setItems((data.items ?? []).slice(0, 4)));
-  }, []);
-
-  const featured = items[0];
-  const sideTop = items[1];
-  const sideBottom = items[2];
-
   return (
     <main
       style={{
         minHeight: '100vh',
         margin: 0,
-        padding: '14px 14px 28px',
+        padding: '18px 14px 32px',
         fontFamily: 'Inter, Arial, sans-serif',
-        color: '#f7f3ee',
-        background: '#050505',
+        color: '#171717',
+        background: '#f6f2ea',
       }}
     >
       <div style={{ maxWidth: 560, margin: '0 auto' }}>
-        <section style={{ marginBottom: 14 }}>
-          <div style={{ fontSize: 28, fontWeight: 700, lineHeight: 1.1 }}>FlatHouse</div>
-          <div style={{ color: 'rgba(255,255,255,0.62)', fontSize: 14, marginTop: 4 }}>Каталог недвижимости</div>
-        </section>
-
-        {featured ? (
-          <section
-            style={{
-              marginBottom: 14,
-              borderRadius: 28,
-              overflow: 'hidden',
-              background: 'linear-gradient(180deg, rgba(111,132,188,0.34) 0%, rgba(10,10,10,0.96) 100%)',
-              border: '1px solid rgba(255,255,255,0.08)',
-              boxShadow: '0 18px 40px rgba(0,0,0,0.34)',
-            }}
-          >
-            <div
-              style={{
-                minHeight: 360,
-                padding: 18,
-                display: 'flex',
-                alignItems: 'flex-end',
-              }}
-            >
-              <div>
-                <div style={{ fontSize: 12, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.72)', marginBottom: 8 }}>
-                  {featured.region.name.toUpperCase()}
-                </div>
-                <div style={{ fontSize: 30, fontWeight: 700, lineHeight: 1.08 }}>{featured.title}</div>
-                <div style={{ marginTop: 8, color: 'rgba(255,255,255,0.72)', fontSize: 16 }}>
-                  от {featured.priceFrom ?? 'по запросу'} {featured.currency ?? ''}
-                </div>
-              </div>
-            </div>
-
-            <div style={{ padding: 14, display: 'grid', gap: 10 }}>
-              <Link
-                href="/quiz/region"
-                style={{
-                  display: 'block',
-                  textAlign: 'center',
-                  textDecoration: 'none',
-                  background: '#0f0f10',
-                  color: '#ffffff',
-                  padding: '15px 16px',
-                  borderRadius: 18,
-                  fontWeight: 700,
-                  fontSize: 17,
-                }}
-              >
-                Подобрать объект
-              </Link>
-              <Link
-                href="/properties"
-                style={{
-                  display: 'block',
-                  textAlign: 'center',
-                  textDecoration: 'none',
-                  background: 'rgba(255,255,255,0.08)',
-                  color: '#f5efe8',
-                  padding: '14px 16px',
-                  borderRadius: 18,
-                  fontWeight: 700,
-                  border: '1px solid rgba(255,255,255,0.08)',
-                }}
-              >
-                Открыть каталог
-              </Link>
-            </div>
-          </section>
-        ) : null}
-
-        <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 14 }}>
-          <Link
-            href="/properties"
-            style={{
-              minHeight: 118,
-              borderRadius: 22,
-              background: '#111111',
-              border: '1px solid rgba(255,255,255,0.08)',
-              textDecoration: 'none',
-              color: '#f5efe8',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              textAlign: 'center',
-              fontWeight: 700,
-              fontSize: 18,
-              padding: 14,
-            }}
-          >
-            Все объекты
-          </Link>
-
-          <div style={{ display: 'grid', gap: 10 }}>
-            {[sideTop, sideBottom].map((item, index) =>
-              item ? (
-                <div
-                  key={item.id}
-                  style={{
-                    minHeight: 54,
-                    borderRadius: 18,
-                    padding: 12,
-                    background:
-                      index === 0
-                        ? 'linear-gradient(180deg, rgba(47,112,128,0.35) 0%, rgba(10,10,10,0.96) 100%)'
-                        : 'linear-gradient(180deg, rgba(82,90,112,0.35) 0%, rgba(10,10,10,0.96) 100%)',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    display: 'flex',
-                    alignItems: 'flex-end',
-                  }}
-                >
-                  <div>
-                    <div style={{ fontSize: 10, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.68)', marginBottom: 3 }}>
-                      {item.region.name.toUpperCase()}
-                    </div>
-                    <div style={{ fontSize: 15, fontWeight: 700, lineHeight: 1.05 }}>{item.title}</div>
-                  </div>
-                </div>
-              ) : null,
-            )}
-          </div>
-        </section>
-
         <section
           style={{
-            marginBottom: 14,
-            borderRadius: 26,
-            padding: 22,
-            background: 'linear-gradient(135deg, #26115a 0%, #0d214c 48%, #071730 100%)',
-            border: '1px solid rgba(255,255,255,0.08)',
-            boxShadow: '0 18px 40px rgba(19, 15, 53, 0.45)',
+            background: '#fffdf9',
+            borderRadius: 30,
+            padding: 18,
+            boxShadow: '0 18px 40px rgba(0,0,0,0.08)',
+            border: '1px solid rgba(227,219,207,0.9)',
           }}
         >
-          <div
-            style={{
-              width: 66,
-              height: 66,
-              borderRadius: 999,
-              background: 'linear-gradient(135deg, #7f47ff 0%, #22d1ff 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 800,
-              fontSize: 24,
-              marginBottom: 16,
-            }}
-          >
-            MAX
+          <div style={{ marginBottom: 16 }}>
+            <div style={{ fontSize: 12, letterSpacing: '0.12em', color: '#8a857d', marginBottom: 8 }}>RICH</div>
+            <div style={{ fontSize: 20, fontWeight: 700, lineHeight: 1.2 }}>Привет, Анастасия</div>
           </div>
 
-          <div style={{ display: 'inline-flex', marginBottom: 14, padding: '6px 12px', borderRadius: 999, background: 'rgba(255,255,255,0.08)', color: '#d8d1ff', fontSize: 12, fontWeight: 700 }}>
-            АКЦИЯ
-          </div>
-
-          <div style={{ fontSize: 33, fontWeight: 700, lineHeight: 1.08, marginBottom: 12 }}>Дарим подарки в канале</div>
-          <div style={{ color: 'rgba(255,255,255,0.72)', lineHeight: 1.6, fontSize: 16, marginBottom: 20 }}>
-            Розыгрыши, эксклюзивные предложения и бонусы при бронировании.
-          </div>
-
-          <a
-            href="https://t.me/max"
+          <Link
+            href="/quiz/region"
             style={{
               display: 'block',
-              textAlign: 'center',
               textDecoration: 'none',
-              background: 'linear-gradient(90deg, #8a3dff 0%, #1ed8ff 100%)',
+              textAlign: 'center',
+              background: '#0f4b22',
               color: '#ffffff',
-              padding: '16px 18px',
+              padding: '18px 16px',
               borderRadius: 18,
               fontWeight: 700,
-              fontSize: 17,
+              fontSize: 18,
+              marginBottom: 18,
+              boxShadow: '0 10px 24px rgba(15,75,34,0.25)',
             }}
           >
-            Перейти в канал
-          </a>
-        </section>
+            Получить подборку
+          </Link>
 
-        <section
-          style={{
-            marginBottom: 14,
-            borderRadius: 24,
-            padding: 18,
-            background: 'linear-gradient(180deg, #17120e 0%, #0b0b0b 100%)',
-            border: '1px solid rgba(226, 188, 123, 0.18)',
-          }}
-        >
-          <div style={{ color: '#c8a56a', fontSize: 13, letterSpacing: '0.08em', marginBottom: 8 }}>КАРЬЕРА</div>
-          <div style={{ fontSize: 28, fontWeight: 700, lineHeight: 1.1, marginBottom: 8 }}>Работай там, где другие отдыхают</div>
-          <div style={{ color: 'rgba(255,255,255,0.72)', lineHeight: 1.5, marginBottom: 16 }}>3 открытые вакансии · от 200 000 ₽</div>
-          <div style={{ color: '#dcc07b', fontWeight: 700 }}>→</div>
-        </section>
+          <div style={{ display: 'grid', gap: 14, marginBottom: 18 }}>
+            {markets.map((market, index) => (
+              <Link
+                key={market.key}
+                href={market.href}
+                style={{
+                  display: 'block',
+                  textDecoration: 'none',
+                  borderRadius: 24,
+                  overflow: 'hidden',
+                  minHeight: index < 2 ? 118 : 104,
+                  padding: 18,
+                  color: '#ffffff',
+                  background:
+                    market.key === 'crimea'
+                      ? 'linear-gradient(135deg, #4ba0b3 0%, #295a68 100%)'
+                      : market.key === 'sochi'
+                        ? 'linear-gradient(135deg, #70986e 0%, #395740 100%)'
+                        : market.key === 'thailand'
+                          ? 'linear-gradient(135deg, #6aa89b 0%, #2f6158 100%)'
+                          : 'linear-gradient(135deg, #7690a1 0%, #465865 100%)',
+                  position: 'relative',
+                  boxShadow: 'inset 0 -80px 120px rgba(0,0,0,0.18)',
+                }}
+              >
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.18) 100%)' }} />
+                <div style={{ position: 'relative', zIndex: 1 }}>
+                  <div style={{ fontSize: 30, fontWeight: 700, letterSpacing: '0.04em', marginBottom: 8 }}>{market.title}</div>
+                  <div style={{ maxWidth: 360, fontSize: 13, lineHeight: 1.45, color: 'rgba(255,255,255,0.86)' }}>{market.subtitle}</div>
+                </div>
+              </Link>
+            ))}
+          </div>
 
-        <section style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
-          <button
-            type="button"
+          <div
             style={{
-              borderRadius: 18,
-              border: '1px solid rgba(255,255,255,0.08)',
-              background: '#141414',
-              color: '#f5efe8',
-              padding: '16px 10px',
-              fontSize: 15,
+              borderRadius: 20,
+              background: '#f4efe6',
+              padding: 16,
+              marginBottom: 18,
+              border: '1px solid rgba(221,211,196,0.8)',
+              color: '#3d372f',
+              lineHeight: 1.55,
             }}
           >
-            О компании
-          </button>
-          <button
-            type="button"
-            style={{
-              borderRadius: 18,
-              border: '1px solid rgba(255,255,255,0.08)',
-              background: '#141414',
-              color: '#f5efe8',
-              padding: '16px 10px',
-              fontSize: 15,
-            }}
-          >
-            Отзывы
-          </button>
-          <button
-            type="button"
-            style={{
-              borderRadius: 18,
-              border: '1px solid rgba(255,255,255,0.08)',
-              background: '#141414',
-              color: '#f5efe8',
-              padding: '16px 10px',
-              fontSize: 15,
-            }}
-          >
-            Вакансии
-          </button>
+            <div style={{ fontWeight: 700, marginBottom: 10 }}>🔐 Доступ к закрытым инвестиционным объектам открыт.</div>
+            <div>В этом каталоге собраны подборки по Крыму и Сочи, которые уже можно смотреть и фильтровать.</div>
+            <div style={{ marginTop: 10 }}>Нажмите на нужный рынок и переходите к объектам.</div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+            {bottomLinks.map((item) => (
+              <Link
+                key={item.title}
+                href={item.href}
+                style={{
+                  textDecoration: 'none',
+                  textAlign: 'center',
+                  borderRadius: 16,
+                  padding: '14px 10px',
+                  background: '#0f4b22',
+                  color: '#ffffff',
+                  fontSize: 13,
+                  fontWeight: 700,
+                  boxShadow: '0 8px 18px rgba(15,75,34,0.18)',
+                }}
+              >
+                {item.title}
+              </Link>
+            ))}
+          </div>
         </section>
       </div>
     </main>
