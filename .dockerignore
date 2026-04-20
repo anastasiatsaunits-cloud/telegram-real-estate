@@ -1,0 +1,13 @@
+.git
+.gitignore
+node_modules
+**/node_modules
+.next
+**/.next
+.vercel
+**/.vercel
+docs/setup/PROJECT_HANDOFF_2026-04-20_luxury-miniapp.md
+*.log
+.env
+**/.env
+**/.env.local
