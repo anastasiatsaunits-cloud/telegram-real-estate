@@ -6,10 +6,10 @@
     "createdAt": 1776544749169,
     "framework": "nextjs",
     "devCommand": null,
-    "installCommand": "cd ../.. && pnpm install --no-frozen-lockfile",
-    "buildCommand": "cd ../.. && pnpm --filter miniapp build",
+    "installCommand": "pnpm install",
+    "buildCommand": "pnpm build",
     "outputDirectory": ".next",
-    "rootDirectory": "",
+    "rootDirectory": "apps/miniapp",
     "directoryListing": false,
     "nodeVersion": "24.x"
   }

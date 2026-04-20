@@ -1,20 +1,25 @@
 import Link from 'next/link';
+import { MotionCard, Pill, PrimaryButton, SectionEyebrow, SurfaceCard } from '../components/ui';
 
 const markets = [
   {
     key: 'crimea',
     title: 'Крым',
     subtitle: 'Первая линия, Ялта, Южный берег, курортные комплексы и видовые резиденции',
+    badge: 'Private access',
     href: '/properties?region=crimea&regionName=Крым',
-    gradient: 'linear-gradient(135deg, #6ca6b7 0%, #335c68 100%)',
+    gradient: 'linear-gradient(135deg, #7db4c7 0%, #436676 42%, #23363e 100%)',
+    accent: 'rgba(157, 223, 248, 0.42)',
     size: 'large',
   },
   {
     key: 'sochi',
     title: 'Сочи',
     subtitle: 'Премиальные лоты, доходные объекты и curated подборки по морю и центру',
+    badge: 'Curated market',
     href: '/properties?region=sochi&regionName=Сочи',
-    gradient: 'linear-gradient(135deg, #7f9d7b 0%, #415847 100%)',
+    gradient: 'linear-gradient(135deg, #8ba685 0%, #566b52 42%, #233129 100%)',
+    accent: 'rgba(206, 230, 187, 0.32)',
     size: 'large',
   },
   {
@@ -22,7 +27,7 @@ const markets = [
     title: 'Таиланд',
     subtitle: 'Скоро добавим международное направление',
     href: '/quiz/region',
-    gradient: 'linear-gradient(135deg, #87aba2 0%, #47635d 100%)',
+    gradient: 'linear-gradient(135deg, #9eb8b0 0%, #5f776f 100%)',
     size: 'small',
   },
   {
@@ -30,7 +35,7 @@ const markets = [
     title: 'Горный кластер',
     subtitle: 'Отдых, аренда и капитализация в горах',
     href: '/quiz/region',
-    gradient: 'linear-gradient(135deg, #8e99a7 0%, #56616c 100%)',
+    gradient: 'linear-gradient(135deg, #9ca8b6 0%, #5f6a77 100%)',
     size: 'small',
   },
 ];
@@ -39,6 +44,12 @@ const bottomLinks = [
   { title: 'О компании', href: '/quiz/ready' },
   { title: 'Отзывы', href: '/quiz/success' },
   { title: 'Заработать', href: '/quiz/contact' },
+];
+
+const premiumSignals = [
+  'Закрытые подборки без массовой выдачи',
+  'Приоритетно Крым и Сочи, уже в каталоге',
+  'Короткий путь от просмотра до заявки',
 ];
 
 export default function HomePage() {
@@ -53,108 +64,227 @@ export default function HomePage() {
         padding: '18px 14px 32px',
         fontFamily: 'Inter, Arial, sans-serif',
         color: '#171717',
-        background: 'linear-gradient(180deg, #f7f1e8 0%, #f1eadf 100%)',
+        background:
+          'radial-gradient(circle at top, rgba(255,255,255,0.68) 0%, rgba(255,255,255,0) 28%), linear-gradient(180deg, #f6efe6 0%, #efe7db 100%)',
       }}
     >
       <div style={{ maxWidth: 560, margin: '0 auto' }}>
-        <section
+        <SurfaceCard
           style={{
-            background: '#fffdf9',
-            borderRadius: 32,
+            background: 'rgba(255,253,249,0.94)',
+            borderRadius: 34,
             padding: 18,
-            boxShadow: '0 20px 44px rgba(0,0,0,0.08)',
-            border: '1px solid rgba(227,219,207,0.92)',
+            boxShadow: '0 24px 54px rgba(24,19,15,0.09)',
+            backdropFilter: 'blur(12px)',
           }}
         >
-          <div style={{ marginBottom: 16 }}>
-            <div style={{ fontSize: 12, letterSpacing: '0.14em', color: '#8b8478', marginBottom: 8 }}>RICH BY FLATHOUSE</div>
-            <div style={{ fontSize: 24, fontWeight: 700, lineHeight: 1.15 }}>Приватный каталог инвестиционной недвижимости</div>
-            <div style={{ marginTop: 10, color: '#5c554c', lineHeight: 1.55, fontSize: 15 }}>
-              Подборки по проверенным рынкам, curated объекты и короткий путь от Telegram-прогрева до заявки.
+          <div
+            style={{
+              marginBottom: 18,
+              borderRadius: 30,
+              padding: '18px 18px 20px',
+              background: 'linear-gradient(145deg, #18231f 0%, #243a31 45%, #65533c 100%)',
+              color: '#ffffff',
+              position: 'relative',
+              overflow: 'hidden',
+              boxShadow: '0 18px 34px rgba(32, 30, 24, 0.18)',
+            }}
+          >
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background:
+                  'radial-gradient(circle at top right, rgba(220,198,157,0.28) 0%, rgba(220,198,157,0) 28%), radial-gradient(circle at bottom left, rgba(136,176,177,0.2) 0%, rgba(136,176,177,0) 30%)',
+              }}
+            />
+            <div style={{ position: 'relative', zIndex: 1 }}>
+              <Pill
+                style={{
+                  gap: 8,
+                  marginBottom: 14,
+                  background: 'rgba(255,255,255,0.12)',
+                  border: '1px solid rgba(255,255,255,0.14)',
+                  color: 'rgba(255,247,231,0.9)',
+                }}
+              >
+                RICH BY FLATHOUSE <span style={{ opacity: 0.7 }}>•</span> private catalog
+              </Pill>
+
+              <div style={{ fontSize: 30, fontWeight: 700, lineHeight: 1.06, marginBottom: 12 }}>
+                Приватный доступ к инвестиционной недвижимости в curated формате
+              </div>
+
+              <div style={{ color: 'rgba(255,255,255,0.78)', lineHeight: 1.6, fontSize: 15, marginBottom: 18 }}>
+                Не витрина из CRM, а короткий premium funnel. Сначала рынок, потом сильные объекты, потом заявка с понятным следующим шагом.
+              </div>
+
+              <div style={{ display: 'grid', gap: 10, marginBottom: 18 }}>
+                {premiumSignals.map((signal) => (
+                  <div
+                    key={signal}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 10,
+                      color: '#f8f2e7',
+                      fontSize: 14,
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 6,
+                        height: 6,
+                        borderRadius: 999,
+                        background: '#d7bf8f',
+                        boxShadow: '0 0 0 6px rgba(215,191,143,0.12)',
+                        flexShrink: 0,
+                      }}
+                    />
+                    <span>{signal}</span>
+                  </div>
+                ))}
+              </div>
+
+              <PrimaryButton
+                href="/quiz/region"
+                style={{
+                  background: '#e7d5ae',
+                  color: '#1e201c',
+                  boxShadow: '0 10px 24px rgba(14,20,17,0.26)',
+                }}
+              >
+                Получить персональную подборку
+              </PrimaryButton>
             </div>
           </div>
 
-          <Link
-            href="/quiz/region"
+          <div
             style={{
-              display: 'block',
-              textDecoration: 'none',
-              textAlign: 'center',
-              background: '#0f4b22',
-              color: '#ffffff',
-              padding: '18px 16px',
-              borderRadius: 18,
-              fontWeight: 700,
-              fontSize: 18,
-              marginBottom: 18,
-              boxShadow: '0 10px 24px rgba(15,75,34,0.24)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 12,
+              marginBottom: 14,
+              padding: '0 4px',
             }}
           >
-            Получить подборку
-          </Link>
+            <div>
+              <SectionEyebrow style={{ marginBottom: 6 }}>Выбор рынка</SectionEyebrow>
+              <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.12, color: '#1d1b18' }}>Откройте каталог с приоритетного направления</div>
+            </div>
+            <Pill style={{ flexShrink: 0 }}>2 live markets</Pill>
+          </div>
 
           <div style={{ display: 'grid', gap: 14, marginBottom: 14 }}>
             {featuredMarkets.map((market) => (
-              <Link
-                key={market.key}
-                href={market.href}
-                style={{
-                  display: 'block',
-                  textDecoration: 'none',
-                  borderRadius: 28,
-                  overflow: 'hidden',
-                  minHeight: 148,
-                  padding: 20,
-                  color: '#ffffff',
-                  background: market.gradient,
-                  position: 'relative',
-                  boxShadow: 'inset 0 -80px 120px rgba(0,0,0,0.22)',
-                }}
-              >
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.26) 100%)' }} />
-                <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
-                  <div style={{ display: 'inline-flex', alignSelf: 'flex-start', padding: '7px 12px', borderRadius: 999, background: 'rgba(255,255,255,0.18)', color: '#fff', fontSize: 12, fontWeight: 700, letterSpacing: '0.08em' }}>
-                    РЫНОК
+              <MotionCard key={market.key}>
+                <Link
+                  href={market.href}
+                  style={{
+                    display: 'block',
+                    textDecoration: 'none',
+                    borderRadius: 30,
+                    overflow: 'hidden',
+                    minHeight: 188,
+                    padding: 20,
+                    color: '#ffffff',
+                    background: market.gradient,
+                    position: 'relative',
+                    boxShadow: '0 18px 34px rgba(20, 21, 20, 0.12)',
+                  }}
+                >
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background:
+                        'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.3) 100%)',
+                    }}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      right: -20,
+                      top: -18,
+                      width: 140,
+                      height: 140,
+                      borderRadius: '50%',
+                      background: market.accent,
+                      filter: 'blur(8px)',
+                    }}
+                  />
+                  <div
+                    style={{
+                      position: 'relative',
+                      zIndex: 1,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      height: '100%',
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'flex-start' }}>
+                      <Pill
+                        style={{
+                          background: 'rgba(255,255,255,0.16)',
+                          color: '#fff',
+                        }}
+                      >
+                        {market.badge}
+                      </Pill>
+                      <div style={{ color: 'rgba(255,255,255,0.82)', fontSize: 22 }}>↗</div>
+                    </div>
+
+                    <div>
+                      <div style={{ fontSize: 38, fontWeight: 700, letterSpacing: '0.03em', marginBottom: 8 }}>{market.title}</div>
+                      <div style={{ maxWidth: 390, fontSize: 14, lineHeight: 1.5, color: 'rgba(255,255,255,0.9)', marginBottom: 14 }}>
+                        {market.subtitle}
+                      </div>
+                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: '#fff5dd', fontWeight: 700, fontSize: 14 }}>
+                        Смотреть объекты <span>→</span>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <div style={{ fontSize: 34, fontWeight: 700, letterSpacing: '0.03em', marginBottom: 8 }}>{market.title}</div>
-                    <div style={{ maxWidth: 380, fontSize: 14, lineHeight: 1.45, color: 'rgba(255,255,255,0.9)' }}>{market.subtitle}</div>
-                  </div>
-                </div>
-              </Link>
+                </Link>
+              </MotionCard>
             ))}
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 18 }}>
             {secondaryMarkets.map((market) => (
-              <Link
-                key={market.key}
-                href={market.href}
-                style={{
-                  display: 'block',
-                  textDecoration: 'none',
-                  borderRadius: 24,
-                  overflow: 'hidden',
-                  minHeight: 128,
-                  padding: 18,
-                  color: '#ffffff',
-                  background: market.gradient,
-                  position: 'relative',
-                }}
-              >
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.22) 100%)' }} />
-                <div style={{ position: 'relative', zIndex: 1 }}>
-                  <div style={{ fontSize: 26, fontWeight: 700, marginBottom: 8 }}>{market.title}</div>
-                  <div style={{ fontSize: 13, lineHeight: 1.42, color: 'rgba(255,255,255,0.86)' }}>{market.subtitle}</div>
-                </div>
-              </Link>
+              <MotionCard key={market.key}>
+                <Link
+                  href={market.href}
+                  style={{
+                    display: 'block',
+                    textDecoration: 'none',
+                    borderRadius: 24,
+                    overflow: 'hidden',
+                    minHeight: 140,
+                    padding: 18,
+                    color: '#ffffff',
+                    background: market.gradient,
+                    position: 'relative',
+                  }}
+                >
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.22) 100%)' }} />
+                  <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+                    <SectionEyebrow style={{ color: 'rgba(255,255,255,0.72)' }}>watchlist</SectionEyebrow>
+                    <div>
+                      <div style={{ fontSize: 26, fontWeight: 700, marginBottom: 8 }}>{market.title}</div>
+                      <div style={{ fontSize: 13, lineHeight: 1.42, color: 'rgba(255,255,255,0.86)' }}>{market.subtitle}</div>
+                    </div>
+                  </div>
+                </Link>
+              </MotionCard>
             ))}
           </div>
 
           <div
             style={{
-              borderRadius: 22,
-              background: '#f4efe6',
+              borderRadius: 24,
+              background: 'linear-gradient(180deg, #f6efe4 0%, #f2eadc 100%)',
               padding: 16,
               marginBottom: 18,
               border: '1px solid rgba(221,211,196,0.8)',
@@ -162,32 +292,45 @@ export default function HomePage() {
               lineHeight: 1.55,
             }}
           >
-            <div style={{ fontWeight: 700, marginBottom: 10 }}>🔐 Доступ к закрытым инвестиционным объектам открыт</div>
-            <div>Сейчас уже доступны curated подборки по Крыму и Сочи. Следующий шаг, выбрать рынок и перейти к лотам.</div>
+            <SectionEyebrow style={{ marginBottom: 8 }}>Concierge note</SectionEyebrow>
+            <div style={{ fontWeight: 700, marginBottom: 8 }}>Каталог открыт для приоритетных рынков, Крым и Сочи уже готовы к просмотру.</div>
+            <div>
+              Если нужен более точный сценарий входа, начните с персональной подборки. Если хотите быстро показать клиенту лоты, открывайте рынок сразу.
+            </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
-            {bottomLinks.map((item) => (
-              <Link
-                key={item.title}
-                href={item.href}
-                style={{
-                  textDecoration: 'none',
-                  textAlign: 'center',
-                  borderRadius: 16,
-                  padding: '14px 10px',
-                  background: '#0f4b22',
-                  color: '#ffffff',
-                  fontSize: 13,
-                  fontWeight: 700,
-                  boxShadow: '0 8px 18px rgba(15,75,34,0.18)',
-                }}
-              >
-                {item.title}
-              </Link>
-            ))}
+          <div
+            style={{
+              borderRadius: 24,
+              background: 'linear-gradient(180deg, #173328 0%, #234338 100%)',
+              padding: 14,
+              boxShadow: '0 16px 32px rgba(19,40,31,0.18)',
+            }}
+          >
+            <SectionEyebrow style={{ marginBottom: 10, color: 'rgba(231,221,205,0.7)' }}>Дополнительные входы в funnel</SectionEyebrow>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+              {bottomLinks.map((item) => (
+                <Link
+                  key={item.title}
+                  href={item.href}
+                  style={{
+                    textDecoration: 'none',
+                    textAlign: 'center',
+                    borderRadius: 16,
+                    padding: '14px 10px',
+                    background: 'rgba(255,255,255,0.1)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    color: '#ffffff',
+                    fontSize: 13,
+                    fontWeight: 700,
+                  }}
+                >
+                  {item.title}
+                </Link>
+              ))}
+            </div>
           </div>
-        </section>
+        </SurfaceCard>
       </div>
     </main>
   );

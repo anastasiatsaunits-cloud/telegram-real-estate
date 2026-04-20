@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000/api';
+import { proxyJson } from '../../lib/server-api';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -8,18 +7,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
-  try {
-    const response = await fetch(`${API_BASE_URL}/leads`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(req.body),
-    });
+  const result = await proxyJson('/leads', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(req.body),
+  });
 
-    const data = await response.json();
-    res.status(response.status).json(data);
-  } catch {
-    res.status(500).json({ message: 'Lead submit failed' });
+  if (!result.ok) {
+    res.status(result.status).json(result.data);
+    return;
   }
+
+  res.status(result.status).json(result.data);
 }

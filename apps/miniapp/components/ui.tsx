@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 
+const borderColor = 'rgba(227,219,207,0.92)';
+
 type CardProps = {
   children: ReactNode;
   style?: React.CSSProperties;
@@ -12,7 +14,7 @@ export function SurfaceCard({ children, style }: CardProps) {
       style={{
         background: '#fffdf9',
         borderRadius: 28,
-        border: '1px solid rgba(227,219,207,0.92)',
+        border: `1px solid ${borderColor}`,
         boxShadow: '0 18px 40px rgba(0,0,0,0.08)',
         ...style,
       }}
@@ -32,6 +34,61 @@ export function MotionCard({ children, style }: CardProps) {
     >
       {children}
     </motion.div>
+  );
+}
+
+export function SectionEyebrow({ children, style }: CardProps) {
+  return (
+    <div
+      style={{
+        fontSize: 12,
+        letterSpacing: '0.12em',
+        textTransform: 'uppercase',
+        color: '#8f8578',
+        ...style,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+export function Pill({ children, style }: CardProps) {
+  return (
+    <div
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 999,
+        padding: '8px 12px',
+        background: '#f4ecdf',
+        color: '#62584d',
+        fontSize: 12,
+        fontWeight: 700,
+        letterSpacing: '0.06em',
+        textTransform: 'uppercase',
+        ...style,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+export function InfoCard({ children, style }: CardProps) {
+  return (
+    <SurfaceCard
+      style={{
+        borderRadius: 24,
+        padding: 18,
+        background: '#faf7f1',
+        boxShadow: 'none',
+        ...style,
+      }}
+    >
+      {children}
+    </SurfaceCard>
   );
 }
 

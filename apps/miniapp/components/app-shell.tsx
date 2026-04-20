@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { SectionEyebrow, SurfaceCard } from './ui';
 
 type AppShellProps = {
   eyebrow?: string;
@@ -15,31 +16,25 @@ export function AppShell({ eyebrow, title, description, children }: AppShellProp
         padding: '18px 14px 32px',
         fontFamily: 'Inter, Arial, sans-serif',
         color: '#1f1f1f',
-        background: 'linear-gradient(180deg, #f8f3eb 0%, #f1ece4 100%)',
+        background:
+          'radial-gradient(circle at top, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0) 28%), linear-gradient(180deg, #f8f3eb 0%, #f1ece4 100%)',
       }}
     >
       <div style={{ maxWidth: 560, margin: '0 auto' }}>
-        <section
+        <SurfaceCard
           style={{
             background: 'rgba(255,255,255,0.92)',
-            borderRadius: 28,
+            borderRadius: 32,
             padding: 22,
-            boxShadow: '0 14px 40px rgba(0,0,0,0.08)',
-            border: '1px solid rgba(232, 222, 207, 0.9)',
+            boxShadow: '0 20px 46px rgba(0,0,0,0.08)',
             backdropFilter: 'blur(10px)',
           }}
         >
-          {eyebrow ? (
-            <p style={{ margin: '0 0 8px', color: '#9b7b58', fontWeight: 700, fontSize: 13, letterSpacing: '0.02em' }}>
-              {eyebrow}
-            </p>
-          ) : null}
+          {eyebrow ? <SectionEyebrow style={{ marginBottom: 8, color: '#9b7b58' }}>{eyebrow}</SectionEyebrow> : null}
           <h1 style={{ margin: '0 0 12px', fontSize: 30, lineHeight: 1.08 }}>{title}</h1>
-          {description ? (
-            <p style={{ margin: '0 0 20px', lineHeight: 1.55, color: '#615648', fontSize: 15 }}>{description}</p>
-          ) : null}
+          {description ? <p style={{ margin: '0 0 20px', lineHeight: 1.55, color: '#615648', fontSize: 15 }}>{description}</p> : null}
           {children}
-        </section>
+        </SurfaceCard>
       </div>
     </main>
   );

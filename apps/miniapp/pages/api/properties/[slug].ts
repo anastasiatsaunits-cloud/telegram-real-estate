@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000/api';
+import { proxyJson } from '../../../lib/server-api';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const slug = req.query.slug;
@@ -10,11 +9,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
-  try {
-    const response = await fetch(`${API_BASE_URL}/properties/${slug}`);
-    const data = await response.json();
-    res.status(response.status).json(data);
-  } catch {
-    res.status(500).json({ message: 'Property load failed' });
+  const result = await proxyJson(`/properties/${encodeURIComponent(slug)}`);
+
+  if (!result.ok) {
+    res.status(result.status).json(result.data);
+    return;
   }
+
+  res.status(result.status).json(result.data);
 }
