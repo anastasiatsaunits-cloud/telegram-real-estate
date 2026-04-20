@@ -5,16 +5,18 @@ import { MotionCard, Pill, SectionEyebrow, SurfaceCard } from './ui';
 function getMarketPalette(regionSlug: string) {
   if (regionSlug === 'sochi') {
     return {
-      gradient: 'linear-gradient(135deg, #89a8ba 0%, #60798b 45%, #2e3e4a 100%)',
-      accent: 'rgba(194, 229, 247, 0.26)',
-      label: 'Сочи · curated',
+      gradient: 'linear-gradient(135deg, #8ea986 0%, #5f755a 42%, #243229 100%)',
+      accent: 'rgba(209, 232, 193, 0.24)',
+      label: 'Сочи · curated market',
+      cta: '#0f4b22',
     };
   }
 
   return {
-    gradient: 'linear-gradient(135deg, #7da4b7 0%, #58717f 45%, #2f4149 100%)',
-    accent: 'rgba(185, 233, 244, 0.25)',
-    label: 'Крым · private',
+    gradient: 'linear-gradient(135deg, #7aaec3 0%, #547b92 45%, #263746 100%)',
+    accent: 'rgba(188, 230, 245, 0.24)',
+    label: 'Крым · private market',
+    cta: '#0b4f6c',
   };
 }
 
@@ -33,7 +35,7 @@ export function PropertyCardLink({
 }) {
   const palette = getMarketPalette(property.region.slug);
   const location = [property.region.name, property.city].filter(Boolean).join(' · ');
-  const priceLabel = property.priceFrom ? `от ${property.priceFrom} ${property.currency ?? ''}`.trim() : 'по запросу';
+  const priceLabel = property.priceFrom ? `от ${Number(property.priceFrom).toLocaleString('ru-RU')} ${property.currency ?? ''}`.trim() : 'по запросу';
 
   return (
     <MotionCard>
@@ -55,8 +57,8 @@ export function PropertyCardLink({
         >
           <div
             style={{
-              minHeight: 250,
-              padding: 18,
+              minHeight: 278,
+              padding: 20,
               display: 'flex',
               alignItems: 'space-between',
               flexDirection: 'column',
@@ -110,9 +112,12 @@ export function PropertyCardLink({
             </div>
 
             <div style={{ position: 'relative', zIndex: 1 }}>
-              <SectionEyebrow style={{ color: 'rgba(255,255,255,0.72)', marginBottom: 10 }}>premium object</SectionEyebrow>
-              <div style={{ fontSize: 34, fontWeight: 700, lineHeight: 1.02, color: '#ffffff', marginBottom: 10 }}>{property.title}</div>
-              <div style={{ fontSize: 14, lineHeight: 1.5, color: 'rgba(255,255,255,0.88)', maxWidth: 380 }}>{location || 'Локация уточняется'}</div>
+              <SectionEyebrow style={{ color: 'rgba(255,255,255,0.72)', marginBottom: 10 }}>signature object</SectionEyebrow>
+              <div style={{ fontSize: 34, fontWeight: 700, lineHeight: 1.02, color: '#ffffff', marginBottom: 12 }}>{property.title}</div>
+              <div style={{ fontSize: 14, lineHeight: 1.55, color: 'rgba(255,255,255,0.88)', maxWidth: 380, marginBottom: 14 }}>{location || 'Локация уточняется'}</div>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: '#fff3da', fontWeight: 700, fontSize: 14 }}>
+                Смотреть объект <span>→</span>
+              </div>
             </div>
           </div>
 
@@ -137,7 +142,7 @@ export function PropertyCardLink({
                 gap: 16,
                 borderRadius: 20,
                 padding: '16px 18px',
-                background: '#0f4b22',
+                background: palette.cta,
                 color: '#ffffff',
                 fontWeight: 700,
                 fontSize: 17,

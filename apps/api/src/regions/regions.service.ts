@@ -7,7 +7,12 @@ export class RegionsService {
 
   async findAll() {
     const items = await this.prisma.region.findMany({
-      where: { isActive: true },
+      where: {
+        isActive: true,
+        slug: {
+          in: ['crimea', 'sochi'],
+        },
+      },
       orderBy: [{ sortOrder: 'asc' }, { name: 'asc' }],
       select: {
         id: true,

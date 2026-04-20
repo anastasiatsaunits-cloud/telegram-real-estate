@@ -44,20 +44,20 @@ export default function PropertiesPage() {
 
   const title = useMemo(() => {
     if (regionName) return `Объекты · ${regionName}`;
-    return 'Подходящие варианты';
+    return 'Рынки и объекты';
   }, [regionName]);
 
   return (
     <AppShell
-      eyebrow="Живая подборка"
+      eyebrow="Живой каталог"
       title={title}
-      description={`Регион: ${regionName || 'не выбран'}. Бюджет: ${budget.title}. Срок: ${timeline.title}.`}
+      description={regionName ? `Рынок: ${regionName}. Бюджет: ${budget.title}. Срок: ${timeline.title}.` : 'Сначала выбери рынок, потом смотри объекты и веди клиента дальше по сильному сценарию.'}
     >
       <BackLink href="/quiz/success" />
 
       <InfoCard style={{ marginBottom: 16, background: 'linear-gradient(180deg, #f6f1e8 0%, #f3ecdf 100%)', color: '#4a4339' }}>
         <SectionEyebrow style={{ marginBottom: 8, color: '#a09383' }}>Фильтр</SectionEyebrow>
-        <div style={{ fontWeight: 700, marginBottom: 12, fontSize: 20, color: '#201c18' }}>{regionName || 'Все рынки'}</div>
+        <div style={{ fontWeight: 700, marginBottom: 12, fontSize: 20, color: '#201c18' }}>{regionName || 'Крым и Сочи'}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
           <Pill>{budget.title}</Pill>
           <Pill style={{ background: '#f8f5ef', color: '#6e6256' }}>{timeline.title}</Pill>
@@ -77,7 +77,7 @@ export default function PropertiesPage() {
         <InfoCard>
           <SectionEyebrow style={{ marginBottom: 8 }}>Пустая выдача</SectionEyebrow>
           <div style={{ fontWeight: 700, marginBottom: 8 }}>Под эти параметры пока нет активных объектов</div>
-          <div style={{ lineHeight: 1.6, color: '#615648' }}>Можно ослабить фильтр по бюджету или открыть другой рынок.</div>
+          <div style={{ lineHeight: 1.6, color: '#615648' }}>Можно ослабить фильтр по бюджету или переключиться между Крымом и Сочи.</div>
         </InfoCard>
       ) : (
         <div style={{ display: 'grid', gap: 14 }}>

@@ -21,10 +21,11 @@ export class PropertiesService {
     const items = await this.prisma.property.findMany({
       where: {
         isActive: true,
-        ...(regionSlug ? { region: { slug: regionSlug } } : {}),
+        status: 'active',
+        ...(regionSlug ? { region: { slug: regionSlug } } : { region: { slug: { in: ['crimea', 'sochi'] } } }),
         ...(priceFilter ? { priceFrom: priceFilter } : {}),
       },
-      orderBy: { createdAt: 'desc' },
+      orderBy: [{ region: { sortOrder: 'asc' } }, { priceFrom: 'asc' }, { createdAt: 'desc' }],
       select: {
         id: true,
         title: true,

@@ -5,8 +5,8 @@ const markets = [
   {
     key: 'crimea',
     title: 'Крым',
-    subtitle: 'Первая линия, Ялта, Южный берег, курортные комплексы и видовые резиденции',
-    badge: 'Private access',
+    subtitle: 'Ялта, Алушта, первая линия, курортные резиденции и приватные лоты для спокойного капитала',
+    badge: 'Private coast',
     href: '/properties?region=crimea&regionName=Крым',
     gradient: 'linear-gradient(135deg, #7db4c7 0%, #436676 42%, #23363e 100%)',
     accent: 'rgba(157, 223, 248, 0.42)',
@@ -15,7 +15,7 @@ const markets = [
   {
     key: 'sochi',
     title: 'Сочи',
-    subtitle: 'Премиальные лоты, доходные объекты и curated подборки по морю и центру',
+    subtitle: 'Премиальные лоты, доходные объекты и сильные curated подборки по морю, центру и статусным локациям',
     badge: 'Curated market',
     href: '/properties?region=sochi&regionName=Сочи',
     gradient: 'linear-gradient(135deg, #8ba685 0%, #566b52 42%, #233129 100%)',
@@ -47,9 +47,9 @@ const bottomLinks = [
 ];
 
 const premiumSignals = [
-  'Закрытые подборки без массовой выдачи',
-  'Приоритетно Крым и Сочи, уже в каталоге',
-  'Короткий путь от просмотра до заявки',
+  'Два живых рынка, Крым и Сочи, уже разведены отдельно',
+  'Закрытые подборки без перегруза CRM-шумом',
+  'Короткий путь от просмотра объекта до заявки',
 ];
 
 export default function HomePage() {
@@ -112,11 +112,11 @@ export default function HomePage() {
               </Pill>
 
               <div style={{ fontSize: 30, fontWeight: 700, lineHeight: 1.06, marginBottom: 12 }}>
-                Приватный доступ к инвестиционной недвижимости в curated формате
+                Приватный вход в каталог инвестиционной недвижимости, уже разведённый по рынкам
               </div>
 
               <div style={{ color: 'rgba(255,255,255,0.78)', lineHeight: 1.6, fontSize: 15, marginBottom: 18 }}>
-                Не витрина из CRM, а короткий premium funnel. Сначала рынок, потом сильные объекты, потом заявка с понятным следующим шагом.
+                Сначала выбираем рынок, потом открываем сильные объекты. Крым и Сочи теперь идут отдельными направлениями, без смешанной выдачи.
               </div>
 
               <div style={{ display: 'grid', gap: 10, marginBottom: 18 }}>
@@ -147,14 +147,14 @@ export default function HomePage() {
               </div>
 
               <PrimaryButton
-                href="/quiz/region"
+                href="/properties"
                 style={{
                   background: '#e7d5ae',
                   color: '#1e201c',
                   boxShadow: '0 10px 24px rgba(14,20,17,0.26)',
                 }}
               >
-                Получить персональную подборку
+                Открыть рынки и объекты
               </PrimaryButton>
             </div>
           </div>
@@ -171,7 +171,7 @@ export default function HomePage() {
           >
             <div>
               <SectionEyebrow style={{ marginBottom: 6 }}>Выбор рынка</SectionEyebrow>
-              <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.12, color: '#1d1b18' }}>Откройте каталог с приоритетного направления</div>
+              <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.12, color: '#1d1b18' }}>Сначала выбери рынок, потом открывай объекты</div>
             </div>
             <Pill style={{ flexShrink: 0 }}>2 live markets</Pill>
           </div>
@@ -293,9 +293,9 @@ export default function HomePage() {
             }}
           >
             <SectionEyebrow style={{ marginBottom: 8 }}>Concierge note</SectionEyebrow>
-            <div style={{ fontWeight: 700, marginBottom: 8 }}>Каталог открыт для приоритетных рынков, Крым и Сочи уже готовы к просмотру.</div>
+            <div style={{ fontWeight: 700, marginBottom: 8 }}>Каталог уже живой: Крым и Сочи открываются как отдельные рынки, а не как смешанная витрина.</div>
             <div>
-              Если нужен более точный сценарий входа, начните с персональной подборки. Если хотите быстро показать клиенту лоты, открывайте рынок сразу.
+              Если нужен быстрый показ, открывай рынок сразу. Если нужен более точный сценарий входа, можно увести клиента в персональную подборку через квиз.
             </div>
           </div>
 
