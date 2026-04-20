@@ -172,6 +172,26 @@ export default function PropertyDetailsPage() {
             <div style={{ lineHeight: 1.7 }}>{propertyData.description || 'Подробное описание объекта добавим на следующем слое. Сейчас экран уже готов для показа клиенту и перехода в заявку.'}</div>
           </InfoCard>
 
+          <InfoCard style={{ marginBottom: 16, background: 'linear-gradient(180deg, #162a24 0%, #1f3c34 100%)', color: '#ffffff', boxShadow: '0 16px 30px rgba(18,38,31,0.2)' }}>
+            <SectionEyebrow style={{ marginBottom: 8, color: 'rgba(230,220,204,0.7)' }}>Investment narrative</SectionEyebrow>
+            <div style={{ fontSize: 20, fontWeight: 700, lineHeight: 1.32, marginBottom: 10 }}>Лот под private-инвестиционный сценарий, а не просто ещё одна карточка в выдаче.</div>
+            <div style={{ color: 'rgba(255,255,255,0.8)', lineHeight: 1.7, marginBottom: 12 }}>
+              Экран должен быстро ответить на три вопроса: почему именно этот объект, какой здесь формат входа и что делать дальше, если клиенту нужен расчёт или похожие варианты.
+            </div>
+            <div style={{ display: 'grid', gap: 10 }}>
+              {[
+                'Премиальная локация и понятный ценовой вход без перегруза второстепенными данными',
+                'Короткий путь к доходности, подбору похожих лотов и живому concierge-сценарию',
+                'Подача в логике luxury miniapp, а не CRM-анкеты',
+              ].map((item) => (
+                <div key={item} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                  <div style={{ width: 7, height: 7, marginTop: 7, borderRadius: 999, background: '#e5d0a7', flexShrink: 0 }} />
+                  <div style={{ color: 'rgba(255,255,255,0.86)', lineHeight: 1.6 }}>{item}</div>
+                </div>
+              ))}
+            </div>
+          </InfoCard>
+
           <div style={{ marginBottom: 16 }}>
             <SectionEyebrow style={{ marginBottom: 10, color: '#978876' }}>Быстрые факты</SectionEyebrow>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>

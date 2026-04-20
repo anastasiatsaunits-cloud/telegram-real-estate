@@ -149,6 +149,24 @@ export function PropertyCardLink({
 
             <div
               style={{
+                borderRadius: 22,
+                padding: '16px 16px',
+                marginBottom: 14,
+                background: 'linear-gradient(180deg, #fffaf2 0%, #f6efe4 100%)',
+                border: '1px solid rgba(228,216,198,0.92)',
+              }}
+            >
+              <SectionEyebrow style={{ marginBottom: 8 }}>why this lot</SectionEyebrow>
+              <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.32, color: '#1d1b18', marginBottom: 8 }}>
+                Сильная витринная подача для первого касания, чтобы клиент захотел открыть detail, а не пролистнуть дальше.
+              </div>
+              <div style={{ color: '#675b4f', lineHeight: 1.6, fontSize: 14 }}>
+                Карточка собрана как вход в curated-подборку: рынок, локация, цена входа и понятный переход к следующему шагу.
+              </div>
+            </div>
+
+            <div
+              style={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',

@@ -47,15 +47,30 @@ const bottomLinks = [
 ];
 
 const premiumSignals = [
-  'Два живых рынка, Крым и Сочи, уже разведены отдельно',
-  'Закрытые подборки без перегруза CRM-шумом',
-  'Короткий путь от просмотра объекта до заявки',
+  'Крым и Сочи уже разведены как два самостоятельных инвестиционных рынка',
+  'Curated-подборка без CRM-шума и случайных лотов',
+  'Путь от первого впечатления до заявки собран как private service',
 ];
 
 const trustNumbers = [
   { value: '2', label: 'живых рынка' },
   { value: '24/7', label: 'concierge-подбор' },
-  { value: '1', label: 'точка входа в инвестицию' },
+  { value: '72ч', label: 'на сбор сильной подборки' },
+];
+
+const conciergeSteps = [
+  {
+    title: 'Выбираешь рынок',
+    text: 'Крым и Сочи подаются отдельно, чтобы у клиента сразу было ощущение точного входа, а не общей ленты.',
+  },
+  {
+    title: 'Открываешь curated-объекты',
+    text: 'Показываем только сильные лоты с premium подачей, цифрами и понятным следующим шагом.',
+  },
+  {
+    title: 'Переходишь в private подбор',
+    text: 'Дальше не анкета ради анкеты, а сценарий под инвестиционную задачу, бюджет и горизонт.',
+  },
 ];
 
 export default function HomePage() {
@@ -179,6 +194,61 @@ export default function HomePage() {
               >
                 Открыть рынки и объекты
               </PrimaryButton>
+            </div>
+          </div>
+
+          <div
+            style={{
+              marginBottom: 16,
+              borderRadius: 24,
+              padding: '18px 18px 16px',
+              background: 'linear-gradient(180deg, #f6efe4 0%, #f2eadf 100%)',
+              border: '1px solid rgba(223,210,193,0.92)',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 14 }}>
+              <div>
+                <SectionEyebrow style={{ marginBottom: 6 }}>Private concierge flow</SectionEyebrow>
+                <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.16, color: '#1d1b18' }}>Не просто каталог, а короткий путь к инвестиционному решению</div>
+              </div>
+              <Pill style={{ flexShrink: 0, background: '#efe4d2', color: '#6d5c49' }}>luxury funnel</Pill>
+            </div>
+
+            <div style={{ display: 'grid', gap: 10 }}>
+              {conciergeSteps.map((step, index) => (
+                <div
+                  key={step.title}
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '36px 1fr',
+                    gap: 12,
+                    alignItems: 'start',
+                    borderRadius: 18,
+                    padding: '12px 12px',
+                    background: 'rgba(255,255,255,0.58)',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 36,
+                      height: 36,
+                      borderRadius: 999,
+                      background: '#1f2b25',
+                      color: '#f7ecd7',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontWeight: 700,
+                    }}
+                  >
+                    {index + 1}
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 700, color: '#1f1b17', marginBottom: 4 }}>{step.title}</div>
+                    <div style={{ lineHeight: 1.6, color: '#665a4d', fontSize: 14 }}>{step.text}</div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
