@@ -1,6 +1,17 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
+const MARKET_ASSETS = {
+  crimea: {
+    cover: '/market/crimea-cover.jpg',
+    gallery: ['/market/crimea-cover.jpg', '/market/crimea-gallery-1.jpg', '/market/crimea-gallery-2.jpg'],
+  },
+  sochi: {
+    cover: '/market/sochi-cover.jpg',
+    gallery: ['/market/sochi-cover.jpg', '/market/sochi-gallery-1.jpg', '/market/sochi-gallery-2.jpg'],
+  },
+} as const;
+
 @Injectable()
 export class PropertiesService {
   constructor(private readonly prisma: PrismaService) {}
@@ -43,7 +54,12 @@ export class PropertiesService {
       },
     });
 
-    return { items };
+    return {
+      items: items.map((item) => ({
+        ...item,
+        coverAsset: MARKET_ASSETS[item.region.slug as keyof typeof MARKET_ASSETS]?.cover ?? null,
+      })),
+    };
   }
 
   async findBySlug(slug: string) {
@@ -88,6 +104,12 @@ export class PropertiesService {
       throw new NotFoundException('Property not found');
     }
 
-    return { item };
+    return {
+      item: {
+        ...item,
+        coverAsset: MARKET_ASSETS[item.region.slug as keyof typeof MARKET_ASSETS]?.cover ?? null,
+        galleryAssets: MARKET_ASSETS[item.region.slug as keyof typeof MARKET_ASSETS]?.gallery ?? [],
+      },
+    };
   }
 }

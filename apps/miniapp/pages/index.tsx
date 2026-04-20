@@ -52,6 +52,12 @@ const premiumSignals = [
   'Короткий путь от просмотра объекта до заявки',
 ];
 
+const trustNumbers = [
+  { value: '2', label: 'живых рынка' },
+  { value: '24/7', label: 'concierge-подбор' },
+  { value: '1', label: 'точка входа в инвестицию' },
+];
+
 export default function HomePage() {
   const featuredMarkets = markets.filter((market) => market.size === 'large');
   const secondaryMarkets = markets.filter((market) => market.size === 'small');
@@ -117,6 +123,23 @@ export default function HomePage() {
 
               <div style={{ color: 'rgba(255,255,255,0.78)', lineHeight: 1.6, fontSize: 15, marginBottom: 18 }}>
                 Сначала выбираем рынок, потом открываем сильные объекты. Крым и Сочи теперь идут отдельными направлениями, без смешанной выдачи.
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 10, marginBottom: 18 }}>
+                {trustNumbers.map((item) => (
+                  <div
+                    key={item.label}
+                    style={{
+                      borderRadius: 18,
+                      padding: '14px 10px',
+                      background: 'rgba(255,255,255,0.08)',
+                      border: '1px solid rgba(255,255,255,0.08)',
+                    }}
+                  >
+                    <div style={{ fontSize: 22, fontWeight: 700, color: '#fff5dd', marginBottom: 6 }}>{item.value}</div>
+                    <div style={{ fontSize: 12, lineHeight: 1.35, color: 'rgba(255,255,255,0.7)' }}>{item.label}</div>
+                  </div>
+                ))}
               </div>
 
               <div style={{ display: 'grid', gap: 10, marginBottom: 18 }}>
@@ -186,10 +209,17 @@ export default function HomePage() {
                     textDecoration: 'none',
                     borderRadius: 30,
                     overflow: 'hidden',
-                    minHeight: 188,
+                    minHeight: 216,
                     padding: 20,
                     color: '#ffffff',
                     background: market.gradient,
+                    backgroundImage: market.key === 'crimea'
+                      ? 'linear-gradient(180deg, rgba(12,18,22,0.12) 0%, rgba(10,13,16,0.5) 100%), url(/market/crimea-cover.jpg)'
+                      : market.key === 'sochi'
+                        ? 'linear-gradient(180deg, rgba(12,18,22,0.12) 0%, rgba(10,13,16,0.5) 100%), url(/market/sochi-cover.jpg)'
+                        : market.gradient,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
                     position: 'relative',
                     boxShadow: '0 18px 34px rgba(20, 21, 20, 0.12)',
                   }}
@@ -237,7 +267,7 @@ export default function HomePage() {
                     </div>
 
                     <div>
-                      <div style={{ fontSize: 38, fontWeight: 700, letterSpacing: '0.03em', marginBottom: 8 }}>{market.title}</div>
+                      <div style={{ fontSize: 42, fontWeight: 700, letterSpacing: '0.03em', marginBottom: 8 }}>{market.title}</div>
                       <div style={{ maxWidth: 390, fontSize: 14, lineHeight: 1.5, color: 'rgba(255,255,255,0.9)', marginBottom: 14 }}>
                         {market.subtitle}
                       </div>

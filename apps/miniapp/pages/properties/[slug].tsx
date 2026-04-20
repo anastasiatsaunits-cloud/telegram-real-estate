@@ -8,7 +8,7 @@ import type { PropertyDetails } from '../../lib/properties';
 
 function formatPrice(value: string | null | undefined, currency: string | null | undefined) {
   if (!value) return 'по запросу';
-  return `от ${value} ${currency ?? ''}`.trim();
+  return `от ${Number(value).toLocaleString('ru-RU')} ${currency ?? ''}`.trim();
 }
 
 function formatArea(from: string | null | undefined, to: string | null | undefined) {
@@ -106,10 +106,13 @@ export default function PropertyDetailsPage() {
         <>
           <SurfaceCard
             style={{
-              minHeight: 420,
+              minHeight: 520,
               borderRadius: 30,
               marginBottom: 16,
               background: theme.gradient,
+              backgroundImage: propertyData.coverAsset ? `linear-gradient(180deg, rgba(10,12,15,0.14) 0%, rgba(10,13,16,0.58) 100%), url(${propertyData.coverAsset})` : theme.gradient,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
               padding: 18,
               position: 'relative',
               overflow: 'hidden',
@@ -129,7 +132,7 @@ export default function PropertyDetailsPage() {
 
             <div style={{ position: 'relative', zIndex: 1 }}>
               <SectionEyebrow style={{ color: 'rgba(255,255,255,0.76)', marginBottom: 10 }}>объект из закрытой подборки</SectionEyebrow>
-              <div style={{ fontSize: 38, fontWeight: 700, lineHeight: 1.02, color: '#ffffff', marginBottom: 10 }}>{propertyData.title}</div>
+              <div style={{ fontSize: 42, fontWeight: 700, lineHeight: 1.02, color: '#ffffff', marginBottom: 10 }}>{propertyData.title}</div>
               <div style={{ fontSize: 15, lineHeight: 1.55, color: 'rgba(255,255,255,0.88)', maxWidth: 420, marginBottom: 18 }}>{locationLine}</div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 12 }}>
@@ -146,6 +149,22 @@ export default function PropertyDetailsPage() {
               </div>
             </div>
           </SurfaceCard>
+
+          <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', marginBottom: 16 }}>
+            {propertyData.galleryAssets.slice(0, 3).map((asset) => (
+              <div
+                key={asset}
+                style={{
+                  borderRadius: 22,
+                  minHeight: 116,
+                  backgroundImage: `url(${asset})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  boxShadow: '0 14px 24px rgba(0,0,0,0.1)',
+                }}
+              />
+            ))}
+          </div>
 
           <InfoCard style={{ marginBottom: 16, background: 'linear-gradient(180deg, #f9f3e8 0%, #f4ead8 100%)', color: '#3d342b' }}>
             <SectionEyebrow style={{ marginBottom: 8, color: '#978876' }}>О проекте</SectionEyebrow>

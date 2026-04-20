@@ -57,13 +57,16 @@ export function PropertyCardLink({
         >
           <div
             style={{
-              minHeight: 278,
+              minHeight: 318,
               padding: 20,
               display: 'flex',
               alignItems: 'space-between',
               flexDirection: 'column',
               justifyContent: 'space-between',
               background: palette.gradient,
+              backgroundImage: property.coverAsset ? `linear-gradient(180deg, rgba(14,17,19,0.18) 0%, rgba(10,13,16,0.55) 100%), url(${property.coverAsset})` : palette.gradient,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
               position: 'relative',
             }}
           >
@@ -71,7 +74,7 @@ export function PropertyCardLink({
               style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.36) 100%)',
+                background: 'linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.48) 100%)',
               }}
             />
             <div
@@ -113,7 +116,7 @@ export function PropertyCardLink({
 
             <div style={{ position: 'relative', zIndex: 1 }}>
               <SectionEyebrow style={{ color: 'rgba(255,255,255,0.72)', marginBottom: 10 }}>signature object</SectionEyebrow>
-              <div style={{ fontSize: 34, fontWeight: 700, lineHeight: 1.02, color: '#ffffff', marginBottom: 12 }}>{property.title}</div>
+              <div style={{ fontSize: 36, fontWeight: 700, lineHeight: 1.02, color: '#ffffff', marginBottom: 12 }}>{property.title}</div>
               <div style={{ fontSize: 14, lineHeight: 1.55, color: 'rgba(255,255,255,0.88)', maxWidth: 380, marginBottom: 14 }}>{location || 'Локация уточняется'}</div>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: '#fff3da', fontWeight: 700, fontSize: 14 }}>
                 Смотреть объект <span>→</span>
@@ -124,14 +127,24 @@ export function PropertyCardLink({
           <div style={{ padding: 18 }}>
             <div
               style={{
-                display: 'flex',
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
                 gap: 10,
-                flexWrap: 'wrap',
                 marginBottom: 14,
               }}
             >
-              <Pill>{property.region.name}</Pill>
-              {property.city ? <Pill style={{ background: '#f8f5ef', color: '#6e6256' }}>{property.city}</Pill> : null}
+              <div style={{ borderRadius: 18, padding: '12px 10px', background: '#faf6ef' }}>
+                <SectionEyebrow style={{ marginBottom: 6 }}>рынок</SectionEyebrow>
+                <div style={{ fontWeight: 700, color: '#1d1b18' }}>{property.region.name}</div>
+              </div>
+              <div style={{ borderRadius: 18, padding: '12px 10px', background: '#faf6ef' }}>
+                <SectionEyebrow style={{ marginBottom: 6 }}>локация</SectionEyebrow>
+                <div style={{ fontWeight: 700, color: '#1d1b18' }}>{property.city || 'уточняется'}</div>
+              </div>
+              <div style={{ borderRadius: 18, padding: '12px 10px', background: '#faf6ef' }}>
+                <SectionEyebrow style={{ marginBottom: 6 }}>формат</SectionEyebrow>
+                <div style={{ fontWeight: 700, color: '#1d1b18' }}>investment pick</div>
+              </div>
             </div>
 
             <div

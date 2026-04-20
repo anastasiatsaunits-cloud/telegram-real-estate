@@ -5,6 +5,7 @@ export type PropertyListItem = {
   city: string | null;
   priceFrom: string | null;
   currency: string | null;
+  coverAsset: string | null;
   region: {
     id: string;
     name: string;
@@ -27,6 +28,8 @@ export type PropertyDetails = {
   status: string | null;
   description: string | null;
   purchaseOptionsJson: string[] | null;
+  coverAsset: string | null;
+  galleryAssets: string[];
   region: {
     id: string;
     name: string;
