@@ -7,8 +7,18 @@ const startSalesProjects = [
     subtitle: 'Новый комплекс в Сочи с тихой приватной подачей и высоким порогом внимания уже на старте.',
     location: 'Сочи, ул. Демократическая, 18',
     price: 'от 69,6 млн ₽',
+    badge: 'Старт продаж',
     href: '/properties/gk-mandarin-garden-mandarin-garden?region=sochi&regionName=Сочи',
     image: 'https://новостройки93.рф/upload/resize_cache/iblock/d59/650_450_2/wicp45v88zvfw26jx28y10qslf5o2vxi.jpeg',
+  },
+  {
+    title: 'ЖК Кировъ',
+    subtitle: 'Новый квартал в исторической Ялте, приватная резиденция у моря с панорамными видами и ранним входом до официального старта.',
+    location: 'Ялта, берег Чёрного моря, исторический центр',
+    price: 'от 400 000 ₽/м²',
+    badge: 'Скоро старт',
+    href: '/quiz/contact?region=crimea&regionName=Крым&propertyTitle=ЖК%20Кировъ',
+    image: '/market/kirov-start-sales.jpg',
   },
 ];
 
@@ -432,9 +442,9 @@ export default function HomePage() {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 14 }}>
               <div>
                 <SectionEyebrow style={{ marginBottom: 6 }}>Старт продаж</SectionEyebrow>
-                <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.14, color: '#1d1b18' }}>Новый комплекс, который стоит смотреть первым</div>
+                <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.14, color: '#1d1b18' }}>Новые комплексы на раннем входе</div>
               </div>
-              <Pill style={{ background: '#f0dfb7', color: '#5f4826' }}>Новый комплекс</Pill>
+              <Pill style={{ background: '#f0dfb7', color: '#5f4826' }}>{startSalesProjects.length} объекта</Pill>
             </div>
 
             <div style={{ display: 'grid', gap: 12 }}>
@@ -460,14 +470,14 @@ export default function HomePage() {
                     <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.34) 100%)' }} />
                     <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'flex-start' }}>
-                        <Pill style={{ background: '#f0dfb7', color: '#3a2b16' }}>Старт продаж</Pill>
+                        <Pill style={{ background: '#f0dfb7', color: '#3a2b16' }}>{project.badge}</Pill>
                         <div style={{ padding: '9px 14px', borderRadius: 18, background: 'rgba(255,255,255,0.92)', color: '#181818', fontWeight: 700, fontSize: 15 }}>
                           {project.price}
                         </div>
                       </div>
 
                       <div>
-                        <SectionEyebrow style={{ color: 'rgba(255,244,221,0.76)', marginBottom: 8 }}>Сочи · новая подача</SectionEyebrow>
+                        <SectionEyebrow style={{ color: 'rgba(255,244,221,0.76)', marginBottom: 8 }}>{project.location.includes('Ялта') ? 'Крым · новая премьера' : 'Сочи · новая подача'}</SectionEyebrow>
                         <div style={{ fontSize: 32, fontWeight: 700, lineHeight: 1.04, marginBottom: 10 }}>{project.title}</div>
                         <div style={{ fontSize: 14, lineHeight: 1.55, color: 'rgba(255,255,255,0.88)', marginBottom: 10 }}>{project.subtitle}</div>
                         <div style={{ fontSize: 13, lineHeight: 1.5, color: 'rgba(255,255,255,0.72)', marginBottom: 12 }}>{project.location}</div>
