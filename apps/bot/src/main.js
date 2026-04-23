@@ -70,6 +70,34 @@ bot.catch((error) => {
   console.error('Bot error', error.error);
 });
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function runLongPolling() {
+  let offset = 0;
+
+  console.log(`Bot polling started. Mini app URL: ${miniAppUrl}`);
+
+  while (true) {
+    try {
+      const updates = await bot.api.getUpdates({
+        offset,
+        timeout: 30,
+        allowed_updates: ['message', 'callback_query'],
+      });
+
+      for (const update of updates) {
+        offset = update.update_id + 1;
+        await bot.handleUpdate(update);
+      }
+    } catch (error) {
+      console.error('Bot polling error', error);
+      await sleep(2000);
+    }
+  }
+}
+
 async function bootstrap() {
   if (dryRun) {
     console.log(`Bot dry-run ready. Mini app URL: ${miniAppUrl}`);
@@ -78,8 +106,8 @@ async function bootstrap() {
 
   await bot.api.deleteWebhook();
   await syncBotMetadata();
-  await bot.start();
-  console.log(`Bot started. Mini app URL: ${miniAppUrl}`);
+  await bot.init();
+  await runLongPolling();
 }
 
 bootstrap().catch((error) => {
