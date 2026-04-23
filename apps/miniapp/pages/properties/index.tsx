@@ -10,27 +10,27 @@ import { getBudgetByKey, getTimelineByKey } from '../../lib/quiz-options';
 function getMarketStory(region: string, regionName: string) {
   if (region === 'crimea') {
     return {
-      eyebrow: 'Private coast selection',
-      title: regionName || 'Крым',
-      text: 'Курортные резиденции, первая линия и более спокойный сценарий капитала с акцентом на lifestyle и сезонную доходность.',
-      note: 'Фокус: первая линия, курортные форматы, мягкий инвестиционный ритм.',
+      eyebrow: 'Крым. Подборка',
+      title: 'Курортные объекты у моря',
+      text: 'Первая линия, резиденции и форматы для спокойного входа, отдыха и сезонной доходности.',
+      note: 'Подходит тем, кто ищет море, приватность и мягкий инвестиционный ритм.',
     };
   }
 
   if (region === 'sochi') {
     return {
-      eyebrow: 'Curated city selection',
-      title: regionName || 'Сочи',
-      text: 'Премиальные лоты у моря, в центре и в статусных локациях для более быстрого темпа спроса и сильной витринной подачи.',
-      note: 'Фокус: city premium, доходные сценарии и curated-подборки без смешанной выдачи.',
+      eyebrow: 'Сочи. Подборка',
+      title: 'Лоты с активным спросом',
+      text: 'Объекты у моря, в центре и в сильных локациях для тех, кто смотрит на ликвидность и аренду.',
+      note: 'Подходит тем, кто хочет быстрый темп рынка и сильный спрос.',
     };
   }
 
   return {
-    eyebrow: 'Live market catalog',
-    title: regionName || 'Крым и Сочи',
-    text: 'Сначала выбираем рынок, потом открываем curated-объекты с понятным бюджетом, сроком и следующим шагом без CRM-шума.',
-    note: 'Каталог уже разведён по рынкам, чтобы вход был точным с первого экрана.',
+    eyebrow: 'Каталог',
+    title: 'Сначала выберите рынок',
+    text: 'Крым и Сочи открываются отдельно, чтобы вы сразу смотрели релевантные объекты.',
+    note: 'Точный вход всегда работает сильнее, чем смешанная выдача.',
   };
 }
 
@@ -71,15 +71,17 @@ export default function PropertiesPage() {
   }, [region, budget.min, budget.max]);
 
   const title = useMemo(() => {
+    if (region === 'crimea') return 'Крым. Объекты у моря';
+    if (region === 'sochi') return 'Сочи. Объекты для активного спроса';
     if (regionName) return `Объекты · ${regionName}`;
     return 'Рынки и объекты';
-  }, [regionName]);
+  }, [region, regionName]);
 
   return (
     <AppShell
-      eyebrow="Живой каталог"
+      eyebrow={region ? 'Каталог рынка' : 'Каталог объектов'}
       title={title}
-      description={regionName ? `Рынок: ${regionName}. Бюджет: ${budget.title}. Срок: ${timeline.title}.` : 'Сначала выбери рынок, потом смотри объекты и веди клиента дальше по сильному сценарию.'}
+      description={region ? `Отобранные объекты под бюджет ${budget.title} и срок ${timeline.title}.` : 'Выберите рынок и откройте объекты с понятным ценовым входом и инвестиционной логикой.'}
     >
       <BackLink href="/quiz/success" />
 
@@ -90,7 +92,7 @@ export default function PropertiesPage() {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
           <Pill>{budget.title}</Pill>
           <Pill style={{ background: '#f8f5ef', color: '#6e6256' }}>{timeline.title}</Pill>
-          <Pill style={{ background: '#efe7d8', color: '#7d6c58' }}>{loading ? 'Обновляем выдачу' : `${items.length} в подборке`}</Pill>
+          <Pill style={{ background: '#efe7d8', color: '#7d6c58' }}>{loading ? 'Обновляем подборку' : `${items.length} объектов`}</Pill>
         </div>
 
         <div
@@ -110,18 +112,18 @@ export default function PropertiesPage() {
       </InfoCard>
 
       {loading ? (
-        <InfoCard style={{ color: '#7d7367' }}>Загружаю объекты...</InfoCard>
+        <InfoCard style={{ color: '#7d7367' }}>Подбираем объекты...</InfoCard>
       ) : error ? (
         <InfoCard style={{ background: '#fff6f1', color: '#6b4a36' }}>
-          <SectionEyebrow style={{ marginBottom: 8, color: '#b17b58' }}>Live status</SectionEyebrow>
-          <div style={{ fontWeight: 700, marginBottom: 8 }}>Каталог сейчас отвечает нестабильно</div>
-          <div style={{ lineHeight: 1.6 }}>{error}. Проверь backend URL и доступность API.</div>
+          <SectionEyebrow style={{ marginBottom: 8, color: '#b17b58' }}>Временная пауза</SectionEyebrow>
+          <div style={{ fontWeight: 700, marginBottom: 8 }}>Каталог сейчас недоступен</div>
+          <div style={{ lineHeight: 1.6 }}>Попробуйте открыть экран чуть позже.</div>
         </InfoCard>
       ) : items.length === 0 ? (
         <InfoCard>
-          <SectionEyebrow style={{ marginBottom: 8 }}>Пустая выдача</SectionEyebrow>
-          <div style={{ fontWeight: 700, marginBottom: 8 }}>Под эти параметры пока нет активных объектов</div>
-          <div style={{ lineHeight: 1.6, color: '#615648' }}>Можно ослабить фильтр по бюджету или переключиться между Крымом и Сочи.</div>
+          <SectionEyebrow style={{ marginBottom: 8 }}>Под эти параметры</SectionEyebrow>
+          <div style={{ fontWeight: 700, marginBottom: 8 }}>Сейчас нет подходящих объектов</div>
+          <div style={{ lineHeight: 1.6, color: '#615648' }}>Можно расширить бюджет или открыть другой рынок.</div>
         </InfoCard>
       ) : (
         <div style={{ display: 'grid', gap: 14 }}>

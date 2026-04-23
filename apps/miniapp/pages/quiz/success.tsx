@@ -15,15 +15,15 @@ export default function SuccessPage() {
 
   return (
     <AppShell
-      eyebrow="Заявка отправлена"
-      title="Готово, мы получили твой контакт"
-      description={`Теперь можно перейти к живой подборке объектов из backend. Регион: ${regionName}. Бюджет: ${budget.title}. Срок: ${timeline.title}.`}
+      eyebrow="Запрос отправлен"
+      title="Готово, мы получили ваш контакт"
+      description={`Вернёмся с предложениями под рынок ${regionName}, бюджет ${budget.title} и срок ${timeline.title}.`}
     >
       {leadId ? (
         <div style={{ marginBottom: 18, padding: 16, borderRadius: 18, background: '#fffaf6', border: '1px solid #ece3d7' }}>
-          <div style={{ fontSize: 13, color: '#8f7658', fontWeight: 700, marginBottom: 8 }}>Данные заявки</div>
+          <div style={{ fontSize: 13, color: '#8f7658', fontWeight: 700, marginBottom: 8 }}>Подтверждение запроса</div>
           <div style={{ lineHeight: 1.7, color: '#4d443b' }}>
-            <div><strong>Lead ID:</strong> {leadId}</div>
+            <div><strong>Номер запроса:</strong> {leadId}</div>
             {propertyTitle ? <div><strong>Объект:</strong> {propertyTitle}</div> : null}
           </div>
         </div>

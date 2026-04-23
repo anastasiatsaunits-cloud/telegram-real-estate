@@ -48,17 +48,22 @@ export default function ContactQuizPage() {
     }
   }
 
+  const title = propertyTitle ? 'Оставьте телефон, и мы свяжемся по выбранному объекту' : 'Оставьте телефон, и мы соберём подборку под ваш запрос';
+  const description = propertyTitle
+    ? 'Расскажем детали по объекту и, если нужно, покажем похожие варианты в том же бюджете.'
+    : 'Свяжемся с вами, уточним задачу и отправим сильные варианты под бюджет, срок и рынок.';
+
   return (
     <AppShell
       eyebrow="Последний шаг"
-      title="Оставь телефон, и мы покажем подборку"
-      description="Это уже живой submit в backend. Для MVP используем demo session из seed-данных. Сейчас можно отправить либо общий запрос по подборке, либо заявку на конкретный объект."
+      title={title}
+      description={description}
     >
       <BackLink href={`/quiz/ready?region=${regionSlug}&regionName=${encodeURIComponent(region)}&budgetKey=${budget.key}&timelineKey=${timeline.key}`} />
 
       <div style={{ display: 'grid', gap: 12, marginBottom: 18 }}>
         <div style={{ padding: 16, borderRadius: 18, background: '#fff8f0', border: '1px solid #ebddcb' }}>
-          <div style={{ fontSize: 13, color: '#8f7658', fontWeight: 700, marginBottom: 6 }}>Параметры запроса</div>
+          <div style={{ fontSize: 13, color: '#8f7658', fontWeight: 700, marginBottom: 6 }}>Ваш запрос</div>
           <div style={{ color: '#4d443b', lineHeight: 1.6 }}>
             <div><strong>Регион:</strong> {region}</div>
             <div><strong>Бюджет:</strong> {budget.title}</div>
@@ -68,7 +73,7 @@ export default function ContactQuizPage() {
 
         {propertyTitle ? (
           <div style={{ padding: 16, borderRadius: 18, background: '#fffaf6', border: '1px solid #ece3d7' }}>
-            <div style={{ fontSize: 13, color: '#8f7658', fontWeight: 700, marginBottom: 6 }}>Выбранный объект</div>
+            <div style={{ fontSize: 13, color: '#8f7658', fontWeight: 700, marginBottom: 6 }}>Вы выбрали</div>
             <div style={{ fontWeight: 700, lineHeight: 1.5 }}>{propertyTitle}</div>
           </div>
         ) : null}
@@ -76,12 +81,12 @@ export default function ContactQuizPage() {
 
       <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 14 }}>
         <label style={{ display: 'grid', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>Телефон</span>
+          <span style={{ fontWeight: 700 }}>Телефон для связи</span>
           <input
             type="tel"
             value={phone}
             onChange={(event) => setPhone(event.target.value)}
-            placeholder="+7 999 123-45-67"
+            placeholder="+7 (999) 123-45-67"
             required
             style={{
               border: '1px solid #d9cdbd',
@@ -110,10 +115,10 @@ export default function ContactQuizPage() {
             boxShadow: '0 10px 24px rgba(0,0,0,0.12)',
           }}
         >
-          {submitting ? 'Отправляю...' : propertyTitle ? 'Отправить заявку на объект' : 'Получить подборку'}
+          {submitting ? 'Отправляем запрос...' : propertyTitle ? 'Получить детали и похожие варианты' : 'Получить подборку'}
         </button>
 
-        {error ? <div style={{ color: '#b94a48', fontSize: 14 }}>{error}</div> : null}
+        {error ? <div style={{ color: '#b94a48', fontSize: 14 }}>Не удалось отправить запрос. Попробуйте ещё раз.</div> : null}
       </form>
     </AppShell>
   );

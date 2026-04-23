@@ -7,7 +7,7 @@ function getMarketPalette(regionSlug: string) {
     return {
       gradient: 'linear-gradient(135deg, #8ea986 0%, #5f755a 42%, #243229 100%)',
       accent: 'rgba(209, 232, 193, 0.24)',
-      label: 'Сочи · curated market',
+      label: 'Сочи · активный спрос',
       cta: '#0f4b22',
     };
   }
@@ -15,7 +15,7 @@ function getMarketPalette(regionSlug: string) {
   return {
     gradient: 'linear-gradient(135deg, #7aaec3 0%, #547b92 45%, #263746 100%)',
     accent: 'rgba(188, 230, 245, 0.24)',
-    label: 'Крым · private market',
+    label: 'Крым · у моря',
     cta: '#0b4f6c',
   };
 }
@@ -115,7 +115,7 @@ export function PropertyCardLink({
             </div>
 
             <div style={{ position: 'relative', zIndex: 1 }}>
-              <SectionEyebrow style={{ color: 'rgba(255,255,255,0.72)', marginBottom: 10 }}>signature object</SectionEyebrow>
+              <SectionEyebrow style={{ color: 'rgba(255,255,255,0.72)', marginBottom: 10 }}>объект в подборке</SectionEyebrow>
               <div style={{ fontSize: 36, fontWeight: 700, lineHeight: 1.02, color: '#ffffff', marginBottom: 12 }}>{property.title}</div>
               <div style={{ fontSize: 14, lineHeight: 1.55, color: 'rgba(255,255,255,0.88)', maxWidth: 380, marginBottom: 14 }}>{location || 'Локация уточняется'}</div>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: '#fff3da', fontWeight: 700, fontSize: 14 }}>
@@ -143,7 +143,7 @@ export function PropertyCardLink({
               </div>
               <div style={{ borderRadius: 18, padding: '12px 10px', background: '#faf6ef' }}>
                 <SectionEyebrow style={{ marginBottom: 6 }}>формат</SectionEyebrow>
-                <div style={{ fontWeight: 700, color: '#1d1b18' }}>investment pick</div>
+                <div style={{ fontWeight: 700, color: '#1d1b18' }}>для капитала</div>
               </div>
             </div>
 
@@ -156,12 +156,12 @@ export function PropertyCardLink({
                 border: '1px solid rgba(228,216,198,0.92)',
               }}
             >
-              <SectionEyebrow style={{ marginBottom: 8 }}>why this lot</SectionEyebrow>
+              <SectionEyebrow style={{ marginBottom: 8 }}>Почему смотреть</SectionEyebrow>
               <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.32, color: '#1d1b18', marginBottom: 8 }}>
-                Сильная витринная подача для первого касания, чтобы клиент захотел открыть detail, а не пролистнуть дальше.
+                Сильный лот для первого просмотра и предметного разговора.
               </div>
               <div style={{ color: '#675b4f', lineHeight: 1.6, fontSize: 14 }}>
-                Карточка собрана как вход в curated-подборку: рынок, локация, цена входа и понятный переход к следующему шагу.
+                Цена входа, локация и суть объекта уже перед глазами. Дальше, детали, расчёт и следующий шаг.
               </div>
             </div>
 
@@ -180,7 +180,7 @@ export function PropertyCardLink({
                 boxShadow: '0 10px 24px rgba(15,75,34,0.18)',
               }}
             >
-              <span>Открыть карточку объекта</span>
+              <span>Смотреть детали объекта</span>
               <span style={{ fontSize: 20, lineHeight: 1 }}>→</span>
             </div>
           </div>

@@ -5,10 +5,10 @@ const markets = [
   {
     key: 'crimea',
     title: 'Крым',
-    kicker: 'resort income line',
-    subtitle: 'Ялта, Алушта, первая линия, курортные резиденции и приватные лоты для спокойного капитала',
-    footnote: 'Курортный рынок для спокойного капитала и сезонной доходности',
-    badge: 'Private coast',
+    kicker: 'Курортный рынок',
+    subtitle: 'Ялта, Алушта, первая линия, резиденции у моря и объекты для спокойного входа в курортную недвижимость',
+    footnote: 'Для тех, кто ищет море, приватность и аккуратную сезонную доходность',
+    badge: 'Первая линия',
     href: '/properties?region=crimea&regionName=Крым',
     gradient: 'linear-gradient(135deg, rgba(29,53,64,0.12) 0%, rgba(10,16,22,0.72) 100%)',
     accent: 'rgba(157, 223, 248, 0.42)',
@@ -18,10 +18,10 @@ const markets = [
   {
     key: 'sochi',
     title: 'Сочи',
-    kicker: 'city capital line',
-    subtitle: 'Премиальные лоты, доходные объекты и сильные curated подборки по морю, центру и статусным локациям',
-    footnote: 'Городской premium рынок с более быстрым темпом сделок и спроса',
-    badge: 'Curated market',
+    kicker: 'Город у моря',
+    subtitle: 'Премиальные объекты у моря, в центре и в сильных локациях для тех, кто смотрит на ликвидность и аренду',
+    footnote: 'Для входа в рынок с быстрым спросом и сильной динамикой',
+    badge: 'Активный рынок',
     href: '/properties?region=sochi&regionName=Сочи',
     gradient: 'linear-gradient(135deg, rgba(24,44,28,0.12) 0%, rgba(10,16,22,0.72) 100%)',
     accent: 'rgba(206, 230, 187, 0.32)',
@@ -31,7 +31,7 @@ const markets = [
   {
     key: 'thailand',
     title: 'Таиланд',
-    subtitle: 'Скоро добавим международное направление',
+    subtitle: 'Готовим международное направление для курортных инвестиций',
     href: '/quiz/region',
     gradient: 'linear-gradient(135deg, #9eb8b0 0%, #5f776f 100%)',
     size: 'small',
@@ -39,7 +39,7 @@ const markets = [
   {
     key: 'mountains',
     title: 'Горный кластер',
-    subtitle: 'Отдых, аренда и капитализация в горах',
+    subtitle: 'Резиденции и арендные форматы в локациях с круглогодичным спросом',
     href: '/quiz/region',
     gradient: 'linear-gradient(135deg, #9ca8b6 0%, #5f6a77 100%)',
     size: 'small',
@@ -47,35 +47,35 @@ const markets = [
 ];
 
 const bottomLinks = [
-  { title: 'О компании', href: '/quiz/ready' },
+  { title: 'О проекте', href: '/quiz/ready' },
   { title: 'Отзывы', href: '/quiz/success' },
-  { title: 'Заработать', href: '/quiz/contact' },
+  { title: 'Инвесторам', href: '/quiz/contact' },
 ];
 
 const premiumSignals = [
-  'Крым и Сочи уже разведены как два самостоятельных инвестиционных рынка',
-  'Curated-подборка без CRM-шума и случайных лотов',
-  'Путь от первого впечатления до заявки собран как private service',
+  'Крым и Сочи разделены по логике спроса, доходности и образа жизни',
+  'В каталоге только объекты, которые можно уверенно показывать взыскательному клиенту',
+  'Если нужен не просмотр, а решение, переводим сразу в персональный подбор',
 ];
 
 const trustNumbers = [
-  { value: '2', label: 'живых рынка' },
-  { value: '24/7', label: 'concierge-подбор' },
-  { value: '72ч', label: 'на сбор сильной подборки' },
+  { value: '2', label: 'рынка в каталоге' },
+  { value: '24/7', label: 'сопровождение в Telegram' },
+  { value: '72ч', label: 'на точную подборку' },
 ];
 
 const conciergeSteps = [
   {
-    title: 'Выбираешь рынок',
-    text: 'Крым и Сочи подаются отдельно, чтобы у клиента сразу было ощущение точного входа, а не общей ленты.',
+    title: 'Выберите рынок',
+    text: 'Крым, если важны море, приватность и спокойный сценарий капитала. Сочи, если нужен более активный рынок и сильный спрос.',
   },
   {
-    title: 'Открываешь curated-объекты',
-    text: 'Показываем только сильные лоты с premium подачей, цифрами и понятным следующим шагом.',
+    title: 'Откройте объекты',
+    text: 'Смотрите уже отобранные лоты с ценой входа, локацией и понятной логикой покупки.',
   },
   {
-    title: 'Переходишь в private подбор',
-    text: 'Дальше не анкета ради анкеты, а сценарий под инвестиционную задачу, бюджет и горизонт.',
+    title: 'Оставьте запрос на подбор',
+    text: 'Если нужен точный сценарий, соберём предложения под бюджет, срок и цель покупки.',
   },
 ];
 
@@ -141,18 +141,18 @@ export default function HomePage() {
                   backdropFilter: 'blur(8px)',
                 }}
               >
-                RICH BY FLATHOUSE <span style={{ opacity: 0.7 }}>•</span> private investment entry
+                RICH BY FLATHOUSE <span style={{ opacity: 0.7 }}>•</span> закрытый доступ к объектам
               </Pill>
             </div>
 
             <div>
-              <SectionEyebrow style={{ color: 'rgba(255,240,219,0.72)', marginBottom: 10 }}>curated private access</SectionEyebrow>
+              <SectionEyebrow style={{ color: 'rgba(255,240,219,0.72)', marginBottom: 10 }}>Закрытый доступ</SectionEyebrow>
               <div style={{ fontSize: 38, fontWeight: 700, lineHeight: 0.98, marginBottom: 16, maxWidth: 420 }}>
-                Недвижимость, которая ощущается как private service, а не как витрина из случайных лотов
+                Недвижимость, которую подбирают под задачу капитала, а не показывают в общей ленте
               </div>
 
               <div style={{ color: 'rgba(255,245,232,0.8)', lineHeight: 1.6, fontSize: 16, maxWidth: 420, marginBottom: 20 }}>
-                Открываем Крым и Сочи как два самостоятельных инвестиционных рынка. Спокойная luxury-подача, curated-объекты и путь к подбору без CRM-шума.
+                Крым и Сочи открываются как два разных инвестиционных сценария. Только сильные объекты, понятная логика входа и короткий путь к решению.
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 10, marginBottom: 18 }}>
@@ -211,7 +211,7 @@ export default function HomePage() {
                     fontSize: 17,
                   }}
                 >
-                  Открыть private markets
+                  Открыть рынки
                 </PrimaryButton>
 
                 <Link
@@ -230,11 +230,11 @@ export default function HomePage() {
                     backdropFilter: 'blur(10px)',
                   }}
                 >
-                  Получить private подбор
+                  Получить персональный подбор
                 </Link>
 
                 <div style={{ color: 'rgba(255,245,232,0.68)', fontSize: 13, lineHeight: 1.45, textAlign: 'center' }}>
-                  Если нужен не каталог, а готовый shortlist под бюджет и горизонт, уводим сразу в concierge-сценарий.
+                  Если нужен готовый список сильных объектов под бюджет и срок, соберём его персонально.
                 </div>
               </div>
             </div>
@@ -262,10 +262,10 @@ export default function HomePage() {
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 14 }}>
               <div>
-                <SectionEyebrow style={{ marginBottom: 6 }}>Private concierge flow</SectionEyebrow>
-                <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.16, color: '#1d1b18' }}>Не просто каталог, а короткий путь к инвестиционному решению</div>
+                <SectionEyebrow style={{ marginBottom: 6 }}>Как это работает</SectionEyebrow>
+                <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.16, color: '#1d1b18' }}>Не листать десятки карточек, а быстро выйти на сильный вариант</div>
               </div>
-              <Pill style={{ flexShrink: 0, background: '#efe4d2', color: '#6d5c49' }}>luxury funnel</Pill>
+              <Pill style={{ flexShrink: 0, background: '#efe4d2', color: '#6d5c49' }}>Частный маршрут</Pill>
             </div>
 
             <div style={{ display: 'grid', gap: 10 }}>
@@ -318,9 +318,9 @@ export default function HomePage() {
           >
             <div>
               <SectionEyebrow style={{ marginBottom: 6 }}>Выбор рынка</SectionEyebrow>
-              <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.12, color: '#1d1b18' }}>Сначала выбери рынок, потом открывай объекты</div>
+              <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.12, color: '#1d1b18' }}>Сначала рынок, потом объекты</div>
             </div>
-            <Pill style={{ flexShrink: 0 }}>2 live markets</Pill>
+            <Pill style={{ flexShrink: 0 }}>2 направления</Pill>
           </div>
 
           <div style={{ display: 'grid', gap: 14, marginBottom: 14 }}>
@@ -428,7 +428,7 @@ export default function HomePage() {
                 >
                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.22) 100%)' }} />
                   <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
-                    <SectionEyebrow style={{ color: 'rgba(255,255,255,0.72)' }}>watchlist</SectionEyebrow>
+                    <SectionEyebrow style={{ color: 'rgba(255,255,255,0.72)' }}>Скоро</SectionEyebrow>
                     <div>
                       <div style={{ fontSize: 26, fontWeight: 700, marginBottom: 8 }}>{market.title}</div>
                       <div style={{ fontSize: 13, lineHeight: 1.42, color: 'rgba(255,255,255,0.86)' }}>{market.subtitle}</div>
@@ -450,10 +450,10 @@ export default function HomePage() {
               lineHeight: 1.55,
             }}
           >
-            <SectionEyebrow style={{ marginBottom: 8 }}>Concierge note</SectionEyebrow>
-            <div style={{ fontWeight: 700, marginBottom: 8 }}>Каталог уже живой: Крым и Сочи открываются как отдельные рынки, а не как смешанная витрина.</div>
+            <SectionEyebrow style={{ marginBottom: 8 }}>Важно</SectionEyebrow>
+            <div style={{ fontWeight: 700, marginBottom: 8 }}>Каталог разделён по рынкам, чтобы выбор начинался точно</div>
             <div>
-              Если нужен быстрый показ, открывай рынок сразу. Если нужен более точный сценарий входа, можно увести клиента в персональную подборку через квиз.
+              Не смешиваем Крым и Сочи в одну ленту. Так клиент быстрее понимает, куда смотреть и какой сценарий подходит именно ему.
             </div>
           </div>
 
@@ -465,7 +465,7 @@ export default function HomePage() {
               boxShadow: '0 16px 32px rgba(19,40,31,0.18)',
             }}
           >
-            <SectionEyebrow style={{ marginBottom: 10, color: 'rgba(231,221,205,0.7)' }}>Дополнительные входы в funnel</SectionEyebrow>
+            <SectionEyebrow style={{ marginBottom: 10, color: 'rgba(231,221,205,0.7)' }}>Дополнительно</SectionEyebrow>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
               {bottomLinks.map((item) => (
                 <Link

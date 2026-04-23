@@ -25,13 +25,12 @@ export default function ReadyPage() {
           boxShadow: '0 10px 30px rgba(0,0,0,0.06)',
         }}
       >
-        <p style={{ margin: '0 0 8px', color: '#8b7355', fontWeight: 600 }}>Подборка готова</p>
+        <p style={{ margin: '0 0 8px', color: '#8b7355', fontWeight: 600 }}>Следующий шаг</p>
         <h1 style={{ margin: '0 0 12px', fontSize: 32, lineHeight: 1.1 }}>
-          Мы уже собрали подходящие варианты
+          Мы уже понимаем параметры твоего запроса
         </h1>
         <p style={{ margin: '0 0 20px', lineHeight: 1.5, color: '#5c5348' }}>
-          Следующим шагом сюда подключим форму телефона и вывод персональной подборки объектов.
-          Сейчас это первый рабочий экран завершения квиза для MVP.
+          Осталось оставить контакт, и мы вернёмся с подборкой под рынок, бюджет и срок покупки.
         </p>
 
         <div
@@ -43,12 +42,12 @@ export default function ReadyPage() {
             border: '1px solid #ece3d7',
           }}
         >
-          <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 8 }}>Что уже подготовлено</div>
+          <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 8 }}>Ваш запрос</div>
           <ul style={{ margin: 0, paddingLeft: 18, color: '#5c5348', lineHeight: 1.6 }}>
             <li>регион: {regionName}</li>
             <li>бюджет: {budget.title}</li>
             <li>срок покупки: {timeline.title}</li>
-            <li>подборка будет открыта с фильтром по региону</li>
+            <li>дальше покажем объекты в выбранном сценарии</li>
           </ul>
         </div>
 

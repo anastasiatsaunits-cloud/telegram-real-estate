@@ -23,28 +23,28 @@ function getMarketTheme(regionSlug: string | undefined) {
     return {
       gradient: 'linear-gradient(135deg, #89a8ba 0%, #60798b 45%, #2e3e4a 100%)',
       accent: 'rgba(199, 228, 243, 0.28)',
-      label: 'Сочи · premium collection',
+      label: 'Сочи · выбор рынка',
     };
   }
 
   return {
     gradient: 'linear-gradient(135deg, #7da4b7 0%, #58717f 45%, #2f4149 100%)',
     accent: 'rgba(185, 233, 244, 0.25)',
-    label: 'Крым · private collection',
+    label: 'Крым · выбор рынка',
   };
 }
 
 function purchaseOptionsLabel(options: string[] | null | undefined) {
-  if (!options?.length) return 'Рассрочка, ипотека, персональный сценарий входа';
+  if (!options?.length) return 'Рассрочка, ипотека или персональный сценарий покупки.';
   return options.join(' · ');
 }
 
 function metricCards(property: PropertyDetails | null) {
   return [
     { label: 'Площадь', value: formatArea(property?.areaFrom, property?.areaTo) },
-    { label: 'Арендный yield', value: property?.metrics?.rentalYield ? `${property.metrics.rentalYield}%` : 'по запросу' },
+    { label: 'Арендная доходность', value: property?.metrics?.rentalYield ? `${property.metrics.rentalYield}%` : 'по запросу' },
     { label: 'Рост капитала', value: property?.metrics?.annualGrowth ? `${property.metrics.annualGrowth}%` : 'по запросу' },
-    { label: 'ROI 5 лет', value: property?.metrics?.roi5y ? `${property.metrics.roi5y}%` : 'по запросу' },
+    { label: 'ROI за 5 лет', value: property?.metrics?.roi5y ? `${property.metrics.roi5y}%` : 'по запросу' },
   ];
 }
 
@@ -78,9 +78,9 @@ export default function PropertyDetailsPage() {
   const theme = useMemo(() => getMarketTheme(property?.region.slug), [property?.region.slug]);
   const facts = useMemo(
     () => [
-      { label: 'Гео', value: property ? [property.region.name, property.city].filter(Boolean).join(' · ') || property.region.name : '—' },
+      { label: 'География', value: property ? [property.region.name, property.city].filter(Boolean).join(' · ') || property.region.name : '—' },
       { label: 'Площадь', value: formatArea(property?.areaFrom, property?.areaTo) },
-      { label: 'Тип', value: property?.propertyType || 'Премиальный объект' },
+      { label: 'Тип объекта', value: property?.propertyType || 'Премиальный объект' },
       { label: 'Статус', value: property?.status || 'Доступен к просмотру' },
     ],
     [property]
@@ -99,12 +99,12 @@ export default function PropertyDetailsPage() {
       <BackLink href={marketHref} />
 
       {!property && !error ? (
-        <InfoCard style={{ color: '#7d7367' }}>Загружаю карточку...</InfoCard>
+        <InfoCard style={{ color: '#7d7367' }}>Открываем объект...</InfoCard>
       ) : error ? (
         <InfoCard style={{ background: '#fff6f1', color: '#6b4a36' }}>
-          <SectionEyebrow style={{ marginBottom: 8, color: '#b17b58' }}>Live status</SectionEyebrow>
-          <div style={{ fontWeight: 700, marginBottom: 8 }}>Карточка сейчас не открылась</div>
-          <div style={{ lineHeight: 1.6 }}>{error}. Нужна проверка backend URL или live proxy.</div>
+          <SectionEyebrow style={{ marginBottom: 8, color: '#b17b58' }}>Временная пауза</SectionEyebrow>
+          <div style={{ fontWeight: 700, marginBottom: 8 }}>Карточка сейчас недоступна</div>
+          <div style={{ lineHeight: 1.6 }}>Попробуйте открыть объект чуть позже.</div>
         </InfoCard>
       ) : propertyData ? (
         <>
@@ -131,11 +131,11 @@ export default function PropertyDetailsPage() {
 
             <div style={{ position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'flex-start', flexWrap: 'wrap' }}>
               <Pill style={{ background: 'rgba(255,255,255,0.16)', color: '#ffffff' }}>{theme.label}</Pill>
-              <Pill style={{ background: 'rgba(17,22,24,0.42)', color: '#ffffff' }}>curated object</Pill>
+              <Pill style={{ background: 'rgba(17,22,24,0.42)', color: '#ffffff' }}>объект в подборке</Pill>
             </div>
 
             <div style={{ position: 'relative', zIndex: 1 }}>
-              <SectionEyebrow style={{ color: 'rgba(255,255,255,0.76)', marginBottom: 10 }}>объект из закрытой подборки</SectionEyebrow>
+              <SectionEyebrow style={{ color: 'rgba(255,255,255,0.76)', marginBottom: 10 }}>Отобранный объект</SectionEyebrow>
               <div style={{ fontSize: 42, fontWeight: 700, lineHeight: 1.02, color: '#ffffff', marginBottom: 10 }}>{propertyData.title}</div>
               <div style={{ fontSize: 15, lineHeight: 1.55, color: 'rgba(255,255,255,0.88)', maxWidth: 420, marginBottom: 18 }}>{locationLine}</div>
 
@@ -143,12 +143,12 @@ export default function PropertyDetailsPage() {
                 <div style={{ borderRadius: 24, padding: '18px 18px 16px', background: 'rgba(255,255,255,0.92)', color: '#181818', boxShadow: '0 12px 28px rgba(11,17,20,0.18)' }}>
                   <SectionEyebrow style={{ color: '#8a7e73', marginBottom: 6 }}>цена входа</SectionEyebrow>
                   <div style={{ fontWeight: 700, fontSize: 26, lineHeight: 1.08, marginBottom: 8 }}>{formatPrice(propertyData.priceFrom, propertyData.currency)}</div>
-                  <div style={{ fontSize: 14, color: '#665b50', lineHeight: 1.5 }}>Для быстрого первого касания без перегруза цифрами.</div>
+                  <div style={{ fontSize: 14, color: '#665b50', lineHeight: 1.5 }}>Стартовая стоимость для первого ориентира.</div>
                 </div>
                 <div style={{ borderRadius: 24, padding: '18px 18px 16px', background: 'rgba(24,31,34,0.36)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.08)' }}>
-                  <SectionEyebrow style={{ color: 'rgba(255,255,255,0.6)', marginBottom: 6 }}>сценарий</SectionEyebrow>
-                  <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.25, marginBottom: 8 }}>Смотреть, считать, быстро принимать решение</div>
-                  <div style={{ color: 'rgba(255,255,255,0.76)', lineHeight: 1.5, fontSize: 14 }}>Экран собран как selling page для Telegram miniapp.</div>
+                  <SectionEyebrow style={{ color: 'rgba(255,255,255,0.6)', marginBottom: 6 }}>Потенциал</SectionEyebrow>
+                  <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.25, marginBottom: 8 }}>Лот, который стоит считать дальше</div>
+                  <div style={{ color: 'rgba(255,255,255,0.76)', lineHeight: 1.5, fontSize: 14 }}>Если объект откликается по локации и бюджету, следующий шаг, запросить расчёт и похожие варианты.</div>
                 </div>
               </div>
             </div>
@@ -171,24 +171,24 @@ export default function PropertyDetailsPage() {
           </div>
 
           <InfoCard style={{ marginBottom: 16, background: 'linear-gradient(180deg, #f9f3e8 0%, #f4ead8 100%)', color: '#3d342b' }}>
-            <SectionEyebrow style={{ marginBottom: 8, color: '#978876' }}>О проекте</SectionEyebrow>
-            <div style={{ fontSize: 18, fontWeight: 700, lineHeight: 1.3, color: '#201c18', marginBottom: 10 }}>Объект для сценария «смотреть, считать, быстро принимать решение».</div>
-            <div style={{ lineHeight: 1.7 }}>{propertyData.description || 'Подробное описание объекта добавим на следующем слое. Сейчас экран уже готов для показа клиенту и перехода в заявку.'}</div>
+            <SectionEyebrow style={{ marginBottom: 8, color: '#978876' }}>Об объекте</SectionEyebrow>
+            <div style={{ fontSize: 18, fontWeight: 700, lineHeight: 1.3, color: '#201c18', marginBottom: 10 }}>Коротко о главном</div>
+            <div style={{ lineHeight: 1.7 }}>{propertyData.description || 'Сильный объект для тех, кто выбирает локацию, понятный ценовой вход и потенциал дальнейшего роста.'}</div>
           </InfoCard>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 10, marginBottom: 16 }}>
             {[
               {
-                title: 'Быстрый расчёт',
-                text: 'Сразу переводим интерес в цифры и сценарий входа.',
+                title: 'Цена входа',
+                text: 'Сразу видно, с какого бюджета начинается вход в объект.',
               },
               {
-                title: 'Похожие лоты',
-                text: 'Если нужен выбор, не теряем ритм и даём соседние варианты.',
+                title: 'Похожие варианты',
+                text: 'Если нужен выбор, подберём соседние лоты в том же сценарии.',
               },
               {
-                title: 'Возврат в рынок',
-                text: 'Клиент может легко вернуться в текущую curated-подборку.',
+                title: 'Следующий шаг',
+                text: 'Можно сразу запросить расчёт и персональную подборку.',
               },
             ].map((item) => (
               <InfoCard key={item.title} style={{ minHeight: 148, background: '#fffaf2' }}>
@@ -199,16 +199,16 @@ export default function PropertyDetailsPage() {
           </div>
 
           <InfoCard style={{ marginBottom: 16, background: 'linear-gradient(180deg, #162a24 0%, #1f3c34 100%)', color: '#ffffff', boxShadow: '0 16px 30px rgba(18,38,31,0.2)' }}>
-            <SectionEyebrow style={{ marginBottom: 8, color: 'rgba(230,220,204,0.7)' }}>Investment narrative</SectionEyebrow>
-            <div style={{ fontSize: 20, fontWeight: 700, lineHeight: 1.32, marginBottom: 10 }}>Лот под private-инвестиционный сценарий, а не просто ещё одна карточка в выдаче.</div>
+            <SectionEyebrow style={{ marginBottom: 8, color: 'rgba(230,220,204,0.7)' }}>Инвестиционный потенциал</SectionEyebrow>
+            <div style={{ fontSize: 20, fontWeight: 700, lineHeight: 1.32, marginBottom: 10 }}>Объект не для случайного просмотра, а для предметного решения.</div>
             <div style={{ color: 'rgba(255,255,255,0.8)', lineHeight: 1.7, marginBottom: 12 }}>
-              Экран должен быстро ответить на три вопроса: почему именно этот объект, какой здесь формат входа и что делать дальше, если клиенту нужен расчёт или похожие варианты.
+              Здесь важны три вещи: локация, цена входа и потенциал по росту или аренде. Если объект подходит по задаче, дальше ведём в расчёт и подбор похожих вариантов.
             </div>
             <div style={{ display: 'grid', gap: 10 }}>
               {[
-                'Премиальная локация и понятный ценовой вход без перегруза второстепенными данными',
-                'Короткий путь к доходности, подбору похожих лотов и живому concierge-сценарию',
-                'Подача в логике luxury miniapp, а не CRM-анкеты',
+                'Понятная локация и ценовой вход',
+                'Ключевые метрики без лишнего шума',
+                'Быстрый переход к расчёту и персональной подборке',
               ].map((item) => (
                 <div key={item} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
                   <div style={{ width: 7, height: 7, marginTop: 7, borderRadius: 999, background: '#e5d0a7', flexShrink: 0 }} />
@@ -219,7 +219,7 @@ export default function PropertyDetailsPage() {
           </InfoCard>
 
           <div style={{ marginBottom: 16 }}>
-            <SectionEyebrow style={{ marginBottom: 10, color: '#978876' }}>Быстрые факты</SectionEyebrow>
+            <SectionEyebrow style={{ marginBottom: 10, color: '#978876' }}>Ключевые факты</SectionEyebrow>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
               {facts.map((fact) => (
                 <InfoCard key={fact.label} style={{ minHeight: 104 }}>
@@ -231,7 +231,7 @@ export default function PropertyDetailsPage() {
           </div>
 
           <div style={{ marginBottom: 16 }}>
-            <SectionEyebrow style={{ marginBottom: 10, color: '#978876' }}>Инвест-метрики</SectionEyebrow>
+            <SectionEyebrow style={{ marginBottom: 10, color: '#978876' }}>Инвестиционные метрики</SectionEyebrow>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
               {metrics.map((metric) => (
                 <InfoCard key={metric.label} style={{ background: '#fffdf9' }}>
@@ -244,18 +244,18 @@ export default function PropertyDetailsPage() {
 
           <InfoCard style={{ marginBottom: 16 }}>
             <SectionEyebrow style={{ marginBottom: 8, color: '#978876' }}>Варианты покупки</SectionEyebrow>
-            <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.35, color: '#1f1b17', marginBottom: 10 }}>Гибкий сценарий входа под клиента и задачу</div>
+            <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.35, color: '#1f1b17', marginBottom: 10 }}>Подберём удобный формат входа</div>
             <div style={{ color: '#53493f', lineHeight: 1.65 }}>{purchaseOptionsLabel(propertyData.purchaseOptionsJson)}</div>
           </InfoCard>
 
           <InfoCard style={{ marginBottom: 16, background: 'linear-gradient(180deg, #fffaf3 0%, #f4ebde 100%)' }}>
-            <SectionEyebrow style={{ marginBottom: 8, color: '#978876' }}>Private concierge logic</SectionEyebrow>
-            <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.35, color: '#1f1b17', marginBottom: 10 }}>После этой карточки клиенту не нужно думать, куда идти дальше.</div>
+            <SectionEyebrow style={{ marginBottom: 8, color: '#978876' }}>Следующий шаг</SectionEyebrow>
+            <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.35, color: '#1f1b17', marginBottom: 10 }}>После просмотра не нужно начинать поиск заново</div>
             <div style={{ display: 'grid', gap: 10 }}>
               {[
-                'Нужны цифры, переводим в инвест-расчёт и сценарий покупки.',
-                'Нужен выбор, даём подбор похожих лотов без возврата в хаос.',
-                'Нужно просто продолжить просмотр, возвращаем в текущий рынок и подборку.',
+                'Нужен расчёт, соберём цифры под вашу задачу.',
+                'Нужны альтернативы, покажем похожие объекты.',
+                'Нужна консультация, свяжемся и проведём дальше.',
               ].map((item) => (
                 <div key={item} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', color: '#564b40', lineHeight: 1.6 }}>
                   <div style={{ width: 7, height: 7, marginTop: 8, borderRadius: 999, background: '#d1b585', flexShrink: 0 }} />
@@ -266,14 +266,14 @@ export default function PropertyDetailsPage() {
           </InfoCard>
 
           <InfoCard style={{ marginBottom: 16, background: 'linear-gradient(180deg, #173328 0%, #234338 100%)', color: '#ffffff', boxShadow: '0 16px 32px rgba(19,40,31,0.18)' }}>
-            <SectionEyebrow style={{ marginBottom: 8, color: 'rgba(231,221,205,0.7)' }}>Следующий шаг</SectionEyebrow>
-            <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.35, marginBottom: 8 }}>Можно сразу перейти к расчёту доходности или отправить заявку на подбор похожих лотов.</div>
-            <div style={{ color: 'rgba(255,255,255,0.78)', lineHeight: 1.65 }}>Карточка держит premium-ритм: короткий narrative, ключевые факты, метрики и понятный CTA без CRM-шумa.</div>
+            <SectionEyebrow style={{ marginBottom: 8, color: 'rgba(231,221,205,0.7)' }}>Запрос</SectionEyebrow>
+            <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.35, marginBottom: 8 }}>Можно сразу перейти к расчёту и персональной подборке</div>
+            <div style={{ color: 'rgba(255,255,255,0.78)', lineHeight: 1.65 }}>Оставьте контакт, и мы вернёмся с предметным сценарием по этому объекту.</div>
           </InfoCard>
 
           <div style={{ display: 'grid', gap: 12 }}>
             <PrimaryButton href={contactHref} style={{ background: '#ead7ad', color: '#1f1f1f', boxShadow: '0 10px 22px rgba(90,77,38,0.12)' }}>
-              📊 Инвест расчёт и подбор похожих
+              Получить расчёт и похожие объекты
             </PrimaryButton>
 
             <Link
@@ -307,7 +307,7 @@ export default function PropertyDetailsPage() {
                 border: '1px solid rgba(216,201,180,0.92)',
               }}
             >
-              ← Вернуться в подборку рынка
+              Вернуться к подборке
             </Link>
           </div>
         </>
