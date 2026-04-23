@@ -10,7 +10,7 @@ export class RegionsService {
       where: {
         isActive: true,
         slug: {
-          in: ['crimea', 'sochi'],
+          in: ['anapa', 'crimea', 'sochi'],
         },
       },
       orderBy: [{ sortOrder: 'asc' }, { name: 'asc' }],
