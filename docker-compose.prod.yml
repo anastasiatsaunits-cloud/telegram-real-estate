@@ -53,6 +53,17 @@ services:
     ports:
       - "127.0.0.1:3000:3000"
 
+  bot:
+    build:
+      context: .
+      dockerfile: apps/bot/Dockerfile
+    restart: unless-stopped
+    env_file:
+      - deploy/env/bot.env
+    depends_on:
+      miniapp:
+        condition: service_started
+
 volumes:
   postgres_data:
   redis_data:
