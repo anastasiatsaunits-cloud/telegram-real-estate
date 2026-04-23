@@ -89,10 +89,14 @@ export default function PropertyDetailsPage() {
   const metrics = useMemo(() => metricCards(property), [property]);
   const locationLine = property ? [property.city, property.address].filter(Boolean).join(', ') || property.region.name : 'Загружаю карточку объекта...';
   const propertyData = property;
+  const marketHref = region ? `/properties?region=${region}&regionName=${encodeURIComponent(regionName)}` : '/properties';
+  const contactHref = propertyData
+    ? `/quiz/contact?propertySlug=${propertyData.slug}&propertyTitle=${encodeURIComponent(propertyData.title)}${region ? `&region=${region}` : ''}${regionName ? `&regionName=${encodeURIComponent(regionName)}` : ''}`
+    : '/quiz/contact';
 
   return (
     <AppShell eyebrow={property?.region.name ?? 'Объект'} title={property?.title ?? 'Карточка объекта'} description={locationLine}>
-      <BackLink href={region ? `/properties?region=${region}&regionName=${encodeURIComponent(regionName)}` : '/properties'} />
+      <BackLink href={marketHref} />
 
       {!property && !error ? (
         <InfoCard style={{ color: '#7d7367' }}>Загружаю карточку...</InfoCard>
@@ -172,6 +176,28 @@ export default function PropertyDetailsPage() {
             <div style={{ lineHeight: 1.7 }}>{propertyData.description || 'Подробное описание объекта добавим на следующем слое. Сейчас экран уже готов для показа клиенту и перехода в заявку.'}</div>
           </InfoCard>
 
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 10, marginBottom: 16 }}>
+            {[
+              {
+                title: 'Быстрый расчёт',
+                text: 'Сразу переводим интерес в цифры и сценарий входа.',
+              },
+              {
+                title: 'Похожие лоты',
+                text: 'Если нужен выбор, не теряем ритм и даём соседние варианты.',
+              },
+              {
+                title: 'Возврат в рынок',
+                text: 'Клиент может легко вернуться в текущую curated-подборку.',
+              },
+            ].map((item) => (
+              <InfoCard key={item.title} style={{ minHeight: 148, background: '#fffaf2' }}>
+                <SectionEyebrow style={{ marginBottom: 8 }}>{item.title}</SectionEyebrow>
+                <div style={{ color: '#51473c', lineHeight: 1.55, fontSize: 14 }}>{item.text}</div>
+              </InfoCard>
+            ))}
+          </div>
+
           <InfoCard style={{ marginBottom: 16, background: 'linear-gradient(180deg, #162a24 0%, #1f3c34 100%)', color: '#ffffff', boxShadow: '0 16px 30px rgba(18,38,31,0.2)' }}>
             <SectionEyebrow style={{ marginBottom: 8, color: 'rgba(230,220,204,0.7)' }}>Investment narrative</SectionEyebrow>
             <div style={{ fontSize: 20, fontWeight: 700, lineHeight: 1.32, marginBottom: 10 }}>Лот под private-инвестиционный сценарий, а не просто ещё одна карточка в выдаче.</div>
@@ -222,6 +248,23 @@ export default function PropertyDetailsPage() {
             <div style={{ color: '#53493f', lineHeight: 1.65 }}>{purchaseOptionsLabel(propertyData.purchaseOptionsJson)}</div>
           </InfoCard>
 
+          <InfoCard style={{ marginBottom: 16, background: 'linear-gradient(180deg, #fffaf3 0%, #f4ebde 100%)' }}>
+            <SectionEyebrow style={{ marginBottom: 8, color: '#978876' }}>Private concierge logic</SectionEyebrow>
+            <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.35, color: '#1f1b17', marginBottom: 10 }}>После этой карточки клиенту не нужно думать, куда идти дальше.</div>
+            <div style={{ display: 'grid', gap: 10 }}>
+              {[
+                'Нужны цифры, переводим в инвест-расчёт и сценарий покупки.',
+                'Нужен выбор, даём подбор похожих лотов без возврата в хаос.',
+                'Нужно просто продолжить просмотр, возвращаем в текущий рынок и подборку.',
+              ].map((item) => (
+                <div key={item} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', color: '#564b40', lineHeight: 1.6 }}>
+                  <div style={{ width: 7, height: 7, marginTop: 8, borderRadius: 999, background: '#d1b585', flexShrink: 0 }} />
+                  <div>{item}</div>
+                </div>
+              ))}
+            </div>
+          </InfoCard>
+
           <InfoCard style={{ marginBottom: 16, background: 'linear-gradient(180deg, #173328 0%, #234338 100%)', color: '#ffffff', boxShadow: '0 16px 32px rgba(19,40,31,0.18)' }}>
             <SectionEyebrow style={{ marginBottom: 8, color: 'rgba(231,221,205,0.7)' }}>Следующий шаг</SectionEyebrow>
             <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.35, marginBottom: 8 }}>Можно сразу перейти к расчёту доходности или отправить заявку на подбор похожих лотов.</div>
@@ -229,12 +272,12 @@ export default function PropertyDetailsPage() {
           </InfoCard>
 
           <div style={{ display: 'grid', gap: 12 }}>
-            <PrimaryButton href={`/quiz/contact?propertySlug=${propertyData.slug}&propertyTitle=${encodeURIComponent(propertyData.title)}${region ? `&region=${region}` : ''}${regionName ? `&regionName=${encodeURIComponent(regionName)}` : ''}`} style={{ background: '#ead7ad', color: '#1f1f1f', boxShadow: '0 10px 22px rgba(90,77,38,0.12)' }}>
+            <PrimaryButton href={contactHref} style={{ background: '#ead7ad', color: '#1f1f1f', boxShadow: '0 10px 22px rgba(90,77,38,0.12)' }}>
               📊 Инвест расчёт и подбор похожих
             </PrimaryButton>
 
             <Link
-              href={`/quiz/contact?propertySlug=${propertyData.slug}&propertyTitle=${encodeURIComponent(propertyData.title)}${region ? `&region=${region}` : ''}${regionName ? `&regionName=${encodeURIComponent(regionName)}` : ''}`}
+              href={contactHref}
               style={{
                 textDecoration: 'none',
                 textAlign: 'center',
@@ -248,6 +291,23 @@ export default function PropertyDetailsPage() {
               }}
             >
               Оставить заявку
+            </Link>
+
+            <Link
+              href={marketHref}
+              style={{
+                textDecoration: 'none',
+                textAlign: 'center',
+                borderRadius: 22,
+                padding: '17px 18px',
+                background: '#f6efe4',
+                color: '#2d261f',
+                fontWeight: 700,
+                fontSize: 17,
+                border: '1px solid rgba(216,201,180,0.92)',
+              }}
+            >
+              ← Вернуться в подборку рынка
             </Link>
           </div>
         </>
