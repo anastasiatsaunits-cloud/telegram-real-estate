@@ -1,25 +1,55 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useMemo, useState } from 'react';
 import { AppShell } from '../../components/app-shell';
 import { BackLink } from '../../components/back-link';
 import { submitLead } from '../../lib/leads';
-import { getBudgetByKey, getTimelineByKey } from '../../lib/quiz-options';
+import {
+  buildQuizHref,
+  getBudgetByKey,
+  getFormatByKey,
+  getPriorityByKey,
+  getRegionNameBySlug,
+  getScenarioByKey,
+  getTimelineByKey,
+} from '../../lib/quiz-options';
 
 const DEMO_SESSION_ID = 'session_seed_demo';
 
 export default function ContactQuizPage() {
   const router = useRouter();
-  const region = typeof router.query.regionName === 'string' ? router.query.regionName : 'Крым';
-  const budget = getBudgetByKey(typeof router.query.budgetKey === 'string' ? router.query.budgetKey : 'under-10m');
-  const timeline = getTimelineByKey(typeof router.query.timelineKey === 'string' ? router.query.timelineKey : '3-months');
-  const regionSlug = typeof router.query.region === 'string' ? router.query.region : 'crimea';
+  const regionSlug = typeof router.query.region === 'string' ? router.query.region : undefined;
+  const regionName = typeof router.query.regionName === 'string' ? router.query.regionName : getRegionNameBySlug(regionSlug);
+  const scenarioKey = typeof router.query.scenarioKey === 'string' ? router.query.scenarioKey : undefined;
+  const budgetKey = typeof router.query.budgetKey === 'string' ? router.query.budgetKey : undefined;
+  const formatKey = typeof router.query.formatKey === 'string' ? router.query.formatKey : undefined;
+  const timelineKey = typeof router.query.timelineKey === 'string' ? router.query.timelineKey : undefined;
+  const priorityKey = typeof router.query.priorityKey === 'string' ? router.query.priorityKey : undefined;
   const propertySlug = typeof router.query.propertySlug === 'string' ? router.query.propertySlug : undefined;
   const propertyTitle = typeof router.query.propertyTitle === 'string' ? router.query.propertyTitle : undefined;
+
+  const scenario = getScenarioByKey(scenarioKey);
+  const budget = getBudgetByKey(budgetKey);
+  const format = getFormatByKey(formatKey);
+  const timeline = getTimelineByKey(timelineKey);
+  const priority = getPriorityByKey(priorityKey);
 
   const [phone, setPhone] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const backHref = useMemo(
+    () =>
+      buildQuizHref('/quiz/ready', {
+        scenarioKey,
+        region: regionSlug,
+        regionName,
+        budgetKey: budget.key,
+        formatKey,
+        timelineKey,
+        priorityKey,
+      }),
+    [budget.key, formatKey, priorityKey, regionName, regionSlug, scenarioKey, timelineKey],
+  );
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -30,17 +60,27 @@ export default function ContactQuizPage() {
       const response = await submitLead({
         sessionId: DEMO_SESSION_ID,
         phone,
-        regionInterest: region,
+        regionInterest: regionName,
         budgetRange: budget.title,
         purchaseTerm: timeline.title,
-        source: 'miniapp-mvp',
+        source: 'miniapp-quiz-v2',
         propertySlug,
       });
 
       const leadId = response?.item?.id;
-      window.location.href = leadId
-        ? `/quiz/success?leadId=${leadId}&region=${regionSlug}&regionName=${encodeURIComponent(region)}&budgetKey=${budget.key}&timelineKey=${timeline.key}${propertySlug ? `&propertySlug=${propertySlug}` : ''}${propertyTitle ? `&propertyTitle=${encodeURIComponent(propertyTitle)}` : ''}`
-        : '/quiz/success';
+      const successHref = buildQuizHref('/quiz/success', {
+        scenarioKey,
+        region: regionSlug,
+        regionName,
+        budgetKey: budget.key,
+        formatKey,
+        timelineKey: timeline.key,
+        priorityKey,
+        propertySlug,
+        propertyTitle,
+      });
+      const separator = successHref.includes('?') ? '&' : '?';
+      window.location.href = leadId ? `${successHref}${separator}leadId=${encodeURIComponent(leadId)}` : successHref;
     } catch {
       setError('Не удалось отправить заявку. Попробуй ещё раз.');
     } finally {
@@ -48,26 +88,25 @@ export default function ContactQuizPage() {
     }
   }
 
-  const title = propertyTitle ? 'Оставьте телефон, и мы свяжемся по выбранному объекту' : 'Оставьте телефон, и мы соберём подборку под ваш запрос';
+  const title = propertyTitle ? 'Оставьте телефон, и мы откроем детали по выбранному объекту' : 'Оставьте телефон, и мы откроем полную подборку под ваш запрос';
   const description = propertyTitle
-    ? 'Расскажем детали по объекту и, если нужно, покажем похожие варианты в том же бюджете.'
-    : 'Свяжемся с вами, уточним задачу и отправим сильные варианты под бюджет, срок и рынок.';
+    ? 'Свяжемся по выбранному объекту, покажем цифры и при необходимости добавим похожие варианты в том же сценарии.'
+    : 'После контакта откроем полную подборку, уточним детали и вернёмся с 1–2 самыми сильными вариантами.';
 
   return (
-    <AppShell
-      eyebrow="Последний шаг"
-      title={title}
-      description={description}
-    >
-      <BackLink href={`/quiz/ready?region=${regionSlug}&regionName=${encodeURIComponent(region)}&budgetKey=${budget.key}&timelineKey=${timeline.key}`} />
+    <AppShell eyebrow="Следующий шаг" title={title} description={description}>
+      <BackLink href={backHref} />
 
       <div style={{ display: 'grid', gap: 12, marginBottom: 18 }}>
         <div style={{ padding: 16, borderRadius: 18, background: '#fff8f0', border: '1px solid #ebddcb' }}>
           <div style={{ fontSize: 13, color: '#8f7658', fontWeight: 700, marginBottom: 6 }}>Ваш запрос</div>
-          <div style={{ color: '#4d443b', lineHeight: 1.6 }}>
-            <div><strong>Регион:</strong> {region}</div>
+          <div style={{ color: '#4d443b', lineHeight: 1.7 }}>
+            <div><strong>Сценарий:</strong> {scenario.title}</div>
+            <div><strong>Рынок:</strong> {regionName}</div>
             <div><strong>Бюджет:</strong> {budget.title}</div>
+            <div><strong>Формат:</strong> {format.title}</div>
             <div><strong>Срок:</strong> {timeline.title}</div>
+            <div><strong>Приоритет:</strong> {priority.title}</div>
           </div>
         </div>
 
@@ -115,10 +154,10 @@ export default function ContactQuizPage() {
             boxShadow: '0 10px 24px rgba(0,0,0,0.12)',
           }}
         >
-          {submitting ? 'Отправляем запрос...' : propertyTitle ? 'Получить детали и похожие варианты' : 'Получить подборку'}
+          {submitting ? 'Отправляем запрос...' : propertyTitle ? 'Получить детали и похожие варианты' : 'Открыть полную подборку'}
         </button>
 
-        {error ? <div style={{ color: '#b94a48', fontSize: 14 }}>Не удалось отправить запрос. Попробуйте ещё раз.</div> : null}
+        {error ? <div style={{ color: '#b94a48', fontSize: 14 }}>{error}</div> : null}
       </form>
     </AppShell>
   );

@@ -32,7 +32,7 @@ const markets = [
     key: 'thailand',
     title: 'Таиланд',
     subtitle: 'Готовим международное направление для курортных инвестиций',
-    href: '/quiz/region',
+    href: '/quiz/scenario',
     gradient: 'linear-gradient(135deg, #9eb8b0 0%, #5f776f 100%)',
     size: 'small',
   },
@@ -40,14 +40,14 @@ const markets = [
     key: 'mountains',
     title: 'Горный кластер',
     subtitle: 'Резиденции и арендные форматы в локациях с круглогодичным спросом',
-    href: '/quiz/region',
+    href: '/quiz/scenario',
     gradient: 'linear-gradient(135deg, #9ca8b6 0%, #5f6a77 100%)',
     size: 'small',
   },
 ];
 
 const bottomLinks = [
-  { title: 'О проекте', href: '/quiz/ready' },
+  { title: 'О проекте', href: '/quiz/scenario' },
   { title: 'Отзывы', href: '/quiz/success' },
   { title: 'Инвесторам', href: '/quiz/contact' },
 ];
@@ -215,7 +215,7 @@ export default function HomePage() {
                 </PrimaryButton>
 
                 <Link
-                  href="/quiz/contact"
+                  href="/quiz/scenario"
                   style={{
                     display: 'block',
                     textDecoration: 'none',

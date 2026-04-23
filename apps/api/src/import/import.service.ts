@@ -18,10 +18,31 @@ type ImportProperty = {
   regionId?: string;
 };
 
-const REGION_MAP: Record<string, { id: string; name: string; slug: string; sortOrder: number }> = {
-  region_sochi: { id: 'region_sochi', name: 'Сочи', slug: 'sochi', sortOrder: 2 },
-  region_crimea: { id: 'region_crimea', name: 'Крым', slug: 'crimea', sortOrder: 3 },
+const REGION_MAP: Record<string, { id: string; name: string; slug: string; sortOrder: number; mediaBaseUrl: string }> = {
+  region_sochi: { id: 'region_sochi', name: 'Сочи', slug: 'sochi', sortOrder: 2, mediaBaseUrl: 'https://новостройки93.рф' },
+  region_crimea: { id: 'region_crimea', name: 'Крым', slug: 'crimea', sortOrder: 3, mediaBaseUrl: 'https://новостройкикрым.рф' },
 };
+
+function normalizeNumericValue(value: string | null | undefined) {
+  if (value == null) return null;
+
+  const normalized = String(value).trim();
+  if (!normalized || normalized.toLowerCase() === 'null') {
+    return null;
+  }
+
+  const parsed = Number(normalized.replace(/\s+/g, ''));
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function normalizeMediaUrl(url: string, regionId: string) {
+  const normalized = url.trim();
+  if (!normalized) return null;
+  if (/^https?:\/\//i.test(normalized)) return normalized;
+
+  const baseUrl = REGION_MAP[regionId]?.mediaBaseUrl ?? REGION_MAP.region_sochi.mediaBaseUrl;
+  return normalized.startsWith('/') ? `${baseUrl}${normalized}` : `${baseUrl}/${normalized}`;
+}
 
 @Injectable()
 export class ImportService {
@@ -75,11 +96,12 @@ export class ImportService {
       let imported = 0;
 
       for (const item of items) {
-        const priceFrom = item.priceFrom ? Number(item.priceFrom) : null;
-        const priceTo = item.priceTo ? Number(item.priceTo) : null;
-        const areaFrom = item.areaFrom ? Number(item.areaFrom) : null;
-        const areaTo = item.areaTo ? Number(item.areaTo) : null;
         const regionId = item.regionId && REGION_MAP[item.regionId] ? item.regionId : item.city === 'Крым' ? 'region_crimea' : 'region_sochi';
+        const priceFrom = normalizeNumericValue(item.priceFrom);
+        const priceTo = normalizeNumericValue(item.priceTo);
+        const areaFrom = normalizeNumericValue(item.areaFrom);
+        const areaTo = normalizeNumericValue(item.areaTo);
+        const mediaUrls = item.media.map((url) => normalizeMediaUrl(url, regionId)).filter((url): url is string => Boolean(url));
 
         await client.query(
           `INSERT INTO "Property" (
@@ -122,11 +144,11 @@ export class ImportService {
 
         await client.query('DELETE FROM "PropertyMedia" WHERE "propertyId" = $1', [item.id]);
 
-        for (let i = 0; i < item.media.length; i += 1) {
+        for (let i = 0; i < mediaUrls.length; i += 1) {
           await client.query(
             `INSERT INTO "PropertyMedia" ("id", "propertyId", "mediaType", "url", "sortOrder", "createdAt")
              VALUES ($1, $2, 'image', $3, $4, NOW())`,
-            [`media_${item.id}_${i + 1}`, item.id, item.media[i], i + 1],
+            [`media_${item.id}_${i + 1}`, item.id, mediaUrls[i], i + 1],
           );
         }
 

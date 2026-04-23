@@ -5,6 +5,7 @@ import { AppShell } from '../../components/app-shell';
 import { BackLink } from '../../components/back-link';
 import { InfoCard, Pill, PrimaryButton, SectionEyebrow, SurfaceCard } from '../../components/ui';
 import type { PropertyDetails } from '../../lib/properties';
+import { buildQuizHref } from '../../lib/quiz-options';
 
 function formatPrice(value: string | null | undefined, currency: string | null | undefined) {
   if (!value) return 'по запросу';
@@ -53,6 +54,11 @@ export default function PropertyDetailsPage() {
   const slug = typeof router.query.slug === 'string' ? router.query.slug : null;
   const region = typeof router.query.region === 'string' ? router.query.region : '';
   const regionName = typeof router.query.regionName === 'string' ? router.query.regionName : '';
+  const scenarioKey = typeof router.query.scenarioKey === 'string' ? router.query.scenarioKey : undefined;
+  const budgetKey = typeof router.query.budgetKey === 'string' ? router.query.budgetKey : undefined;
+  const formatKey = typeof router.query.formatKey === 'string' ? router.query.formatKey : undefined;
+  const timelineKey = typeof router.query.timelineKey === 'string' ? router.query.timelineKey : undefined;
+  const priorityKey = typeof router.query.priorityKey === 'string' ? router.query.priorityKey : undefined;
   const [property, setProperty] = useState<PropertyDetails | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -89,9 +95,27 @@ export default function PropertyDetailsPage() {
   const metrics = useMemo(() => metricCards(property), [property]);
   const locationLine = property ? [property.city, property.address].filter(Boolean).join(', ') || property.region.name : 'Загружаю карточку объекта...';
   const propertyData = property;
-  const marketHref = region ? `/properties?region=${region}&regionName=${encodeURIComponent(regionName)}` : '/properties';
+  const marketHref = buildQuizHref('/properties', {
+    region: region || undefined,
+    regionName: regionName || undefined,
+    scenarioKey,
+    budgetKey,
+    formatKey,
+    timelineKey,
+    priorityKey,
+  });
   const contactHref = propertyData
-    ? `/quiz/contact?propertySlug=${propertyData.slug}&propertyTitle=${encodeURIComponent(propertyData.title)}${region ? `&region=${region}` : ''}${regionName ? `&regionName=${encodeURIComponent(regionName)}` : ''}`
+    ? buildQuizHref('/quiz/contact', {
+        propertySlug: propertyData.slug,
+        propertyTitle: propertyData.title,
+        region: region || undefined,
+        regionName: regionName || undefined,
+        scenarioKey,
+        budgetKey,
+        formatKey,
+        timelineKey,
+        priorityKey,
+      })
     : '/quiz/contact';
 
   return (
