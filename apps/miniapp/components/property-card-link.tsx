@@ -3,6 +3,15 @@ import type { PropertyListItem } from '../lib/properties';
 import { MotionCard, Pill, SectionEyebrow, SurfaceCard } from './ui';
 
 function getMarketPalette(regionSlug: string) {
+  if (regionSlug === 'anapa') {
+    return {
+      gradient: 'linear-gradient(135deg, #caa36f 0%, #8f6b44 45%, #3f2d1d 100%)',
+      accent: 'rgba(244, 210, 163, 0.28)',
+      label: 'Анапа · курортный вход',
+      cta: '#7a4d22',
+    };
+  }
+
   if (regionSlug === 'sochi') {
     return {
       gradient: 'linear-gradient(135deg, #8ea986 0%, #5f755a 42%, #243229 100%)',

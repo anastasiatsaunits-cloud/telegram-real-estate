@@ -19,6 +19,7 @@ type ImportProperty = {
 };
 
 const REGION_MAP: Record<string, { id: string; name: string; slug: string; sortOrder: number; mediaBaseUrl: string }> = {
+  region_anapa: { id: 'region_anapa', name: 'Анапа', slug: 'anapa', sortOrder: 1, mediaBaseUrl: 'https://новостройки93.рф' },
   region_sochi: { id: 'region_sochi', name: 'Сочи', slug: 'sochi', sortOrder: 2, mediaBaseUrl: 'https://новостройки93.рф' },
   region_crimea: { id: 'region_crimea', name: 'Крым', slug: 'crimea', sortOrder: 3, mediaBaseUrl: 'https://новостройкикрым.рф' },
 };
@@ -96,7 +97,13 @@ export class ImportService {
       let imported = 0;
 
       for (const item of items) {
-        const regionId = item.regionId && REGION_MAP[item.regionId] ? item.regionId : item.city === 'Крым' ? 'region_crimea' : 'region_sochi';
+        const regionId = item.regionId && REGION_MAP[item.regionId]
+          ? item.regionId
+          : item.city === 'Крым'
+            ? 'region_crimea'
+            : item.city === 'Анапа'
+              ? 'region_anapa'
+              : 'region_sochi';
         const priceFrom = normalizeNumericValue(item.priceFrom);
         const priceTo = normalizeNumericValue(item.priceTo);
         const areaFrom = normalizeNumericValue(item.areaFrom);

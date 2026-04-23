@@ -50,9 +50,15 @@ export const marketOptions: MarketOption[] = [
     description: 'Море, приватность, курортный формат и спокойный сценарий капитала.',
   },
   {
+    key: 'anapa',
+    regionSlug: 'anapa',
+    title: 'Анапа',
+    description: 'Курортный вход, новые проекты у моря и отдельная витрина по этому рынку.',
+  },
+  {
     key: 'compare',
-    title: 'Хочу сравнить оба',
-    description: 'Покажем варианты по двум рынкам и дадим первый ориентир.',
+    title: 'Хочу сравнить рынки',
+    description: 'Покажем варианты по нескольким рынкам и дадим первый ориентир.',
   },
 ];
 
@@ -155,9 +161,10 @@ export function getPriorityByKey(key: string | undefined) {
 }
 
 export function getRegionNameBySlug(region: string | undefined) {
+  if (region === 'anapa') return 'Анапа';
   if (region === 'sochi') return 'Сочи';
   if (region === 'crimea') return 'Крым';
-  return 'Сочи и Крым';
+  return 'Сочи, Крым и Анапа';
 }
 
 export function buildQuizHref(path: string, params: QuizHrefParams = {}) {

@@ -2,6 +2,10 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 const MARKET_ASSETS = {
+  anapa: {
+    cover: '/market/anapa-cover.jpg',
+    gallery: ['/market/anapa-cover.jpg'],
+  },
   crimea: {
     cover: '/market/crimea-cover.jpg',
     gallery: ['/market/crimea-cover.jpg', '/market/crimea-gallery-1.jpg', '/market/crimea-gallery-2.jpg'],
@@ -33,7 +37,7 @@ export class PropertiesService {
       where: {
         isActive: true,
         status: 'active',
-        ...(regionSlug ? { region: { slug: regionSlug } } : { region: { slug: { in: ['crimea', 'sochi'] } } }),
+        ...(regionSlug ? { region: { slug: regionSlug } } : { region: { slug: { in: ['anapa', 'crimea', 'sochi'] } } }),
         ...(priceFilter ? { priceFrom: priceFilter } : {}),
       },
       orderBy: [{ region: { sortOrder: 'asc' } }, { priceFrom: 'asc' }, { createdAt: 'desc' }],

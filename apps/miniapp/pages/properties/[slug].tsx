@@ -20,6 +20,14 @@ function formatArea(from: string | null | undefined, to: string | null | undefin
 }
 
 function getMarketTheme(regionSlug: string | undefined) {
+  if (regionSlug === 'anapa') {
+    return {
+      gradient: 'linear-gradient(135deg, #c4a37c 0%, #8b6a48 45%, #473320 100%)',
+      accent: 'rgba(244, 219, 181, 0.28)',
+      label: 'Анапа · выбор рынка',
+    };
+  }
+
   if (regionSlug === 'sochi') {
     return {
       gradient: 'linear-gradient(135deg, #89a8ba 0%, #60798b 45%, #2e3e4a 100%)',

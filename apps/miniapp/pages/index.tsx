@@ -17,12 +17,25 @@ const startSalesProjects = [
     location: 'Ялта, исторический центр, берег Чёрного моря',
     price: 'от 400 000 ₽/м²',
     badge: 'Скоро старт',
-    href: '/quiz/contact?region=crimea&regionName=Крым&propertyTitle=ЖК%20Кировъ',
+    href: '/properties/zhk-kirov?region=crimea&regionName=Крым',
     image: '/market/kirov-start-sales-cover.png',
   },
 ];
 
 const markets = [
+  {
+    key: 'anapa',
+    title: 'Анапа',
+    kicker: 'Курортный вход',
+    subtitle: 'Новые проекты у моря, стартовые запуски и отдельная витрина для спокойного входа в рынок.',
+    footnote: 'Для тех, кто хочет смотреть Анапу отдельно и без смешения с другими локациями',
+    badge: 'Новый регион',
+    href: '/properties?region=anapa&regionName=Анапа',
+    gradient: 'linear-gradient(135deg, rgba(74,47,24,0.12) 0%, rgba(22,15,10,0.72) 100%)',
+    accent: 'rgba(243, 203, 154, 0.34)',
+    image: 'https://новостройки93.рф/upload/iblock/6c0/1grz6rcv8v3faeuclkmq387z3ixsjm46.jpg',
+    size: 'large',
+  },
   {
     key: 'crimea',
     title: 'Крым',
@@ -74,13 +87,13 @@ const bottomLinks = [
 ];
 
 const premiumSignals = [
-  'Крым и Сочи разделены по логике спроса, доходности и образа жизни',
+  'Крым, Сочи и Анапа разделены по логике спроса, доходности и образа жизни',
   'В каталоге только объекты, которые можно уверенно показывать взыскательному клиенту',
   'Если нужен не просмотр, а решение, переводим сразу в персональный подбор',
 ];
 
 const trustNumbers = [
-  { value: '2', label: 'рынка в каталоге' },
+  { value: '3', label: 'рынка в каталоге' },
   { value: '24/7', label: 'сопровождение в Telegram' },
   { value: '72ч', label: 'на точную подборку' },
 ];
@@ -88,7 +101,7 @@ const trustNumbers = [
 const conciergeSteps = [
   {
     title: 'Выберите рынок',
-    text: 'Крым, если важны море, приватность и спокойный сценарий капитала. Сочи, если нужен более активный рынок и сильный спрос.',
+    text: 'Крым, если важны море и приватность. Сочи, если нужен более активный рынок. Анапа, если смотришь ранний курортный вход и новые запуски.',
   },
   {
     title: 'Откройте объекты',
@@ -173,7 +186,7 @@ export default function HomePage() {
               </div>
 
               <div style={{ color: 'rgba(255,245,232,0.8)', lineHeight: 1.6, fontSize: 16, maxWidth: 420, marginBottom: 20 }}>
-                Крым и Сочи открываются как два разных инвестиционных сценария. Только сильные объекты, понятная логика входа и короткий путь к решению.
+                Крым, Сочи и Анапа открываются как три разных инвестиционных сценария. Только сильные объекты, понятная логика входа и короткий путь к решению.
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 10, marginBottom: 18 }}>
@@ -341,7 +354,7 @@ export default function HomePage() {
               <SectionEyebrow style={{ marginBottom: 6 }}>Выбор рынка</SectionEyebrow>
               <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.12, color: '#1d1b18' }}>Сначала рынок, потом объекты</div>
             </div>
-            <Pill style={{ flexShrink: 0 }}>2 направления</Pill>
+            <Pill style={{ flexShrink: 0 }}>3 направления</Pill>
           </div>
 
           <div style={{ display: 'grid', gap: 14, marginBottom: 14 }}>
@@ -358,11 +371,7 @@ export default function HomePage() {
                     padding: 20,
                     color: '#ffffff',
                     background: market.gradient,
-                    backgroundImage: market.key === 'crimea'
-                      ? 'linear-gradient(180deg, rgba(12,18,22,0.12) 0%, rgba(10,13,16,0.5) 100%), url(/market/crimea-cover.jpg)'
-                      : market.key === 'sochi'
-                        ? 'linear-gradient(180deg, rgba(12,18,22,0.12) 0%, rgba(10,13,16,0.5) 100%), url(/market/sochi-cover.jpg)'
-                        : market.gradient,
+                    backgroundImage: `linear-gradient(180deg, rgba(12,18,22,0.12) 0%, rgba(10,13,16,0.5) 100%), url(${market.image})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     position: 'relative',
@@ -536,7 +545,7 @@ export default function HomePage() {
             <SectionEyebrow style={{ marginBottom: 8 }}>Важно</SectionEyebrow>
             <div style={{ fontWeight: 700, marginBottom: 8 }}>Каталог разделён по рынкам, чтобы выбор начинался точно</div>
             <div>
-              Не смешиваем Крым и Сочи в одну ленту. Так клиент быстрее понимает, куда смотреть и какой сценарий подходит именно ему.
+              Не смешиваем Крым, Сочи и Анапу в одну ленту. Так клиент быстрее понимает, куда смотреть и какой сценарий подходит именно ему.
             </div>
           </div>
 

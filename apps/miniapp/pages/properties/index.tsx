@@ -8,6 +8,15 @@ import type { PropertyListItem } from '../../lib/properties';
 import { getBudgetByKey, getTimelineByKey } from '../../lib/quiz-options';
 
 function getMarketStory(region: string, regionName: string) {
+  if (region === 'anapa') {
+    return {
+      eyebrow: 'Анапа. Подборка',
+      title: 'Курортные проекты раннего входа',
+      text: 'Новые комплексы у моря и форматы для спокойного входа в курортную недвижимость с сильной сезонной логикой.',
+      note: 'Подходит тем, кто хочет смотреть Анапу отдельно, без смешения с другими рынками.',
+    };
+  }
+
   if (region === 'crimea') {
     return {
       eyebrow: 'Крым. Подборка',
@@ -29,7 +38,7 @@ function getMarketStory(region: string, regionName: string) {
   return {
     eyebrow: 'Каталог',
     title: 'Сначала выберите рынок',
-    text: 'Крым и Сочи открываются отдельно, чтобы вы сразу смотрели релевантные объекты.',
+    text: 'Крым, Сочи и Анапа открываются отдельно, чтобы вы сразу смотрели релевантные объекты.',
     note: 'Точный вход всегда работает сильнее, чем смешанная выдача.',
   };
 }
@@ -71,6 +80,7 @@ export default function PropertiesPage() {
   }, [region, budget.min, budget.max]);
 
   const title = useMemo(() => {
+    if (region === 'anapa') return 'Анапа. Курортные проекты у моря';
     if (region === 'crimea') return 'Крым. Объекты у моря';
     if (region === 'sochi') return 'Сочи. Объекты для активного спроса';
     if (regionName) return `Объекты · ${regionName}`;
