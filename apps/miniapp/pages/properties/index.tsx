@@ -11,9 +11,9 @@ function getMarketStory(region: string, regionName: string) {
   if (region === 'anapa') {
     return {
       eyebrow: 'Анапа. Подборка',
-      title: 'Курортные проекты раннего входа',
-      text: 'Новые комплексы у моря и форматы для спокойного входа в курортную недвижимость с сильной сезонной логикой.',
-      note: 'Подходит тем, кто хочет смотреть Анапу отдельно, без смешения с другими рынками.',
+      title: 'Новые курортные проекты для раннего входа',
+      text: 'Здесь собраны комплексы, которые удобно показывать тем, кто ищет более мягкий вход в курортную недвижимость, стартовые очереди и форматы у моря.',
+      note: 'Подходит тем, кто хочет смотреть Анапу как отдельный рынок, с акцентом на новые запуски и спокойный сценарий покупки.',
     };
   }
 
@@ -43,6 +43,30 @@ function getMarketStory(region: string, regionName: string) {
   };
 }
 
+function getMarketHighlights(region: string, itemsCount: number) {
+  if (region === 'anapa') {
+    return [
+      {
+        label: 'Рынок',
+        title: 'Отдельная витрина по Анапе',
+        text: 'Без смешения с Крымом и Сочи, чтобы клиент сразу видел именно курортные проекты Анапы.',
+      },
+      {
+        label: 'Формат',
+        title: 'Новые комплексы у моря',
+        text: 'Подходит под старты продаж, спокойный вход и переговоры с теми, кто выбирает курортную недвижимость заранее.',
+      },
+      {
+        label: 'Сейчас в подборке',
+        title: `${itemsCount || 0} объекта в рынке`,
+        text: 'Подборку можно быстро расширять новыми комплексами, которые Анастасия присылает прямо в чат.',
+      },
+    ];
+  }
+
+  return [];
+}
+
 export default function PropertiesPage() {
   const router = useRouter();
   const searchParams = useMemo(() => {
@@ -59,6 +83,7 @@ export default function PropertiesPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const marketStory = useMemo(() => getMarketStory(region, regionName), [region, regionName]);
+  const marketHighlights = useMemo(() => getMarketHighlights(region, items.length), [region, items.length]);
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -130,6 +155,18 @@ export default function PropertiesPage() {
           {marketStory.note}
         </div>
       </InfoCard>
+
+      {marketHighlights.length ? (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 10, marginBottom: 16 }}>
+          {marketHighlights.map((item) => (
+            <InfoCard key={item.title} style={{ minHeight: 156, background: '#fffaf2' }}>
+              <SectionEyebrow style={{ marginBottom: 8 }}>{item.label}</SectionEyebrow>
+              <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.25, color: '#201c18', marginBottom: 8 }}>{item.title}</div>
+              <div style={{ color: '#5b5145', lineHeight: 1.55, fontSize: 14 }}>{item.text}</div>
+            </InfoCard>
+          ))}
+        </div>
+      ) : null}
 
       {loading ? (
         <InfoCard style={{ color: '#7d7367' }}>Подбираем объекты...</InfoCard>
