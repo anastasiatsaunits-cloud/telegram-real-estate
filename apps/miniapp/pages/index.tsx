@@ -5,21 +5,27 @@ const markets = [
   {
     key: 'crimea',
     title: 'Крым',
+    kicker: 'resort income line',
     subtitle: 'Ялта, Алушта, первая линия, курортные резиденции и приватные лоты для спокойного капитала',
+    footnote: 'Курортный рынок для спокойного капитала и сезонной доходности',
     badge: 'Private coast',
     href: '/properties?region=crimea&regionName=Крым',
-    gradient: 'linear-gradient(135deg, #7db4c7 0%, #436676 42%, #23363e 100%)',
+    gradient: 'linear-gradient(135deg, rgba(29,53,64,0.12) 0%, rgba(10,16,22,0.72) 100%)',
     accent: 'rgba(157, 223, 248, 0.42)',
+    image: '/market/crimea-cover.jpg',
     size: 'large',
   },
   {
     key: 'sochi',
     title: 'Сочи',
+    kicker: 'city capital line',
     subtitle: 'Премиальные лоты, доходные объекты и сильные curated подборки по морю, центру и статусным локациям',
+    footnote: 'Городской premium рынок с более быстрым темпом сделок и спроса',
     badge: 'Curated market',
     href: '/properties?region=sochi&regionName=Сочи',
-    gradient: 'linear-gradient(135deg, #8ba685 0%, #566b52 42%, #233129 100%)',
+    gradient: 'linear-gradient(135deg, rgba(24,44,28,0.12) 0%, rgba(10,16,22,0.72) 100%)',
     accent: 'rgba(206, 230, 187, 0.32)',
+    image: '/market/sochi-cover.jpg',
     size: 'large',
   },
   {
@@ -82,62 +88,71 @@ export default function HomePage() {
       style={{
         minHeight: '100vh',
         margin: 0,
-        padding: '18px 14px 32px',
+        padding: '0 0 32px',
         fontFamily: 'Inter, Arial, sans-serif',
-        color: '#171717',
+        color: '#f7f1e8',
         background:
-          'radial-gradient(circle at top, rgba(255,255,255,0.68) 0%, rgba(255,255,255,0) 28%), linear-gradient(180deg, #f6efe6 0%, #efe7db 100%)',
+          'radial-gradient(circle at top, rgba(188,156,109,0.12) 0%, rgba(9,13,18,0) 26%), linear-gradient(180deg, #0c1117 0%, #121a21 42%, #181d1b 100%)',
       }}
     >
-      <div style={{ maxWidth: 560, margin: '0 auto' }}>
-        <SurfaceCard
+      <div style={{ maxWidth: 560, margin: '0 auto', padding: '0 14px' }}>
+        <div
           style={{
-            background: 'rgba(255,253,249,0.94)',
-            borderRadius: 34,
-            padding: 18,
-            boxShadow: '0 24px 54px rgba(24,19,15,0.09)',
-            backdropFilter: 'blur(12px)',
+            position: 'relative',
+            minHeight: 640,
+            marginBottom: 18,
+            borderRadius: '0 0 34px 34px',
+            overflow: 'hidden',
+            backgroundImage:
+              'linear-gradient(180deg, rgba(7,10,14,0.24) 0%, rgba(7,10,14,0.68) 48%, rgba(10,12,15,0.96) 100%), url(/market/sochi-cover.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            boxShadow: '0 30px 70px rgba(0,0,0,0.34)',
           }}
         >
           <div
             style={{
-              marginBottom: 18,
-              borderRadius: 30,
-              padding: '18px 18px 20px',
-              background: 'linear-gradient(145deg, #18231f 0%, #243a31 45%, #65533c 100%)',
-              color: '#ffffff',
+              position: 'absolute',
+              inset: 0,
+              background:
+                'radial-gradient(circle at top right, rgba(226,197,141,0.22) 0%, rgba(226,197,141,0) 30%), radial-gradient(circle at bottom left, rgba(83,116,104,0.32) 0%, rgba(83,116,104,0) 34%)',
+            }}
+          />
+
+          <div
+            style={{
               position: 'relative',
-              overflow: 'hidden',
-              boxShadow: '0 18px 34px rgba(32, 30, 24, 0.18)',
+              zIndex: 1,
+              minHeight: 640,
+              padding: '22px 20px 24px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
             }}
           >
-            <div
-              style={{
-                position: 'absolute',
-                inset: 0,
-                background:
-                  'radial-gradient(circle at top right, rgba(220,198,157,0.28) 0%, rgba(220,198,157,0) 28%), radial-gradient(circle at bottom left, rgba(136,176,177,0.2) 0%, rgba(136,176,177,0) 30%)',
-              }}
-            />
-            <div style={{ position: 'relative', zIndex: 1 }}>
+            <div>
               <Pill
                 style={{
                   gap: 8,
-                  marginBottom: 14,
-                  background: 'rgba(255,255,255,0.12)',
-                  border: '1px solid rgba(255,255,255,0.14)',
-                  color: 'rgba(255,247,231,0.9)',
+                  marginBottom: 18,
+                  background: 'rgba(255,255,255,0.08)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  color: 'rgba(255,247,231,0.92)',
+                  backdropFilter: 'blur(8px)',
                 }}
               >
-                RICH BY FLATHOUSE <span style={{ opacity: 0.7 }}>•</span> private catalog
+                RICH BY FLATHOUSE <span style={{ opacity: 0.7 }}>•</span> private investment entry
               </Pill>
+            </div>
 
-              <div style={{ fontSize: 30, fontWeight: 700, lineHeight: 1.06, marginBottom: 12 }}>
-                Приватный вход в каталог инвестиционной недвижимости, уже разведённый по рынкам
+            <div>
+              <SectionEyebrow style={{ color: 'rgba(255,240,219,0.72)', marginBottom: 10 }}>curated private access</SectionEyebrow>
+              <div style={{ fontSize: 38, fontWeight: 700, lineHeight: 0.98, marginBottom: 16, maxWidth: 420 }}>
+                Недвижимость, которая ощущается как private service, а не как витрина из случайных лотов
               </div>
 
-              <div style={{ color: 'rgba(255,255,255,0.78)', lineHeight: 1.6, fontSize: 15, marginBottom: 18 }}>
-                Сначала выбираем рынок, потом открываем сильные объекты. Крым и Сочи теперь идут отдельными направлениями, без смешанной выдачи.
+              <div style={{ color: 'rgba(255,245,232,0.8)', lineHeight: 1.6, fontSize: 16, maxWidth: 420, marginBottom: 20 }}>
+                Открываем Крым и Сочи как два самостоятельных инвестиционных рынка. Спокойная luxury-подача, curated-объекты и путь к подбору без CRM-шума.
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 10, marginBottom: 18 }}>
@@ -145,19 +160,20 @@ export default function HomePage() {
                   <div
                     key={item.label}
                     style={{
-                      borderRadius: 18,
+                      borderRadius: 20,
                       padding: '14px 10px',
                       background: 'rgba(255,255,255,0.08)',
                       border: '1px solid rgba(255,255,255,0.08)',
+                      backdropFilter: 'blur(10px)',
                     }}
                   >
-                    <div style={{ fontSize: 22, fontWeight: 700, color: '#fff5dd', marginBottom: 6 }}>{item.value}</div>
-                    <div style={{ fontSize: 12, lineHeight: 1.35, color: 'rgba(255,255,255,0.7)' }}>{item.label}</div>
+                    <div style={{ fontSize: 22, fontWeight: 700, color: '#fff4dc', marginBottom: 6 }}>{item.value}</div>
+                    <div style={{ fontSize: 12, lineHeight: 1.35, color: 'rgba(255,255,255,0.72)' }}>{item.label}</div>
                   </div>
                 ))}
               </div>
 
-              <div style={{ display: 'grid', gap: 10, marginBottom: 18 }}>
+              <div style={{ display: 'grid', gap: 10, marginBottom: 22 }}>
                 {premiumSignals.map((signal) => (
                   <div
                     key={signal}
@@ -184,19 +200,57 @@ export default function HomePage() {
                 ))}
               </div>
 
-              <PrimaryButton
-                href="/properties"
-                style={{
-                  background: '#e7d5ae',
-                  color: '#1e201c',
-                  boxShadow: '0 10px 24px rgba(14,20,17,0.26)',
-                }}
-              >
-                Открыть рынки и объекты
-              </PrimaryButton>
+              <div style={{ display: 'grid', gap: 10 }}>
+                <PrimaryButton
+                  href="/properties"
+                  style={{
+                    background: 'linear-gradient(135deg, #f0dfb7 0%, #dcc08c 100%)',
+                    color: '#181715',
+                    boxShadow: '0 18px 34px rgba(0,0,0,0.26)',
+                    borderRadius: 20,
+                    fontSize: 17,
+                  }}
+                >
+                  Открыть private markets
+                </PrimaryButton>
+
+                <Link
+                  href="/quiz/contact"
+                  style={{
+                    display: 'block',
+                    textDecoration: 'none',
+                    textAlign: 'center',
+                    padding: '16px 16px',
+                    borderRadius: 20,
+                    fontWeight: 700,
+                    fontSize: 16,
+                    color: '#f8f2e7',
+                    background: 'rgba(255,255,255,0.08)',
+                    border: '1px solid rgba(255,255,255,0.14)',
+                    backdropFilter: 'blur(10px)',
+                  }}
+                >
+                  Получить private подбор
+                </Link>
+
+                <div style={{ color: 'rgba(255,245,232,0.68)', fontSize: 13, lineHeight: 1.45, textAlign: 'center' }}>
+                  Если нужен не каталог, а готовый shortlist под бюджет и горизонт, уводим сразу в concierge-сценарий.
+                </div>
+              </div>
             </div>
           </div>
+        </div>
 
+        <SurfaceCard
+          style={{
+            background: 'rgba(246,239,228,0.06)',
+            borderRadius: 30,
+            padding: 18,
+            boxShadow: '0 24px 54px rgba(0,0,0,0.16)',
+            backdropFilter: 'blur(16px)',
+            border: '1px solid rgba(255,255,255,0.08)',
+          }}
+        >
           <div
             style={{
               marginBottom: 16,
@@ -337,12 +391,16 @@ export default function HomePage() {
                     </div>
 
                     <div>
+                      <SectionEyebrow style={{ color: 'rgba(255,244,221,0.72)', marginBottom: 8 }}>{market.kicker}</SectionEyebrow>
                       <div style={{ fontSize: 42, fontWeight: 700, letterSpacing: '0.03em', marginBottom: 8 }}>{market.title}</div>
                       <div style={{ maxWidth: 390, fontSize: 14, lineHeight: 1.5, color: 'rgba(255,255,255,0.9)', marginBottom: 14 }}>
                         {market.subtitle}
                       </div>
-                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: '#fff5dd', fontWeight: 700, fontSize: 14 }}>
-                        Смотреть объекты <span>→</span>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+                        <div style={{ maxWidth: 230, fontSize: 12, lineHeight: 1.45, color: 'rgba(255,255,255,0.72)' }}>{market.footnote}</div>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: '#fff5dd', fontWeight: 700, fontSize: 14, flexShrink: 0 }}>
+                          Смотреть объекты <span>→</span>
+                        </div>
                       </div>
                     </div>
                   </div>
