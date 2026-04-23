@@ -20,6 +20,14 @@ function getMarketPalette(regionSlug: string) {
   };
 }
 
+function getCollectionBadge(slug: string) {
+  if (slug === 'gk-mandarin-garden-mandarin-garden') {
+    return 'Старт продаж';
+  }
+
+  return null;
+}
+
 export function PropertyCardLink({
   property,
   regionQuery,
@@ -36,6 +44,7 @@ export function PropertyCardLink({
   const palette = getMarketPalette(property.region.slug);
   const location = [property.region.name, property.city].filter(Boolean).join(' · ');
   const priceLabel = property.priceFrom ? `от ${Number(property.priceFrom).toLocaleString('ru-RU')} ${property.currency ?? ''}`.trim() : 'по запросу';
+  const collectionBadge = getCollectionBadge(property.slug);
 
   return (
     <MotionCard>
@@ -91,14 +100,27 @@ export function PropertyCardLink({
             />
 
             <div style={{ position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-              <Pill
-                style={{
-                  background: 'rgba(255,255,255,0.16)',
-                  color: '#ffffff',
-                }}
-              >
-                {palette.label}
-              </Pill>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                <Pill
+                  style={{
+                    background: 'rgba(255,255,255,0.16)',
+                    color: '#ffffff',
+                  }}
+                >
+                  {palette.label}
+                </Pill>
+                {collectionBadge ? (
+                  <Pill
+                    style={{
+                      background: '#f0dfb7',
+                      color: '#342817',
+                      boxShadow: '0 8px 20px rgba(15,16,18,0.14)',
+                    }}
+                  >
+                    {collectionBadge}
+                  </Pill>
+                ) : null}
+              </div>
               <div
                 style={{
                   padding: '9px 14px',

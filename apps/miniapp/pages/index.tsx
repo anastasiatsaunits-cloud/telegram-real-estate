@@ -1,6 +1,17 @@
 import Link from 'next/link';
 import { MotionCard, Pill, PrimaryButton, SectionEyebrow, SurfaceCard } from '../components/ui';
 
+const startSalesProjects = [
+  {
+    title: 'ГК Mandarin Garden',
+    subtitle: 'Новый комплекс в Сочи с тихой приватной подачей и высоким порогом внимания уже на старте.',
+    location: 'Сочи, ул. Демократическая, 18',
+    price: 'от 69,6 млн ₽',
+    href: '/properties/gk-mandarin-garden-mandarin-garden?region=sochi&regionName=Сочи',
+    image: 'https://новостройки93.рф/upload/resize_cache/iblock/d59/650_450_2/wicp45v88zvfw26jx28y10qslf5o2vxi.jpeg',
+  },
+];
+
 const markets = [
   {
     key: 'crimea',
@@ -407,6 +418,68 @@ export default function HomePage() {
                 </Link>
               </MotionCard>
             ))}
+          </div>
+
+          <div
+            style={{
+              marginBottom: 18,
+              borderRadius: 24,
+              padding: '16px 16px 14px',
+              background: 'linear-gradient(180deg, #fff7eb 0%, #f2eadf 100%)',
+              border: '1px solid rgba(223,210,193,0.92)',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 14 }}>
+              <div>
+                <SectionEyebrow style={{ marginBottom: 6 }}>Старт продаж</SectionEyebrow>
+                <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.14, color: '#1d1b18' }}>Новый комплекс, который стоит смотреть первым</div>
+              </div>
+              <Pill style={{ background: '#f0dfb7', color: '#5f4826' }}>Новый комплекс</Pill>
+            </div>
+
+            <div style={{ display: 'grid', gap: 12 }}>
+              {startSalesProjects.map((project) => (
+                <MotionCard key={project.title}>
+                  <Link
+                    href={project.href}
+                    style={{
+                      display: 'block',
+                      textDecoration: 'none',
+                      borderRadius: 24,
+                      overflow: 'hidden',
+                      minHeight: 220,
+                      padding: 18,
+                      color: '#ffffff',
+                      backgroundImage: `linear-gradient(180deg, rgba(12,18,22,0.12) 0%, rgba(10,13,16,0.58) 100%), url(${project.image})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      position: 'relative',
+                      boxShadow: '0 18px 34px rgba(20, 21, 20, 0.12)',
+                    }}
+                  >
+                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.34) 100%)' }} />
+                    <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'flex-start' }}>
+                        <Pill style={{ background: '#f0dfb7', color: '#3a2b16' }}>Старт продаж</Pill>
+                        <div style={{ padding: '9px 14px', borderRadius: 18, background: 'rgba(255,255,255,0.92)', color: '#181818', fontWeight: 700, fontSize: 15 }}>
+                          {project.price}
+                        </div>
+                      </div>
+
+                      <div>
+                        <SectionEyebrow style={{ color: 'rgba(255,244,221,0.76)', marginBottom: 8 }}>Сочи · новая подача</SectionEyebrow>
+                        <div style={{ fontSize: 32, fontWeight: 700, lineHeight: 1.04, marginBottom: 10 }}>{project.title}</div>
+                        <div style={{ fontSize: 14, lineHeight: 1.55, color: 'rgba(255,255,255,0.88)', marginBottom: 10 }}>{project.subtitle}</div>
+                        <div style={{ fontSize: 13, lineHeight: 1.5, color: 'rgba(255,255,255,0.72)', marginBottom: 12 }}>{project.location}</div>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: '#fff5dd', fontWeight: 700, fontSize: 14 }}>
+                          Смотреть объект <span>→</span>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </MotionCard>
+              ))}
+            </div>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 18 }}>
