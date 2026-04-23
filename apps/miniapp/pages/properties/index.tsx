@@ -45,10 +45,14 @@ function getMarketStory(region: string, regionName: string) {
 
 export default function PropertiesPage() {
   const router = useRouter();
-  const region = typeof router.query.region === 'string' ? router.query.region : '';
-  const regionName = typeof router.query.regionName === 'string' ? router.query.regionName : '';
-  const budgetKey = typeof router.query.budgetKey === 'string' ? router.query.budgetKey : '';
-  const timelineKey = typeof router.query.timelineKey === 'string' ? router.query.timelineKey : '';
+  const searchParams = useMemo(() => {
+    const query = router.asPath.includes('?') ? router.asPath.split('?')[1] : '';
+    return new URLSearchParams(query);
+  }, [router.asPath]);
+  const region = searchParams.get('region') ?? '';
+  const regionName = searchParams.get('regionName') ?? '';
+  const budgetKey = searchParams.get('budgetKey') ?? '';
+  const timelineKey = searchParams.get('timelineKey') ?? '';
   const budget = budgetKey ? getBudgetByKey(budgetKey) : null;
   const timeline = timelineKey ? getTimelineByKey(timelineKey) : null;
   const [items, setItems] = useState<PropertyListItem[]>([]);
