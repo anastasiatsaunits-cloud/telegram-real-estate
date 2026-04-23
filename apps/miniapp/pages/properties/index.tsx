@@ -47,8 +47,10 @@ export default function PropertiesPage() {
   const router = useRouter();
   const region = typeof router.query.region === 'string' ? router.query.region : '';
   const regionName = typeof router.query.regionName === 'string' ? router.query.regionName : '';
-  const budget = getBudgetByKey(typeof router.query.budgetKey === 'string' ? router.query.budgetKey : 'under-10m');
-  const timeline = getTimelineByKey(typeof router.query.timelineKey === 'string' ? router.query.timelineKey : '3-months');
+  const budgetKey = typeof router.query.budgetKey === 'string' ? router.query.budgetKey : '';
+  const timelineKey = typeof router.query.timelineKey === 'string' ? router.query.timelineKey : '';
+  const budget = budgetKey ? getBudgetByKey(budgetKey) : null;
+  const timeline = timelineKey ? getTimelineByKey(timelineKey) : null;
   const [items, setItems] = useState<PropertyListItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -57,8 +59,8 @@ export default function PropertiesPage() {
   useEffect(() => {
     const params = new URLSearchParams();
     if (region) params.set('region', region);
-    if (budget.min) params.set('budgetMin', String(budget.min));
-    if (budget.max) params.set('budgetMax', String(budget.max));
+    if (budget?.min) params.set('budgetMin', String(budget.min));
+    if (budget?.max) params.set('budgetMax', String(budget.max));
     const query = params.toString() ? `?${params.toString()}` : '';
 
     setLoading(true);
@@ -77,7 +79,7 @@ export default function PropertiesPage() {
         setError(err instanceof Error ? err.message : 'Не удалось загрузить объекты');
       })
       .finally(() => setLoading(false));
-  }, [region, budget.min, budget.max]);
+  }, [region, budget?.min, budget?.max]);
 
   const title = useMemo(() => {
     if (region === 'anapa') return 'Анапа. Курортные проекты у моря';
@@ -91,7 +93,11 @@ export default function PropertiesPage() {
     <AppShell
       eyebrow={region ? 'Каталог рынка' : 'Каталог объектов'}
       title={title}
-      description={region ? `Отобранные объекты под бюджет ${budget.title} и срок ${timeline.title}.` : 'Выберите рынок и откройте объекты с понятным ценовым входом и инвестиционной логикой.'}
+      description={region
+        ? budget && timeline
+          ? `Отобранные объекты под бюджет ${budget.title} и срок ${timeline.title}.`
+          : 'Откройте объекты этого рынка и посмотрите варианты без лишнего шума.'
+        : 'Выберите рынок и откройте объекты с понятным ценовым входом и инвестиционной логикой.'}
     >
       <BackLink href="/quiz/success" />
 
@@ -100,8 +106,8 @@ export default function PropertiesPage() {
         <div style={{ fontWeight: 700, marginBottom: 10, fontSize: 24, lineHeight: 1.15, color: '#201c18' }}>{marketStory.title}</div>
         <div style={{ lineHeight: 1.65, color: '#5b5145', marginBottom: 14 }}>{marketStory.text}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
-          <Pill>{budget.title}</Pill>
-          <Pill style={{ background: '#f8f5ef', color: '#6e6256' }}>{timeline.title}</Pill>
+          <Pill>{budget?.title ?? 'Все бюджеты'}</Pill>
+          <Pill style={{ background: '#f8f5ef', color: '#6e6256' }}>{timeline?.title ?? 'Без ограничения по сроку'}</Pill>
           <Pill style={{ background: '#efe7d8', color: '#7d6c58' }}>{loading ? 'Обновляем подборку' : `${items.length} объектов`}</Pill>
         </div>
 
@@ -143,8 +149,8 @@ export default function PropertiesPage() {
               property={property}
               regionQuery={region}
               regionName={regionName}
-              budgetKey={budget.key}
-              timelineKey={timeline.key}
+              budgetKey={budget?.key}
+              timelineKey={timeline?.key}
             />
           ))}
         </div>
