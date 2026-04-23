@@ -3,6 +3,16 @@ import { MotionCard, Pill, PrimaryButton, SectionEyebrow, SurfaceCard } from '..
 
 const startSalesProjects = [
   {
+    title: 'ЖК Курортный регион',
+    subtitle: 'Новый курортный жилой комплекс в Тульском, Адыгея. Формат город в городе на 20 га, рядом термальные источники и в часе от будущего курорта Лаго-Наки.',
+    location: 'Тульский, Республика Адыгея · 20 га · 20 корпусов',
+    price: 'от 135 000 ₽/м²',
+    badge: 'Новый старт',
+    eyebrow: 'Адыгея · курортный кластер',
+    href: '/quiz/contact?propertyTitle=%D0%96%D0%9A%20%D0%9A%D1%83%D1%80%D0%BE%D1%80%D1%82%D0%BD%D1%8B%D0%B9%20%D1%80%D0%B5%D0%B3%D0%B8%D0%BE%D0%BD',
+    image: '/market/kurortny-region-start-sales.svg',
+  },
+  {
     title: 'ЛОК VERA',
     subtitle: 'Пятизвёздочный лечебно-оздоровительный комплекс с масштабной территорией, медцентром, spa, бассейнами и сильной подачей для предстартовых клиентов.',
     location: 'Предстарт продаж · 47 000 м² территории · 1 200 номеров',

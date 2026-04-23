@@ -1,0 +1,26 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="675" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1A2B23"/>
+      <stop offset="0.52" stop-color="#314C3F"/>
+      <stop offset="1" stop-color="#8C7A5F"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="142" y1="146" x2="1000" y2="522" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F0D9A8" stop-opacity="0.36"/>
+      <stop offset="1" stop-color="#F0D9A8" stop-opacity="0.06"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <circle cx="990" cy="118" r="154" fill="#E2C48A" fill-opacity="0.13"/>
+  <circle cx="181" cy="590" r="214" fill="#E2C48A" fill-opacity="0.08"/>
+  <path d="M0 560C100 494 180 472 264 458C340 446 418 440 510 394C596 351 682 278 776 272C872 266 940 330 1024 351C1095 369 1154 362 1200 342V675H0V560Z" fill="#22372D"/>
+  <path d="M0 592C90 552 172 533 256 524C359 514 438 538 532 506C609 480 692 426 781 422C880 418 949 467 1034 490C1091 505 1148 507 1200 495V675H0V592Z" fill="#314A3F"/>
+  <rect x="80" y="76" width="1040" height="523" rx="38" fill="url(#gold)" stroke="rgba(240,217,168,0.24)"/>
+  <text x="120" y="154" fill="#F4E7C8" font-family="Georgia, serif" font-size="36" letter-spacing="4">СТАРТ ПРОДАЖ</text>
+  <text x="120" y="242" fill="#FFF6E6" font-family="Georgia, serif" font-size="84" font-weight="700">Курортный регион</text>
+  <text x="120" y="306" fill="#F7EBD1" font-family="Arial, sans-serif" font-size="30">Тульский, Республика Адыгея</text>
+  <text x="120" y="378" fill="#F7EBD1" font-family="Arial, sans-serif" font-size="28">город в городе на 20 га рядом с термальными источниками</text>
+  <text x="120" y="424" fill="#F7EBD1" font-family="Arial, sans-serif" font-size="28">20 корпусов, собственная набережная, торговый центр и частный детский сад</text>
+  <text x="120" y="470" fill="#F7EBD1" font-family="Arial, sans-serif" font-size="28">60 минут до строящегося горнолыжного курорта Лаго-Наки</text>
+  <text x="120" y="558" fill="#F0D9A8" font-family="Arial, sans-serif" font-size="42" font-weight="700">от 135 000 ₽/м²</text>
+</svg>
