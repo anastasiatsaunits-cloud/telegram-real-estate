@@ -8,6 +8,7 @@ const startSalesProjects = [
     location: 'Предстарт продаж · 47 000 м² территории · 1 200 номеров',
     price: 'от 750 000 ₽/м²',
     badge: 'Предстарт продаж',
+    eyebrow: 'Новый предстарт · курортный формат',
     href: '/quiz/contact?propertyTitle=%D0%9B%D0%9E%D0%9A%20VERA',
     image: '/market/vera-start-sales.jpg',
   },
@@ -17,6 +18,7 @@ const startSalesProjects = [
     location: 'Сочи, ул. Демократическая, 18',
     price: 'от 69,6 млн ₽',
     badge: 'Старт продаж',
+    eyebrow: 'Сочи · новая подача',
     href: '/properties/gk-mandarin-garden-mandarin-garden?region=sochi&regionName=Сочи',
     image: 'https://новостройки93.рф/upload/resize_cache/iblock/d59/650_450_2/wicp45v88zvfw26jx28y10qslf5o2vxi.jpeg',
   },
@@ -26,6 +28,7 @@ const startSalesProjects = [
     location: 'Ялта, исторический центр, берег Чёрного моря',
     price: 'от 400 000 ₽/м²',
     badge: 'Скоро старт',
+    eyebrow: 'Крым · новая премьера',
     href: '/properties/zhk-kirov?region=crimea&regionName=Крым',
     image: '/market/kirov-start-sales-cover.png',
   },
@@ -495,7 +498,7 @@ export default function HomePage() {
                       </div>
 
                       <div>
-                        <SectionEyebrow style={{ color: 'rgba(255,244,221,0.76)', marginBottom: 8 }}>{project.location.includes('Ялта') ? 'Крым · новая премьера' : 'Сочи · новая подача'}</SectionEyebrow>
+                        <SectionEyebrow style={{ color: 'rgba(255,244,221,0.76)', marginBottom: 8 }}>{project.eyebrow}</SectionEyebrow>
                         <div style={{ fontSize: 32, fontWeight: 700, lineHeight: 1.04, marginBottom: 10 }}>{project.title}</div>
                         <div style={{ fontSize: 14, lineHeight: 1.55, color: 'rgba(255,255,255,0.88)', marginBottom: 10 }}>{project.subtitle}</div>
                         <div style={{ fontSize: 13, lineHeight: 1.5, color: 'rgba(255,255,255,0.72)', marginBottom: 12 }}>{project.location}</div>
