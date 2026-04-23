@@ -3,6 +3,15 @@ import { MotionCard, Pill, PrimaryButton, SectionEyebrow, SurfaceCard } from '..
 
 const startSalesProjects = [
   {
+    title: 'ЛОК VERA',
+    subtitle: 'Пятизвёздочный лечебно-оздоровительный комплекс с масштабной территорией, медцентром, spa, бассейнами и сильной подачей для предстартовых клиентов.',
+    location: 'Предстарт продаж · 47 000 м² территории · 1 200 номеров',
+    price: 'от 750 000 ₽/м²',
+    badge: 'Предстарт продаж',
+    href: '/quiz/contact?propertyTitle=%D0%9B%D0%9E%D0%9A%20VERA',
+    image: '/market/vera-start-sales.jpg',
+  },
+  {
     title: 'ГК Mandarin Garden',
     subtitle: 'Новый комплекс в Сочи с тихой приватной подачей и высоким порогом внимания уже на старте.',
     location: 'Сочи, ул. Демократическая, 18',
