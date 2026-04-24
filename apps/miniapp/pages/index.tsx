@@ -11,6 +11,7 @@ const startSalesProjects = [
     eyebrow: 'Адыгея · курортный кластер',
     href: '/quiz/contact?propertyTitle=%D0%96%D0%9A%20%D0%9A%D1%83%D1%80%D0%BE%D1%80%D1%82%D0%BD%D1%8B%D0%B9%20%D1%80%D0%B5%D0%B3%D0%B8%D0%BE%D0%BD',
     image: '/market/kurortny-region-start-sales.svg',
+    imagePosition: '72% center',
   },
   {
     title: 'ЛОК VERA',
@@ -21,6 +22,7 @@ const startSalesProjects = [
     eyebrow: 'Новый предстарт · курортный формат',
     href: '/quiz/contact?propertyTitle=%D0%9B%D0%9E%D0%9A%20VERA',
     image: '/market/vera-start-sales.jpg',
+    imagePosition: 'center center',
   },
   {
     title: 'ГК Mandarin Garden',
@@ -31,6 +33,7 @@ const startSalesProjects = [
     eyebrow: 'Сочи · новая подача',
     href: '/properties/gk-mandarin-garden-mandarin-garden?region=sochi&regionName=Сочи',
     image: 'https://новостройки93.рф/upload/resize_cache/iblock/d59/650_450_2/wicp45v88zvfw26jx28y10qslf5o2vxi.jpeg',
+    imagePosition: 'center center',
   },
   {
     title: 'ЖК Кировъ',
@@ -41,6 +44,7 @@ const startSalesProjects = [
     eyebrow: 'Крым · новая премьера',
     href: '/properties/zhk-kirov?region=crimea&regionName=Крым',
     image: '/market/kirov-start-sales-cover.png',
+    imagePosition: 'center center',
   },
 ];
 
@@ -57,6 +61,7 @@ const markets = [
     accent: 'rgba(243, 203, 154, 0.34)',
     image: '/market/anapa-cover.jpg',
     size: 'large',
+    imagePosition: 'center center',
   },
   {
     key: 'crimea',
@@ -70,6 +75,7 @@ const markets = [
     accent: 'rgba(157, 223, 248, 0.42)',
     image: '/market/crimea-cover.jpg',
     size: 'large',
+    imagePosition: 'center center',
   },
   {
     key: 'sochi',
@@ -83,6 +89,7 @@ const markets = [
     accent: 'rgba(206, 230, 187, 0.32)',
     image: '/market/sochi-cover.jpg',
     size: 'large',
+    imagePosition: 'center center',
   },
   {
     key: 'thailand',
@@ -144,19 +151,19 @@ export default function HomePage() {
       style={{
         minHeight: '100vh',
         margin: 0,
-        padding: '0 0 32px',
+        padding: '0 0 18px',
         fontFamily: 'Inter, Arial, sans-serif',
         color: '#f7f1e8',
         background:
           'radial-gradient(circle at top, rgba(188,156,109,0.12) 0%, rgba(9,13,18,0) 26%), linear-gradient(180deg, #0c1117 0%, #121a21 42%, #181d1b 100%)',
       }}
     >
-      <div style={{ maxWidth: 560, margin: '0 auto', padding: '0 14px' }}>
+      <div style={{ maxWidth: 560, margin: '0 auto', padding: '0 10px' }}>
         <div
           style={{
             position: 'relative',
             minHeight: 640,
-            marginBottom: 18,
+            marginBottom: 10,
             borderRadius: '0 0 34px 34px',
             overflow: 'hidden',
             backgroundImage:
@@ -301,7 +308,7 @@ export default function HomePage() {
           style={{
             background: 'rgba(246,239,228,0.06)',
             borderRadius: 30,
-            padding: 18,
+            padding: 12,
             boxShadow: '0 24px 54px rgba(0,0,0,0.16)',
             backdropFilter: 'blur(16px)',
             border: '1px solid rgba(255,255,255,0.08)',
@@ -309,7 +316,7 @@ export default function HomePage() {
         >
           <div
             style={{
-              marginBottom: 16,
+              marginBottom: 10,
               borderRadius: 24,
               padding: '18px 18px 16px',
               background: 'linear-gradient(180deg, #f6efe4 0%, #f2eadf 100%)',
@@ -379,9 +386,17 @@ export default function HomePage() {
             <Pill style={{ flexShrink: 0 }}>3 направления</Pill>
           </div>
 
-          <div style={{ display: 'grid', gap: 14, marginBottom: 14 }}>
-            {featuredMarkets.map((market) => (
-              <MotionCard key={market.key}>
+          <div style={{ display: 'grid', gap: 0, marginBottom: 10 }}>
+            {featuredMarkets.map((market, index) => (
+              <MotionCard
+                key={market.key}
+                style={{
+                  position: 'sticky',
+                  top: 74 + index * 18,
+                  zIndex: featuredMarkets.length - index,
+                  marginTop: index === 0 ? 0 : -22,
+                }}
+              >
                 <Link
                   href={market.href}
                   style={{
@@ -389,15 +404,16 @@ export default function HomePage() {
                     textDecoration: 'none',
                     borderRadius: 30,
                     overflow: 'hidden',
-                    minHeight: 216,
-                    padding: 20,
+                    minHeight: 240,
+                    padding: 18,
                     color: '#ffffff',
                     background: market.gradient,
-                    backgroundImage: `linear-gradient(180deg, rgba(12,18,22,0.12) 0%, rgba(10,13,16,0.5) 100%), url(${market.image})`,
+                    backgroundImage: `linear-gradient(180deg, rgba(10,14,18,0.16) 0%, rgba(8,12,16,0.34) 38%, rgba(7,11,15,0.88) 100%), url(${market.image})`,
                     backgroundSize: 'cover',
-                    backgroundPosition: 'center',
+                    backgroundPosition: market.imagePosition ?? 'center',
                     position: 'relative',
-                    boxShadow: '0 18px 34px rgba(20, 21, 20, 0.12)',
+                    boxShadow: '0 24px 44px rgba(20, 21, 20, 0.14)',
+                    border: '1px solid rgba(255,255,255,0.08)',
                   }}
                 >
                   <div
@@ -405,7 +421,14 @@ export default function HomePage() {
                       position: 'absolute',
                       inset: 0,
                       background:
-                        'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.3) 100%)',
+                        'linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.18) 18%, rgba(0,0,0,0.54) 100%)',
+                    }}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'linear-gradient(90deg, rgba(7,11,15,0.72) 0%, rgba(7,11,15,0.24) 52%, rgba(7,11,15,0.1) 100%)',
                     }}
                   />
                   <div
@@ -433,8 +456,10 @@ export default function HomePage() {
                     <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'flex-start' }}>
                       <Pill
                         style={{
-                          background: 'rgba(255,255,255,0.16)',
+                          background: 'rgba(255,255,255,0.18)',
                           color: '#fff',
+                          backdropFilter: 'blur(10px)',
+                          boxShadow: '0 10px 24px rgba(9,10,12,0.18)',
                         }}
                       >
                         {market.badge}
@@ -442,14 +467,24 @@ export default function HomePage() {
                       <div style={{ color: 'rgba(255,255,255,0.82)', fontSize: 22 }}>↗</div>
                     </div>
 
-                    <div>
-                      <SectionEyebrow style={{ color: 'rgba(255,244,221,0.72)', marginBottom: 8 }}>{market.kicker}</SectionEyebrow>
-                      <div style={{ fontSize: 42, fontWeight: 700, letterSpacing: '0.03em', marginBottom: 8 }}>{market.title}</div>
-                      <div style={{ maxWidth: 390, fontSize: 14, lineHeight: 1.5, color: 'rgba(255,255,255,0.9)', marginBottom: 14 }}>
+                    <div
+                      style={{
+                        maxWidth: 400,
+                        padding: '16px 16px 14px',
+                        borderRadius: 24,
+                        background: 'linear-gradient(180deg, rgba(12,18,24,0.14) 0%, rgba(12,18,24,0.48) 24%, rgba(8,12,16,0.74) 100%)',
+                        border: '1px solid rgba(255,255,255,0.08)',
+                        backdropFilter: 'blur(10px)',
+                        boxShadow: '0 18px 30px rgba(6,8,10,0.18)',
+                      }}
+                    >
+                      <SectionEyebrow style={{ color: 'rgba(255,244,221,0.74)', marginBottom: 8 }}>{market.kicker}</SectionEyebrow>
+                      <div style={{ fontSize: 38, fontWeight: 700, letterSpacing: '0.02em', lineHeight: 0.96, marginBottom: 10, textShadow: '0 10px 24px rgba(0,0,0,0.3)' }}>{market.title}</div>
+                      <div style={{ maxWidth: 340, fontSize: 14, lineHeight: 1.48, color: 'rgba(255,255,255,0.92)', marginBottom: 12 }}>
                         {market.subtitle}
                       </div>
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
-                        <div style={{ maxWidth: 230, fontSize: 12, lineHeight: 1.45, color: 'rgba(255,255,255,0.72)' }}>{market.footnote}</div>
+                      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 12 }}>
+                        <div style={{ maxWidth: 210, fontSize: 12, lineHeight: 1.42, color: 'rgba(255,255,255,0.7)' }}>{market.footnote}</div>
                         <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: '#fff5dd', fontWeight: 700, fontSize: 14, flexShrink: 0 }}>
                           Смотреть объекты <span>→</span>
                         </div>
@@ -463,7 +498,7 @@ export default function HomePage() {
 
           <div
             style={{
-              marginBottom: 18,
+              marginBottom: 10,
               borderRadius: 24,
               padding: '16px 16px 14px',
               background: 'linear-gradient(180deg, #fff7eb 0%, #f2eadf 100%)',
@@ -478,9 +513,17 @@ export default function HomePage() {
               <Pill style={{ background: '#f0dfb7', color: '#5f4826' }}>{startSalesProjects.length} объекта</Pill>
             </div>
 
-            <div style={{ display: 'grid', gap: 12 }}>
-              {startSalesProjects.map((project) => (
-                <MotionCard key={project.title}>
+            <div style={{ display: 'grid', gap: 0 }}>
+              {startSalesProjects.map((project, index) => (
+                <MotionCard
+                  key={project.title}
+                  style={{
+                    position: 'sticky',
+                    top: 92 + index * 18,
+                    zIndex: startSalesProjects.length - index,
+                    marginTop: index === 0 ? 0 : -20,
+                  }}
+                >
                   <Link
                     href={project.href}
                     style={{
@@ -488,30 +531,42 @@ export default function HomePage() {
                       textDecoration: 'none',
                       borderRadius: 24,
                       overflow: 'hidden',
-                      minHeight: 220,
-                      padding: 18,
+                      minHeight: 250,
+                      padding: 16,
                       color: '#ffffff',
-                      backgroundImage: `linear-gradient(180deg, rgba(12,18,22,0.12) 0%, rgba(10,13,16,0.58) 100%), url(${project.image})`,
+                      backgroundImage: `linear-gradient(180deg, rgba(10,14,18,0.14) 0%, rgba(8,12,16,0.3) 28%, rgba(7,11,15,0.92) 100%), url(${project.image})`,
                       backgroundSize: 'cover',
-                      backgroundPosition: 'center',
+                      backgroundPosition: project.imagePosition ?? 'center',
                       position: 'relative',
-                      boxShadow: '0 18px 34px rgba(20, 21, 20, 0.12)',
+                      boxShadow: '0 24px 44px rgba(20, 21, 20, 0.14)',
+                      border: '1px solid rgba(255,255,255,0.08)',
                     }}
                   >
-                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.34) 100%)' }} />
+                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.18) 16%, rgba(0,0,0,0.56) 100%)' }} />
+                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(7,11,15,0.76) 0%, rgba(7,11,15,0.32) 48%, rgba(7,11,15,0.12) 100%)' }} />
                     <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'flex-start' }}>
-                        <Pill style={{ background: '#f0dfb7', color: '#3a2b16' }}>{project.badge}</Pill>
-                        <div style={{ padding: '9px 14px', borderRadius: 18, background: 'rgba(255,255,255,0.92)', color: '#181818', fontWeight: 700, fontSize: 15 }}>
+                        <Pill style={{ background: '#f0dfb7', color: '#3a2b16', boxShadow: '0 10px 24px rgba(15,16,18,0.16)' }}>{project.badge}</Pill>
+                        <div style={{ padding: '9px 14px', borderRadius: 18, background: 'rgba(255,255,255,0.92)', color: '#181818', fontWeight: 700, fontSize: 15, boxShadow: '0 10px 24px rgba(15,16,18,0.16)' }}>
                           {project.price}
                         </div>
                       </div>
 
-                      <div>
-                        <SectionEyebrow style={{ color: 'rgba(255,244,221,0.76)', marginBottom: 8 }}>{project.eyebrow}</SectionEyebrow>
-                        <div style={{ fontSize: 32, fontWeight: 700, lineHeight: 1.04, marginBottom: 10 }}>{project.title}</div>
-                        <div style={{ fontSize: 14, lineHeight: 1.55, color: 'rgba(255,255,255,0.88)', marginBottom: 10 }}>{project.subtitle}</div>
-                        <div style={{ fontSize: 13, lineHeight: 1.5, color: 'rgba(255,255,255,0.72)', marginBottom: 12 }}>{project.location}</div>
+                      <div
+                        style={{
+                          maxWidth: 408,
+                          padding: '16px 16px 14px',
+                          borderRadius: 22,
+                          background: 'linear-gradient(180deg, rgba(12,18,24,0.12) 0%, rgba(12,18,24,0.42) 20%, rgba(8,12,16,0.72) 100%)',
+                          border: '1px solid rgba(255,255,255,0.08)',
+                          backdropFilter: 'blur(10px)',
+                          boxShadow: '0 18px 30px rgba(6,8,10,0.18)',
+                        }}
+                      >
+                        <SectionEyebrow style={{ color: 'rgba(255,244,221,0.78)', marginBottom: 8 }}>{project.eyebrow}</SectionEyebrow>
+                        <div style={{ fontSize: 30, fontWeight: 700, lineHeight: 1.02, marginBottom: 10, textShadow: '0 10px 24px rgba(0,0,0,0.3)' }}>{project.title}</div>
+                        <div style={{ fontSize: 14, lineHeight: 1.48, color: 'rgba(255,255,255,0.9)', marginBottom: 10, maxWidth: 320 }}>{project.subtitle}</div>
+                        <div style={{ fontSize: 13, lineHeight: 1.46, color: 'rgba(255,255,255,0.7)', marginBottom: 12, maxWidth: 300 }}>{project.location}</div>
                         <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: '#fff5dd', fontWeight: 700, fontSize: 14 }}>
                           Смотреть объект <span>→</span>
                         </div>
@@ -523,7 +578,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 18 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 10 }}>
             {secondaryMarkets.map((market) => (
               <MotionCard key={market.key}>
                 <Link
@@ -558,7 +613,7 @@ export default function HomePage() {
               borderRadius: 24,
               background: 'linear-gradient(180deg, #f6efe4 0%, #f2eadc 100%)',
               padding: 16,
-              marginBottom: 18,
+              marginBottom: 10,
               border: '1px solid rgba(221,211,196,0.8)',
               color: '#3d372f',
               lineHeight: 1.55,

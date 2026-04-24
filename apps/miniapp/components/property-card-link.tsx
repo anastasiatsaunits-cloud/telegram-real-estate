@@ -70,19 +70,19 @@ export function PropertyCardLink({
             borderRadius: 30,
             overflow: 'hidden',
             color: '#161616',
-            boxShadow: '0 16px 34px rgba(0,0,0,0.08)',
+            boxShadow: '0 18px 38px rgba(0,0,0,0.08)',
           }}
         >
           <div
             style={{
               minHeight: 318,
-              padding: 20,
+              padding: 18,
               display: 'flex',
               alignItems: 'space-between',
               flexDirection: 'column',
               justifyContent: 'space-between',
               background: palette.gradient,
-              backgroundImage: property.coverAsset ? `linear-gradient(180deg, rgba(14,17,19,0.18) 0%, rgba(10,13,16,0.55) 100%), url(${property.coverAsset})` : palette.gradient,
+              backgroundImage: property.coverAsset ? `linear-gradient(180deg, rgba(14,17,19,0.14) 0%, rgba(10,13,16,0.3) 24%, rgba(10,13,16,0.88) 100%), url(${property.coverAsset})` : palette.gradient,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               position: 'relative',
@@ -92,7 +92,14 @@ export function PropertyCardLink({
               style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.48) 100%)',
+                background: 'linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.16) 14%, rgba(0,0,0,0.52) 100%)',
+              }}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(90deg, rgba(7,11,15,0.74) 0%, rgba(7,11,15,0.28) 54%, rgba(7,11,15,0.12) 100%)',
               }}
             />
             <div
@@ -114,6 +121,7 @@ export function PropertyCardLink({
                   style={{
                     background: 'rgba(255,255,255,0.16)',
                     color: '#ffffff',
+                    backdropFilter: 'blur(10px)',
                   }}
                 >
                   {palette.label}
@@ -145,10 +153,22 @@ export function PropertyCardLink({
               </div>
             </div>
 
-            <div style={{ position: 'relative', zIndex: 1 }}>
+            <div
+              style={{
+                position: 'relative',
+                zIndex: 1,
+                maxWidth: 396,
+                padding: '16px 16px 14px',
+                borderRadius: 24,
+                background: 'linear-gradient(180deg, rgba(12,18,24,0.12) 0%, rgba(12,18,24,0.42) 20%, rgba(8,12,16,0.72) 100%)',
+                border: '1px solid rgba(255,255,255,0.08)',
+                backdropFilter: 'blur(10px)',
+                boxShadow: '0 18px 30px rgba(6,8,10,0.18)',
+              }}
+            >
               <SectionEyebrow style={{ color: 'rgba(255,255,255,0.72)', marginBottom: 10 }}>объект в подборке</SectionEyebrow>
-              <div style={{ fontSize: 36, fontWeight: 700, lineHeight: 1.02, color: '#ffffff', marginBottom: 12 }}>{property.title}</div>
-              <div style={{ fontSize: 14, lineHeight: 1.55, color: 'rgba(255,255,255,0.88)', maxWidth: 380, marginBottom: 14 }}>{location || 'Локация уточняется'}</div>
+              <div style={{ fontSize: 34, fontWeight: 700, lineHeight: 1, color: '#ffffff', marginBottom: 12, textShadow: '0 10px 24px rgba(0,0,0,0.3)' }}>{property.title}</div>
+              <div style={{ fontSize: 14, lineHeight: 1.48, color: 'rgba(255,255,255,0.9)', maxWidth: 340, marginBottom: 14 }}>{location || 'Локация уточняется'}</div>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: '#fff3da', fontWeight: 700, fontSize: 14 }}>
                 Смотреть объект <span>→</span>
               </div>
