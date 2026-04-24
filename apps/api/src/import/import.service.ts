@@ -22,6 +22,7 @@ const REGION_MAP: Record<string, { id: string; name: string; slug: string; sortO
   region_anapa: { id: 'region_anapa', name: 'Анапа', slug: 'anapa', sortOrder: 1, mediaBaseUrl: 'https://новостройки93.рф' },
   region_sochi: { id: 'region_sochi', name: 'Сочи', slug: 'sochi', sortOrder: 2, mediaBaseUrl: 'https://новостройки93.рф' },
   region_crimea: { id: 'region_crimea', name: 'Крым', slug: 'crimea', sortOrder: 3, mediaBaseUrl: 'https://новостройкикрым.рф' },
+  region_mountains: { id: 'region_mountains', name: 'Горный кластер', slug: 'mountains', sortOrder: 4, mediaBaseUrl: 'https://новостройки93.рф' },
 };
 
 function normalizeNumericValue(value: string | null | undefined) {

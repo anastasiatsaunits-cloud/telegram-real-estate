@@ -113,6 +113,14 @@ function getMarketTheme(regionSlug: string | undefined) {
     };
   }
 
+  if (regionSlug === 'mountains') {
+    return {
+      gradient: 'linear-gradient(135deg, #92a6b8 0%, #63788b 45%, #2b3944 100%)',
+      accent: 'rgba(208, 229, 242, 0.24)',
+      label: 'Горный кластер · выбор рынка',
+    };
+  }
+
   return {
     gradient: 'linear-gradient(135deg, #7da4b7 0%, #58717f 45%, #2f4149 100%)',
     accent: 'rgba(185, 233, 244, 0.25)',

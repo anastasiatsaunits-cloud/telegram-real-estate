@@ -21,6 +21,15 @@ function getMarketPalette(regionSlug: string) {
     };
   }
 
+  if (regionSlug === 'mountains') {
+    return {
+      gradient: 'linear-gradient(135deg, #8a9dae 0%, #5f7384 42%, #24313a 100%)',
+      accent: 'rgba(202, 223, 238, 0.24)',
+      label: 'Горный кластер · круглый год',
+      cta: '#24495f',
+    };
+  }
+
   return {
     gradient: 'linear-gradient(135deg, #7aaec3 0%, #547b92 45%, #263746 100%)',
     accent: 'rgba(188, 230, 245, 0.24)',

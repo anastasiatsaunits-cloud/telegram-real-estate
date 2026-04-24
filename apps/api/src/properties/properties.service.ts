@@ -14,6 +14,10 @@ const MARKET_ASSETS = {
     cover: '/market/sochi-cover.jpg',
     gallery: ['/market/sochi-cover.jpg', '/market/sochi-gallery-1.jpg', '/market/sochi-gallery-2.jpg'],
   },
+  mountains: {
+    cover: '/market/mountains-cover.jpg',
+    gallery: ['/market/mountains-cover.jpg'],
+  },
 } as const;
 
 @Injectable()
@@ -37,7 +41,7 @@ export class PropertiesService {
       where: {
         isActive: true,
         status: 'active',
-        ...(regionSlug ? { region: { slug: regionSlug } } : { region: { slug: { in: ['anapa', 'crimea', 'sochi'] } } }),
+        ...(regionSlug ? { region: { slug: regionSlug } } : { region: { slug: { in: ['anapa', 'crimea', 'sochi', 'mountains'] } } }),
         ...(priceFilter ? { priceFrom: priceFilter } : {}),
       },
       orderBy: [{ region: { sortOrder: 'asc' } }, { priceFrom: 'asc' }, { createdAt: 'desc' }],
