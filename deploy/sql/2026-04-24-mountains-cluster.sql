@@ -130,26 +130,44 @@ ON CONFLICT ("slug") DO UPDATE SET
 
 DELETE FROM "PropertyMedia"
 WHERE "propertyId" IN (
-  'property_mountains_polyana_pik',
-  'property_mountains_benefit_collection',
-  'property_mountains_leeprime',
-  'property_mountains_rouge_540'
+  SELECT "id"
+  FROM "Property"
+  WHERE "slug" IN (
+    'gk-polyana-pik',
+    'gk-benefit-collection-sochi-chalet-benefit-kollekshn',
+    'ak-leeprime-residences-polyana-sochi-lipraym-rezidens-polyana-sochi-',
+    'gk-polyana-rouge-540-polyana-ruzh'
+  )
 );
 
 INSERT INTO "PropertyMedia" ("id", "propertyId", "mediaType", "url", "sortOrder", "createdAt")
-VALUES
-  ('media_mountains_polyana_pik_1', 'property_mountains_polyana_pik', 'image', 'https://новостройки93.рф/upload/iblock/e5d/mamy3xr59mjqpezvg76rx141fzmfcdyp.png', 0, NOW()),
-  ('media_mountains_polyana_pik_2', 'property_mountains_polyana_pik', 'image', 'https://новостройки93.рф/upload/iblock/9cb/myvbcjjpcuc7jzgsd7lwi9yv8uls46j8.png', 1, NOW()),
-  ('media_mountains_polyana_pik_3', 'property_mountains_polyana_pik', 'image', 'https://новостройки93.рф/upload/iblock/69a/mgfce6c0597gy1f8kacur38opwws1ygk.png', 2, NOW()),
-  ('media_mountains_benefit_1', 'property_mountains_benefit_collection', 'image', 'https://новостройки93.рф/upload/iblock/f85/azm9tq9wl62p1zrg3pw0iqr6gdwgap1f.jpg', 0, NOW()),
-  ('media_mountains_benefit_2', 'property_mountains_benefit_collection', 'image', 'https://новостройки93.рф/upload/iblock/577/kytolqz82im6z5i8an37ecfzv38kzfoo.jpg', 1, NOW()),
-  ('media_mountains_benefit_3', 'property_mountains_benefit_collection', 'image', 'https://новостройки93.рф/upload/iblock/655/eyqc7bz9jt9vb7u4s0m9vyvyqz63cp9p.jpg', 2, NOW()),
-  ('media_mountains_leeprime_1', 'property_mountains_leeprime', 'image', 'https://новостройки93.рф/upload/iblock/4e2/ptmp61vklew1rq8hgpiw26ix4tc4cyof.png', 0, NOW()),
-  ('media_mountains_leeprime_2', 'property_mountains_leeprime', 'image', 'https://новостройки93.рф/upload/iblock/03a/iunxjarlwcy3sorl6am69gd5ln8pdbft.jpg', 1, NOW()),
-  ('media_mountains_leeprime_3', 'property_mountains_leeprime', 'image', 'https://новостройки93.рф/upload/iblock/47a/ph8ocx6vks47grb78c41r7pwfvpoic76.jpg', 2, NOW()),
-  ('media_mountains_rouge_1', 'property_mountains_rouge_540', 'image', 'https://новостройки93.рф/upload/iblock/78b/8j64glt42w1wx15jf7ye28brz8ayg9w5.jpg', 0, NOW()),
-  ('media_mountains_rouge_2', 'property_mountains_rouge_540', 'image', 'https://новостройки93.рф/upload/iblock/aee/g0dfarprhcsf0cjxwsohwlks1pdc9m4k.jpg', 1, NOW()),
-  ('media_mountains_rouge_3', 'property_mountains_rouge_540', 'image', 'https://новостройки93.рф/upload/iblock/2e3/9ltzs7n603hkukjyz1iu04rqp6ucf1sl.jpg', 2, NOW())
+SELECT *
+FROM (
+  SELECT 'media_mountains_polyana_pik_1' AS "id", (SELECT "id" FROM "Property" WHERE "slug" = 'gk-polyana-pik') AS "propertyId", 'image' AS "mediaType", 'https://новостройки93.рф/upload/iblock/e5d/mamy3xr59mjqpezvg76rx141fzmfcdyp.png' AS "url", 0 AS "sortOrder", NOW() AS "createdAt"
+  UNION ALL
+  SELECT 'media_mountains_polyana_pik_2', (SELECT "id" FROM "Property" WHERE "slug" = 'gk-polyana-pik'), 'image', 'https://новостройки93.рф/upload/iblock/9cb/myvbcjjpcuc7jzgsd7lwi9yv8uls46j8.png', 1, NOW()
+  UNION ALL
+  SELECT 'media_mountains_polyana_pik_3', (SELECT "id" FROM "Property" WHERE "slug" = 'gk-polyana-pik'), 'image', 'https://новостройки93.рф/upload/iblock/69a/mgfce6c0597gy1f8kacur38opwws1ygk.png', 2, NOW()
+  UNION ALL
+  SELECT 'media_mountains_benefit_1', (SELECT "id" FROM "Property" WHERE "slug" = 'gk-benefit-collection-sochi-chalet-benefit-kollekshn'), 'image', 'https://новостройки93.рф/upload/iblock/f85/azm9tq9wl62p1zrg3pw0iqr6gdwgap1f.jpg', 0, NOW()
+  UNION ALL
+  SELECT 'media_mountains_benefit_2', (SELECT "id" FROM "Property" WHERE "slug" = 'gk-benefit-collection-sochi-chalet-benefit-kollekshn'), 'image', 'https://новостройки93.рф/upload/iblock/577/kytolqz82im6z5i8an37ecfzv38kzfoo.jpg', 1, NOW()
+  UNION ALL
+  SELECT 'media_mountains_benefit_3', (SELECT "id" FROM "Property" WHERE "slug" = 'gk-benefit-collection-sochi-chalet-benefit-kollekshn'), 'image', 'https://новостройки93.рф/upload/iblock/655/eyqc7bz9jt9vb7u4s0m9vyvyqz63cp9p.jpg', 2, NOW()
+  UNION ALL
+  SELECT 'media_mountains_leeprime_1', (SELECT "id" FROM "Property" WHERE "slug" = 'ak-leeprime-residences-polyana-sochi-lipraym-rezidens-polyana-sochi-'), 'image', 'https://новостройки93.рф/upload/iblock/4e2/ptmp61vklew1rq8hgpiw26ix4tc4cyof.png', 0, NOW()
+  UNION ALL
+  SELECT 'media_mountains_leeprime_2', (SELECT "id" FROM "Property" WHERE "slug" = 'ak-leeprime-residences-polyana-sochi-lipraym-rezidens-polyana-sochi-'), 'image', 'https://новостройки93.рф/upload/iblock/03a/iunxjarlwcy3sorl6am69gd5ln8pdbft.jpg', 1, NOW()
+  UNION ALL
+  SELECT 'media_mountains_leeprime_3', (SELECT "id" FROM "Property" WHERE "slug" = 'ak-leeprime-residences-polyana-sochi-lipraym-rezidens-polyana-sochi-'), 'image', 'https://новостройки93.рф/upload/iblock/47a/ph8ocx6vks47grb78c41r7pwfvpoic76.jpg', 2, NOW()
+  UNION ALL
+  SELECT 'media_mountains_rouge_1', (SELECT "id" FROM "Property" WHERE "slug" = 'gk-polyana-rouge-540-polyana-ruzh'), 'image', 'https://новостройки93.рф/upload/iblock/78b/8j64glt42w1wx15jf7ye28brz8ayg9w5.jpg', 0, NOW()
+  UNION ALL
+  SELECT 'media_mountains_rouge_2', (SELECT "id" FROM "Property" WHERE "slug" = 'gk-polyana-rouge-540-polyana-ruzh'), 'image', 'https://новостройки93.рф/upload/iblock/aee/g0dfarprhcsf0cjxwsohwlks1pdc9m4k.jpg', 1, NOW()
+  UNION ALL
+  SELECT 'media_mountains_rouge_3', (SELECT "id" FROM "Property" WHERE "slug" = 'gk-polyana-rouge-540-polyana-ruzh'), 'image', 'https://новостройки93.рф/upload/iblock/2e3/9ltzs7n603hkukjyz1iu04rqp6ucf1sl.jpg', 2, NOW()
+) AS media_rows
+WHERE "propertyId" IS NOT NULL
 ON CONFLICT ("id") DO UPDATE SET
   "propertyId" = EXCLUDED."propertyId",
   "mediaType" = EXCLUDED."mediaType",
