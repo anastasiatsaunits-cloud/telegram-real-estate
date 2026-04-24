@@ -55,7 +55,7 @@ const markets = [
     href: '/properties?region=anapa&regionName=Анапа',
     gradient: 'linear-gradient(135deg, rgba(74,47,24,0.12) 0%, rgba(22,15,10,0.72) 100%)',
     accent: 'rgba(243, 203, 154, 0.34)',
-    image: 'https://новостройки93.рф/upload/iblock/6c0/1grz6rcv8v3faeuclkmq387z3ixsjm46.jpg',
+    image: '/market/anapa-cover.jpg',
     size: 'large',
   },
   {
@@ -103,9 +103,9 @@ const markets = [
 ];
 
 const bottomLinks = [
-  { title: 'О проекте', href: '/quiz/scenario' },
-  { title: 'Отзывы', href: '/quiz/success' },
-  { title: 'Инвесторам', href: '/quiz/contact' },
+  { title: 'Как подбираем', href: '/quiz/scenario' },
+  { title: 'Смотреть объекты', href: '/properties' },
+  { title: 'Оставить запрос', href: '/quiz/contact' },
 ];
 
 const premiumSignals = [
@@ -564,10 +564,10 @@ export default function HomePage() {
               lineHeight: 1.55,
             }}
           >
-            <SectionEyebrow style={{ marginBottom: 8 }}>Важно</SectionEyebrow>
-            <div style={{ fontWeight: 700, marginBottom: 8 }}>Каталог разделён по рынкам, чтобы выбор начинался точно</div>
+            <SectionEyebrow style={{ marginBottom: 8 }}>Почему это удобно</SectionEyebrow>
+            <div style={{ fontWeight: 700, marginBottom: 8 }}>Каждый рынок открыт отдельно, чтобы вы быстрее вышли на свой сценарий</div>
             <div>
-              Не смешиваем Крым, Сочи и Анапу в одну ленту. Так клиент быстрее понимает, куда смотреть и какой сценарий подходит именно ему.
+              Сочи, Крым и Анапа собраны как разные сценарии покупки. Так проще сразу смотреть релевантные объекты, а не тратить внимание на лишнюю выдачу.
             </div>
           </div>
 
@@ -579,7 +579,7 @@ export default function HomePage() {
               boxShadow: '0 16px 32px rgba(19,40,31,0.18)',
             }}
           >
-            <SectionEyebrow style={{ marginBottom: 10, color: 'rgba(231,221,205,0.7)' }}>Дополнительно</SectionEyebrow>
+            <SectionEyebrow style={{ marginBottom: 10, color: 'rgba(231,221,205,0.7)' }}>Открыть дальше</SectionEyebrow>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
               {bottomLinks.map((item) => (
                 <Link

@@ -7,9 +7,9 @@ import { buildQuizHref, scenarioOptions } from '../../lib/quiz-options';
 export default function ScenarioQuizPage() {
   return (
     <AppShell
-      eyebrow="Шаг 1 из 6"
+      eyebrow="Персональный подбор"
       title="Что для вас сейчас в приоритете?"
-      description="Сначала поймём сценарий покупки, а потом сузим рынок и покажем релевантные объекты, а не общий каталог."
+      description="Ответьте на несколько коротких вопросов, и я сразу покажу первые варианты под ваш сценарий, рынок и бюджет."
     >
       <BackLink href="/" />
       <ProgressBar step={1} total={6} />
@@ -25,7 +25,7 @@ export default function ScenarioQuizPage() {
           lineHeight: 1.55,
         }}
       >
-        Это займёт меньше минуты. Сразу после последнего ответа покажу предварительную подборку по вашему сценарию.
+        Это займёт меньше минуты. Сразу после последнего ответа открою первую подборку и покажу, с каких объектов лучше начать.
       </div>
 
       <div style={{ display: 'grid', gap: 12 }}>

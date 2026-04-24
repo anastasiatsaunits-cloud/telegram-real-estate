@@ -91,10 +91,10 @@ export default function ContactQuizPage() {
   const title = propertyTitle ? 'Оставьте телефон, и мы откроем детали по выбранному объекту' : 'Оставьте телефон, и мы откроем полную подборку под ваш запрос';
   const description = propertyTitle
     ? 'Свяжемся по выбранному объекту, покажем цифры и при необходимости добавим похожие варианты в том же сценарии.'
-    : 'После контакта откроем полную подборку, уточним детали и вернёмся с 1–2 самыми сильными вариантами.';
+    : 'Откроем больше вариантов, уточним детали и вернёмся с самыми сильными предложениями под ваш сценарий.';
 
   return (
-    <AppShell eyebrow="Следующий шаг" title={title} description={description}>
+    <AppShell eyebrow="Открываем полный доступ" title={title} description={description}>
       <BackLink href={backHref} />
 
       <div style={{ display: 'grid', gap: 12, marginBottom: 18 }}>

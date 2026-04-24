@@ -52,9 +52,9 @@ export default function SuccessPage() {
 
   return (
     <AppShell
-      eyebrow="Запрос отправлен"
-      title="Готово, мы получили ваш контакт"
-      description={`Вернёмся с подборкой под сценарий «${scenario.title.toLowerCase()}», рынок ${regionName}, формат ${format.title.toLowerCase()} и бюджет ${budget.title}.`}
+      eyebrow="Контакт получен"
+      title="Спасибо, запрос уже у нас"
+      description={`Подготовим подборку под сценарий «${scenario.title.toLowerCase()}», рынок ${regionName}, формат ${format.title.toLowerCase()} и бюджет ${budget.title}.`}
     >
       {leadId ? (
         <div style={{ marginBottom: 18, padding: 16, borderRadius: 18, background: '#fffaf6', border: '1px solid #ece3d7' }}>

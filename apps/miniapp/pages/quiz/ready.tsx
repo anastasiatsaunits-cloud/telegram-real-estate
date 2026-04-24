@@ -118,9 +118,9 @@ export default function ReadyPage() {
 
   return (
     <AppShell
-      eyebrow="Предварительная подборка"
-      title="Мы уже собрали для вас первые варианты"
-      description="Сначала покажем направление и сильные лоты, а полный доступ и связь с экспертом откроем на следующем шаге."
+      eyebrow="Первая подборка"
+      title="Мы уже собрали для вас первые сильные варианты"
+      description="Ниже показываю направление, подходящие объекты и логику выбора. После контакта откроем полную подборку под ваш запрос."
     >
       <BackLink
         href={buildQuizHref('/quiz/priority', {
@@ -135,7 +135,7 @@ export default function ReadyPage() {
       />
 
       <InfoCard style={{ marginBottom: 16, background: 'linear-gradient(180deg, #fffaf3 0%, #f4ebde 100%)' }}>
-        <SectionEyebrow style={{ marginBottom: 8, color: '#9c8566' }}>Ваш сценарий</SectionEyebrow>
+        <SectionEyebrow style={{ marginBottom: 8, color: '#9c8566' }}>Под ваш запрос</SectionEyebrow>
         <div style={{ fontSize: 19, fontWeight: 700, lineHeight: 1.35, color: '#1f1b17', marginBottom: 10 }}>{summary}</div>
         <div style={{ color: '#5b5044', lineHeight: 1.65 }}>
           Приоритет: {priority.title}. Срок решения: {timeline.title}.
@@ -147,14 +147,14 @@ export default function ReadyPage() {
       ) : items.length ? (
         <>
           <InfoCard style={{ marginBottom: 16 }}>
-            <SectionEyebrow style={{ marginBottom: 8 }}>Что нашли</SectionEyebrow>
+            <SectionEyebrow style={{ marginBottom: 8 }}>Первые варианты</SectionEyebrow>
             <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.4, marginBottom: 8 }}>
-              {isFallback ? 'Показываю ближайшие сильные варианты по рынку' : `Нашли ${items.length} релевантных варианта для первого просмотра`}
+              {isFallback ? 'Показываю сильные варианты, с которых удобно начать' : `Собрала ${items.length} релевантных варианта для первого просмотра`}
             </div>
             <div style={{ color: '#5b5044', lineHeight: 1.65 }}>
               {isFallback
-                ? 'Точных совпадений в текущей витрине мало, поэтому показываю самые близкие объекты по рынку. После контакта откроем полную подборку и расширим выбор.'
-                : 'Это первые объекты для быстрого ориентира. Полную подборку и похожие варианты откроем на следующем шаге.'}
+                ? 'Показываю самые сильные объекты по выбранному рынку. После контакта откроем закрытую подборку и расширим выбор под ваш сценарий.'
+                : 'Это лучшие варианты для быстрого ориентира. После контакта добавим похожие объекты и сузим подборку уже точечно под вас.'}
             </div>
           </InfoCard>
 
@@ -196,7 +196,7 @@ export default function ReadyPage() {
                     </div>
 
                     <div>
-                      <SectionEyebrow style={{ color: 'rgba(255,255,255,0.72)', marginBottom: 8 }}>первый просмотр</SectionEyebrow>
+                      <SectionEyebrow style={{ color: 'rgba(255,255,255,0.72)', marginBottom: 8 }}>первая подборка</SectionEyebrow>
                       <div style={{ fontSize: 28, fontWeight: 700, lineHeight: 1.08, color: '#ffffff', marginBottom: 8 }}>{item.title}</div>
                       <div style={{ color: 'rgba(255,255,255,0.86)', lineHeight: 1.55 }}>{[item.city, item.region.name].filter(Boolean).join(' · ')}</div>
                     </div>
@@ -204,7 +204,7 @@ export default function ReadyPage() {
 
                   <div style={{ padding: 18 }}>
                     <div style={{ color: '#5b5044', lineHeight: 1.65, marginBottom: 12 }}>
-                      Подходит под сценарий «{scenario.title.toLowerCase()}», приоритет «{priority.title.toLowerCase()}» и выбранный диапазон бюджета.
+                      Этот объект подходит под сценарий «{scenario.title.toLowerCase()}», приоритет «{priority.title.toLowerCase()}» и выбранный диапазон бюджета.
                     </div>
                     <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontWeight: 700, color: '#1f1b17' }}>
                       Смотреть детали <span>→</span>
@@ -217,21 +217,21 @@ export default function ReadyPage() {
         </>
       ) : (
         <InfoCard style={{ marginBottom: 16, color: '#5b5044' }}>
-          В текущей витрине пока мало объектов под точный фильтр. После контакта откроем расширенную подборку вручную и доберём сильные варианты под ваш сценарий.
+          Под точный фильтр сейчас мало открытых объектов. После контакта соберём расширенную подборку вручную и вернёмся с сильными вариантами под ваш сценарий.
         </InfoCard>
       )}
 
       <InfoCard style={{ marginBottom: 16, background: 'linear-gradient(180deg, #162a24 0%, #1f3c34 100%)', color: '#ffffff' }}>
-        <SectionEyebrow style={{ marginBottom: 8, color: 'rgba(230,220,204,0.7)' }}>Почему именно так</SectionEyebrow>
-        <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.35, marginBottom: 10 }}>Сначала ценность, потом контакт</div>
+        <SectionEyebrow style={{ marginBottom: 8, color: 'rgba(230,220,204,0.7)' }}>Что будет дальше</SectionEyebrow>
+        <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.35, marginBottom: 10 }}>Откроем полную подборку и сузим выбор под вас</div>
         <div style={{ color: 'rgba(255,255,255,0.82)', lineHeight: 1.7 }}>
-          Вы уже видите направление, рынок и первые объекты. На следующем шаге откроем полную подборку и свяжем с экспертом под ваш запрос.
+          Вы уже видите направление, рынок и первые объекты. На следующем шаге откроем больше вариантов, уточним детали и вернёмся с самым сильным предложением под ваш запрос.
         </div>
       </InfoCard>
 
       <div style={{ display: 'grid', gap: 12 }}>
         <PrimaryButton href={contactHref} style={{ background: '#ead7ad', color: '#1f1f1f', boxShadow: '0 10px 22px rgba(90,77,38,0.12)' }}>
-          Открыть полную подборку
+          Получить полную подборку
         </PrimaryButton>
 
         <Link
