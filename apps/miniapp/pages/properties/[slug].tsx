@@ -5,6 +5,7 @@ import { AppShell } from '../../components/app-shell';
 import { BackLink } from '../../components/back-link';
 import { InfoCard, Pill, PrimaryButton, SectionEyebrow, SurfaceCard } from '../../components/ui';
 import type { PropertyDetails } from '../../lib/properties';
+import { toOptimizedBackgroundImage, toOptimizedImageUrl } from '../../lib/optimized-image';
 import { buildQuizHref } from '../../lib/quiz-options';
 
 function formatPrice(value: string | null | undefined, currency: string | null | undefined) {
@@ -16,11 +17,11 @@ function formatArea(from: string | null | undefined, to: string | null | undefin
   if (from && to) return `${from}-${to} м²`;
   if (from) return `${from} м²`;
   if (to) return `${to} м²`;
-  return '—';
+  return null;
 }
 
 function humanizePropertyType(type: string | null | undefined) {
-  if (!type) return 'Премиальный объект';
+  if (!type) return null;
   if (type === 'apartment') return 'Резиденции и квартиры';
   if (type === 'villa') return 'Вилла';
   if (type === 'hotel') return 'Отельный формат';
@@ -29,9 +30,17 @@ function humanizePropertyType(type: string | null | undefined) {
 
 function humanizeStatus(status: string | null | undefined, slug: string | null | undefined) {
   if (slug === 'zhk-kirov') return 'Скоро старт продаж';
-  if (!status) return 'Актуальный объект';
-  if (status === 'active') return 'Актуальный объект';
+  if (!status || status === 'active') return null;
   return status;
+}
+
+function formatGeography(regionName: string | null | undefined, city: string | null | undefined) {
+  const parts = [regionName, city]
+    .map((item) => item?.trim())
+    .filter(Boolean)
+    .filter((item, index, array) => array.findIndex((value) => value?.toLowerCase() === item?.toLowerCase()) === index);
+
+  return parts.join(' · ');
 }
 
 function getPropertyNarrative(property: PropertyDetails | null) {
@@ -129,17 +138,41 @@ function getMarketTheme(regionSlug: string | undefined) {
 }
 
 function purchaseOptionsLabel(options: string[] | null | undefined) {
-  if (!options?.length) return 'Рассрочка, ипотека или персональный сценарий покупки.';
+  if (!options?.length) return null;
   return options.join(' · ');
 }
 
 function metricCards(property: PropertyDetails | null) {
   return [
-    { label: 'Площадь', value: formatArea(property?.areaFrom, property?.areaTo) },
-    { label: 'Арендная доходность', value: property?.metrics?.rentalYield ? `${property.metrics.rentalYield}%` : 'по запросу' },
-    { label: 'Рост капитала', value: property?.metrics?.annualGrowth ? `${property.metrics.annualGrowth}%` : 'по запросу' },
-    { label: 'ROI за 5 лет', value: property?.metrics?.roi5y ? `${property.metrics.roi5y}%` : 'по запросу' },
-  ];
+    property?.metrics?.rentalYield ? { label: 'Арендная доходность', value: `${property.metrics.rentalYield}%` } : null,
+    property?.metrics?.annualGrowth ? { label: 'Рост капитала', value: `${property.metrics.annualGrowth}%` } : null,
+    property?.metrics?.roi5y ? { label: 'ROI за 5 лет', value: `${property.metrics.roi5y}%` } : null,
+    property?.metrics?.roi10y ? { label: 'ROI за 10 лет', value: `${property.metrics.roi10y}%` } : null,
+  ].filter(Boolean) as { label: string; value: string }[];
+}
+
+function getTrustBlock(property: PropertyDetails | null) {
+  if (property?.slug === 'zhk-kirov') {
+    return {
+      eyebrow: 'Что будет после запроса',
+      title: 'Вернёмся не с общими словами, а с первым пакетом по старту продаж.',
+      items: [
+        'Соберём стартовые условия и первичные планировки, как только они открываются.',
+        'Покажем 2-3 близких премиальных варианта Ялты для сравнения.',
+        'Вернёмся в Telegram и проведём по следующему шагу без лишней переписки.',
+      ],
+    };
+  }
+
+  return {
+    eyebrow: 'Что будет после запроса',
+    title: 'Человек не остаётся один на один с карточкой, дальше идём в предметный подбор.',
+    items: [
+      'Соберём расчёт и 3-5 релевантных объектов под бюджет и задачу.',
+      'Если этот лот не подходит, сразу покажем соседние сильные варианты.',
+      'Вернёмся в Telegram с коротким сценарием следующего шага, без лишней выдачи.',
+    ],
+  };
 }
 
 export default function PropertyDetailsPage() {
@@ -176,18 +209,21 @@ export default function PropertyDetailsPage() {
 
   const theme = useMemo(() => getMarketTheme(property?.region.slug), [property?.region.slug]);
   const narrative = useMemo(() => getPropertyNarrative(property), [property]);
-  const facts = useMemo(
-    () => [
-      { label: 'География', value: property ? [property.region.name, property.city].filter(Boolean).join(' · ') || property.region.name : '—' },
-      { label: 'Площадь', value: formatArea(property?.areaFrom, property?.areaTo) },
-      { label: 'Тип объекта', value: humanizePropertyType(property?.propertyType) },
-      { label: 'Статус', value: humanizeStatus(property?.status, property?.slug) },
-    ],
-    [property]
-  );
+  const facts = useMemo(() => {
+    if (!property) return [];
+
+    return [
+      formatGeography(property.region.name, property.city) ? { label: 'География', value: formatGeography(property.region.name, property.city) } : null,
+      formatArea(property.areaFrom, property.areaTo) ? { label: 'Площадь', value: formatArea(property.areaFrom, property.areaTo) } : null,
+      humanizePropertyType(property.propertyType) ? { label: 'Тип объекта', value: humanizePropertyType(property.propertyType) } : null,
+      humanizeStatus(property.status, property.slug) ? { label: 'Статус', value: humanizeStatus(property.status, property.slug) } : null,
+    ].filter(Boolean) as { label: string; value: string }[];
+  }, [property]);
 
   const metrics = useMemo(() => metricCards(property), [property]);
-  const locationLine = property ? [property.city, property.address].filter(Boolean).join(', ') || property.region.name : 'Загружаю карточку объекта...';
+  const purchaseOptions = useMemo(() => purchaseOptionsLabel(property?.purchaseOptionsJson), [property?.purchaseOptionsJson]);
+  const trustBlock = useMemo(() => getTrustBlock(property), [property]);
+  const locationLine = property ? [property.city, property.address].filter(Boolean).join(', ') || property.region.name : undefined;
   const propertyData = property;
   const marketHref = buildQuizHref('/properties', {
     region: region || undefined,
@@ -217,7 +253,16 @@ export default function PropertyDetailsPage() {
       <BackLink href={marketHref} />
 
       {!property && !error ? (
-        <InfoCard style={{ color: '#7d7367' }}>Открываем объект...</InfoCard>
+        <InfoCard style={{ color: '#5f564b', background: 'linear-gradient(180deg, #fffaf3 0%, #f4ebde 100%)' }}>
+          <SectionEyebrow style={{ marginBottom: 8, color: '#a08f7c' }}>Загрузка</SectionEyebrow>
+          <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.35, color: '#1f1b17', marginBottom: 8 }}>Открываем карточку объекта</div>
+          <div style={{ lineHeight: 1.6, marginBottom: 12 }}>Сейчас подтянем фото, цену входа и ключевые факты, чтобы сразу перейти к просмотру без лишнего шага.</div>
+          <div style={{ display: 'grid', gap: 8 }}>
+            <div style={{ height: 12, borderRadius: 999, background: 'rgba(209,181,133,0.28)' }} />
+            <div style={{ height: 12, width: '82%', borderRadius: 999, background: 'rgba(209,181,133,0.2)' }} />
+            <div style={{ height: 12, width: '64%', borderRadius: 999, background: 'rgba(209,181,133,0.16)' }} />
+          </div>
+        </InfoCard>
       ) : error ? (
         <InfoCard style={{ background: '#fff6f1', color: '#6b4a36' }}>
           <SectionEyebrow style={{ marginBottom: 8, color: '#b17b58' }}>Временная пауза</SectionEyebrow>
@@ -232,7 +277,13 @@ export default function PropertyDetailsPage() {
               borderRadius: 30,
               marginBottom: 16,
               background: theme.gradient,
-              backgroundImage: propertyData.coverAsset ? `linear-gradient(180deg, rgba(10,12,15,0.14) 0%, rgba(10,13,16,0.58) 100%), url(${propertyData.coverAsset})` : theme.gradient,
+              backgroundImage: propertyData.coverAsset
+                ? toOptimizedBackgroundImage(
+                    propertyData.coverAsset,
+                    1200,
+                    'linear-gradient(180deg, rgba(10,12,15,0.14) 0%, rgba(10,13,16,0.58) 100%)'
+                  )
+                : theme.gradient,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               padding: 18,
@@ -254,10 +305,10 @@ export default function PropertyDetailsPage() {
 
             <div style={{ position: 'relative', zIndex: 1 }}>
               <SectionEyebrow style={{ color: 'rgba(255,255,255,0.76)', marginBottom: 10 }}>{narrative.heroEyebrow}</SectionEyebrow>
-              <div style={{ fontSize: 42, fontWeight: 700, lineHeight: 1.02, color: '#ffffff', marginBottom: 10 }}>{propertyData.title}</div>
+              <div style={{ fontSize: 'clamp(32px, 8vw, 42px)', fontWeight: 700, lineHeight: 1.02, color: '#ffffff', marginBottom: 10, overflowWrap: 'anywhere' }}>{propertyData.title}</div>
               <div style={{ fontSize: 15, lineHeight: 1.55, color: 'rgba(255,255,255,0.88)', maxWidth: 420, marginBottom: 18 }}>{locationLine}</div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 12 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12 }}>
                 <div style={{ borderRadius: 24, padding: '18px 18px 16px', background: 'rgba(255,255,255,0.92)', color: '#181818', boxShadow: '0 12px 28px rgba(11,17,20,0.18)' }}>
                   <SectionEyebrow style={{ color: '#8a7e73', marginBottom: 6 }}>цена входа</SectionEyebrow>
                   <div style={{ fontWeight: 700, fontSize: 26, lineHeight: 1.08, marginBottom: 8 }}>{formatPrice(propertyData.priceFrom, propertyData.currency)}</div>
@@ -272,14 +323,14 @@ export default function PropertyDetailsPage() {
             </div>
           </SurfaceCard>
 
-          <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', marginBottom: 16 }}>
+          <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(96px, 1fr))', marginBottom: 16 }}>
             {propertyData.galleryAssets.slice(0, 3).map((asset) => (
               <div
                 key={asset}
                 style={{
                   borderRadius: 22,
                   minHeight: 116,
-                  backgroundImage: `url(${asset})`,
+                  backgroundImage: `url(${toOptimizedImageUrl(asset, 750)})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   boxShadow: '0 14px 24px rgba(0,0,0,0.1)',
@@ -295,7 +346,7 @@ export default function PropertyDetailsPage() {
           </InfoCard>
 
           {narrative.highlights.length ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 10, marginBottom: 16 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10, marginBottom: 16 }}>
               {narrative.highlights.map((item) => (
                 <InfoCard key={item.label} style={{ minHeight: 164, background: '#fffaf2' }}>
                   <SectionEyebrow style={{ marginBottom: 8 }}>{item.label}</SectionEyebrow>
@@ -305,28 +356,6 @@ export default function PropertyDetailsPage() {
               ))}
             </div>
           ) : null}
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 10, marginBottom: 16 }}>
-            {[
-              {
-                title: 'Цена входа',
-                text: 'Сразу видно, с какого бюджета начинается вход в объект.',
-              },
-              {
-                title: 'Похожие варианты',
-                text: 'Если нужен выбор, подберём соседние лоты в том же сценарии.',
-              },
-              {
-                title: 'Следующий шаг',
-                text: 'Можно сразу запросить расчёт и персональную подборку.',
-              },
-            ].map((item) => (
-              <InfoCard key={item.title} style={{ minHeight: 148, background: '#fffaf2' }}>
-                <SectionEyebrow style={{ marginBottom: 8 }}>{item.title}</SectionEyebrow>
-                <div style={{ color: '#51473c', lineHeight: 1.55, fontSize: 14 }}>{item.text}</div>
-              </InfoCard>
-            ))}
-          </div>
 
           <InfoCard style={{ marginBottom: 16, background: 'linear-gradient(180deg, #162a24 0%, #1f3c34 100%)', color: '#ffffff', boxShadow: '0 16px 30px rgba(18,38,31,0.2)' }}>
             <SectionEyebrow style={{ marginBottom: 8, color: 'rgba(230,220,204,0.7)' }}>Инвестиционный потенциал</SectionEyebrow>
@@ -344,56 +373,35 @@ export default function PropertyDetailsPage() {
             </div>
           </InfoCard>
 
-          <div style={{ marginBottom: 16 }}>
-            <SectionEyebrow style={{ marginBottom: 10, color: '#978876' }}>Ключевые факты</SectionEyebrow>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-              {facts.map((fact) => (
-                <InfoCard key={fact.label} style={{ minHeight: 104 }}>
-                  <SectionEyebrow style={{ marginBottom: 10, color: '#a1978a' }}>{fact.label}</SectionEyebrow>
-                  <div style={{ fontWeight: 700, color: '#1e1e1e', lineHeight: 1.4 }}>{fact.value}</div>
-                </InfoCard>
-              ))}
+          {facts.length ? (
+            <div style={{ marginBottom: 16 }}>
+              <SectionEyebrow style={{ marginBottom: 10, color: '#978876' }}>Ключевые факты</SectionEyebrow>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 12 }}>
+                {facts.map((fact) => (
+                  <InfoCard key={fact.label} style={{ minHeight: 104 }}>
+                    <SectionEyebrow style={{ marginBottom: 10, color: '#a1978a' }}>{fact.label}</SectionEyebrow>
+                    <div style={{ fontWeight: 700, color: '#1e1e1e', lineHeight: 1.4 }}>{fact.value}</div>
+                  </InfoCard>
+                ))}
+              </div>
             </div>
-          </div>
+          ) : null}
 
-          <div style={{ marginBottom: 16 }}>
-            <SectionEyebrow style={{ marginBottom: 10, color: '#978876' }}>Инвестиционные метрики</SectionEyebrow>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-              {metrics.map((metric) => (
-                <InfoCard key={metric.label} style={{ background: '#fffdf9' }}>
-                  <SectionEyebrow style={{ marginBottom: 8 }}>{metric.label}</SectionEyebrow>
-                  <div style={{ fontSize: 22, fontWeight: 700, color: '#1f1b17' }}>{metric.value}</div>
-                </InfoCard>
-              ))}
-            </div>
-          </div>
-
-          <InfoCard style={{ marginBottom: 16 }}>
-            <SectionEyebrow style={{ marginBottom: 8, color: '#978876' }}>Варианты покупки</SectionEyebrow>
-            <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.35, color: '#1f1b17', marginBottom: 10 }}>Подберём удобный формат входа</div>
-            <div style={{ color: '#53493f', lineHeight: 1.65 }}>{purchaseOptionsLabel(propertyData.purchaseOptionsJson)}</div>
-          </InfoCard>
-
-          <InfoCard style={{ marginBottom: 16, background: 'linear-gradient(180deg, #fffaf3 0%, #f4ebde 100%)' }}>
-            <SectionEyebrow style={{ marginBottom: 8, color: '#978876' }}>Следующий шаг</SectionEyebrow>
-            <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.35, color: '#1f1b17', marginBottom: 10 }}>{narrative.nextStepTitle}</div>
-            <div style={{ display: 'grid', gap: 10 }}>
-              {narrative.nextStepItems.map((item) => (
-                <div key={item} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', color: '#564b40', lineHeight: 1.6 }}>
-                  <div style={{ width: 7, height: 7, marginTop: 8, borderRadius: 999, background: '#d1b585', flexShrink: 0 }} />
-                  <div>{item}</div>
+          <InfoCard style={{ marginBottom: 16, background: 'linear-gradient(180deg, #173328 0%, #234338 100%)', color: '#ffffff', boxShadow: '0 16px 32px rgba(19,40,31,0.18)' }}>
+            <SectionEyebrow style={{ marginBottom: 8, color: 'rgba(231,221,205,0.7)' }}>{trustBlock.eyebrow}</SectionEyebrow>
+            <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.35, marginBottom: 10 }}>{trustBlock.title}</div>
+            <div style={{ display: 'grid', gap: 10, marginBottom: 14 }}>
+              {trustBlock.items.map((item) => (
+                <div key={item} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                  <div style={{ width: 7, height: 7, marginTop: 8, borderRadius: 999, background: '#e5d0a7', flexShrink: 0 }} />
+                  <div style={{ color: 'rgba(255,255,255,0.82)', lineHeight: 1.6 }}>{item}</div>
                 </div>
               ))}
             </div>
-          </InfoCard>
-
-          <InfoCard style={{ marginBottom: 16, background: 'linear-gradient(180deg, #173328 0%, #234338 100%)', color: '#ffffff', boxShadow: '0 16px 32px rgba(19,40,31,0.18)' }}>
-            <SectionEyebrow style={{ marginBottom: 8, color: 'rgba(231,221,205,0.7)' }}>Запрос</SectionEyebrow>
-            <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.35, marginBottom: 8 }}>{narrative.requestTitle}</div>
             <div style={{ color: 'rgba(255,255,255,0.78)', lineHeight: 1.65 }}>{narrative.requestText}</div>
           </InfoCard>
 
-          <div style={{ display: 'grid', gap: 12 }}>
+          <div style={{ display: 'grid', gap: 12, marginBottom: 16 }}>
             <PrimaryButton href={contactHref} style={{ background: '#ead7ad', color: '#1f1f1f', boxShadow: '0 10px 22px rgba(90,77,38,0.12)' }}>
               {narrative.primaryCta}
             </PrimaryButton>
@@ -414,24 +422,47 @@ export default function PropertyDetailsPage() {
             >
               {narrative.secondaryCta}
             </Link>
-
-            <Link
-              href={marketHref}
-              style={{
-                textDecoration: 'none',
-                textAlign: 'center',
-                borderRadius: 22,
-                padding: '17px 18px',
-                background: '#f6efe4',
-                color: '#2d261f',
-                fontWeight: 700,
-                fontSize: 17,
-                border: '1px solid rgba(216,201,180,0.92)',
-              }}
-            >
-              Вернуться к подборке
-            </Link>
           </div>
+
+          {metrics.length ? (
+            <div style={{ marginBottom: 16 }}>
+              <SectionEyebrow style={{ marginBottom: 10, color: '#978876' }}>Инвестиционные метрики</SectionEyebrow>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 12 }}>
+                {metrics.map((metric) => (
+                  <InfoCard key={metric.label} style={{ background: '#fffdf9' }}>
+                    <SectionEyebrow style={{ marginBottom: 8 }}>{metric.label}</SectionEyebrow>
+                    <div style={{ fontSize: 22, fontWeight: 700, color: '#1f1b17' }}>{metric.value}</div>
+                  </InfoCard>
+                ))}
+              </div>
+            </div>
+          ) : null}
+
+          {purchaseOptions ? (
+            <InfoCard style={{ marginBottom: 16 }}>
+              <SectionEyebrow style={{ marginBottom: 8, color: '#978876' }}>Варианты покупки</SectionEyebrow>
+              <div style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.35, color: '#1f1b17', marginBottom: 10 }}>Подберём удобный формат входа</div>
+              <div style={{ color: '#53493f', lineHeight: 1.65 }}>{purchaseOptions}</div>
+            </InfoCard>
+          ) : null}
+
+          <Link
+            href={marketHref}
+            style={{
+              display: 'block',
+              textDecoration: 'none',
+              textAlign: 'center',
+              borderRadius: 22,
+              padding: '17px 18px',
+              background: '#f6efe4',
+              color: '#2d261f',
+              fontWeight: 700,
+              fontSize: 17,
+              border: '1px solid rgba(216,201,180,0.92)',
+            }}
+          >
+            Вернуться к подборке
+          </Link>
         </>
       ) : null}
     </AppShell>

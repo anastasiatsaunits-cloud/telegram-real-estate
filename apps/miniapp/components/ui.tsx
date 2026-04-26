@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 const borderColor = 'rgba(227,219,207,0.92)';
 
@@ -25,12 +25,16 @@ export function SurfaceCard({ children, style }: CardProps) {
 }
 
 export function MotionCard({ children, style }: CardProps) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 18, scale: 0.985 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.985, filter: 'blur(8px)' }}
+      whileInView={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+      whileHover={reduceMotion ? undefined : { y: -3, scale: 1.004 }}
       viewport={{ once: true, amount: 0.18 }}
-      transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+      whileTap={{ scale: 0.992 }}
+      transition={reduceMotion ? { duration: 0.2 } : { type: 'spring', stiffness: 180, damping: 20, mass: 0.9 }}
       style={style}
     >
       {children}
@@ -61,6 +65,10 @@ export function Pill({ children, style }: CardProps) {
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
+        flexWrap: 'wrap',
+        maxWidth: '100%',
+        textAlign: 'center',
+        lineHeight: 1.25,
         borderRadius: 999,
         padding: '8px 12px',
         background: '#f4ecdf',
@@ -94,9 +102,14 @@ export function InfoCard({ children, style }: CardProps) {
 }
 
 export function PrimaryButton({ children, href, style }: { children: ReactNode; href: string; style?: React.CSSProperties }) {
+  const reduceMotion = useReducedMotion();
+
   return (
-    <a
+    <motion.a
       href={href}
+      whileHover={reduceMotion ? undefined : { y: -2, scale: 1.012 }}
+      whileTap={{ scale: 0.985 }}
+      transition={reduceMotion ? { duration: 0.15 } : { type: 'spring', stiffness: 260, damping: 18 }}
       style={{
         display: 'block',
         textDecoration: 'none',
@@ -112,6 +125,6 @@ export function PrimaryButton({ children, href, style }: { children: ReactNode; 
       }}
     >
       {children}
-    </a>
+    </motion.a>
   );
 }

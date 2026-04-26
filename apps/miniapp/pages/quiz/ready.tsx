@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { AppShell } from '../../components/app-shell';
 import { BackLink } from '../../components/back-link';
 import { InfoCard, PrimaryButton, SectionEyebrow, SurfaceCard } from '../../components/ui';
+import { toOptimizedBackgroundImage } from '../../lib/optimized-image';
 import type { PropertyListItem } from '../../lib/properties';
 import {
   buildQuizHref,
@@ -182,7 +183,7 @@ export default function ReadyPage() {
                       flexDirection: 'column',
                       justifyContent: 'space-between',
                       background: item.coverAsset
-                        ? `linear-gradient(180deg, rgba(12,15,18,0.16) 0%, rgba(12,15,18,0.58) 100%), url(${item.coverAsset}) center/cover`
+                        ? `${toOptimizedBackgroundImage(item.coverAsset, 960, 'linear-gradient(180deg, rgba(12,15,18,0.16) 0%, rgba(12,15,18,0.58) 100%)')} center/cover`
                         : 'linear-gradient(135deg, #7da4b7 0%, #58717f 45%, #2f4149 100%)',
                     }}
                   >

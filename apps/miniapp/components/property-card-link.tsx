@@ -1,5 +1,7 @@
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import type { PropertyListItem } from '../lib/properties';
+import { toOptimizedBackgroundImage } from '../lib/optimized-image';
 import { MotionCard, Pill, SectionEyebrow, SurfaceCard } from './ui';
 
 function getMarketPalette(regionSlug: string) {
@@ -91,7 +93,13 @@ export function PropertyCardLink({
               flexDirection: 'column',
               justifyContent: 'space-between',
               background: palette.gradient,
-              backgroundImage: property.coverAsset ? `linear-gradient(180deg, rgba(14,17,19,0.14) 0%, rgba(10,13,16,0.3) 24%, rgba(10,13,16,0.88) 100%), url(${property.coverAsset})` : palette.gradient,
+              backgroundImage: property.coverAsset
+                ? toOptimizedBackgroundImage(
+                    property.coverAsset,
+                    960,
+                    'linear-gradient(180deg, rgba(14,17,19,0.14) 0%, rgba(10,13,16,0.3) 24%, rgba(10,13,16,0.88) 100%)'
+                  )
+                : palette.gradient,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               position: 'relative',
@@ -111,7 +119,9 @@ export function PropertyCardLink({
                 background: 'linear-gradient(90deg, rgba(7,11,15,0.74) 0%, rgba(7,11,15,0.28) 54%, rgba(7,11,15,0.12) 100%)',
               }}
             />
-            <div
+            <motion.div
+              animate={{ y: [0, -8, 0], scale: [1, 1.04, 1], opacity: [0.92, 1, 0.92] }}
+              transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut' }}
               style={{
                 position: 'absolute',
                 right: -26,
@@ -178,9 +188,13 @@ export function PropertyCardLink({
               <SectionEyebrow style={{ color: 'rgba(255,255,255,0.72)', marginBottom: 10 }}>объект в подборке</SectionEyebrow>
               <div style={{ fontSize: 34, fontWeight: 700, lineHeight: 1, color: '#ffffff', marginBottom: 12, textShadow: '0 10px 24px rgba(0,0,0,0.3)' }}>{property.title}</div>
               <div style={{ fontSize: 14, lineHeight: 1.48, color: 'rgba(255,255,255,0.9)', maxWidth: 340, marginBottom: 14 }}>{location || 'Локация уточняется'}</div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: '#fff3da', fontWeight: 700, fontSize: 14 }}>
+              <motion.div
+                whileHover={{ x: 3 }}
+                transition={{ type: 'spring', stiffness: 260, damping: 18 }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: '#fff3da', fontWeight: 700, fontSize: 14 }}
+              >
                 Смотреть объект <span>→</span>
-              </div>
+              </motion.div>
             </div>
           </div>
 
@@ -225,7 +239,10 @@ export function PropertyCardLink({
               </div>
             </div>
 
-            <div
+            <motion.div
+              whileHover={{ y: -2, scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 18 }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -241,8 +258,8 @@ export function PropertyCardLink({
               }}
             >
               <span>Смотреть детали объекта</span>
-              <span style={{ fontSize: 20, lineHeight: 1 }}>→</span>
-            </div>
+              <motion.span animate={{ x: [0, 3, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }} style={{ fontSize: 20, lineHeight: 1 }}>→</motion.span>
+            </motion.div>
           </div>
         </SurfaceCard>
       </Link>

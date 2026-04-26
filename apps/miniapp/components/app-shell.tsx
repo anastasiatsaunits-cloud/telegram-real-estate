@@ -16,6 +16,7 @@ export function AppShell({ eyebrow, title, description, children }: AppShellProp
         padding: '18px 14px 32px',
         fontFamily: 'Inter, Arial, sans-serif',
         color: '#1f1f1f',
+        overflowX: 'clip',
         background:
           'radial-gradient(circle at top, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0) 28%), linear-gradient(180deg, #f8f3eb 0%, #f1ece4 100%)',
       }}
@@ -31,7 +32,7 @@ export function AppShell({ eyebrow, title, description, children }: AppShellProp
           }}
         >
           {eyebrow ? <SectionEyebrow style={{ marginBottom: 8, color: '#9b7b58' }}>{eyebrow}</SectionEyebrow> : null}
-          <h1 style={{ margin: '0 0 12px', fontSize: 30, lineHeight: 1.08 }}>{title}</h1>
+          <h1 style={{ margin: '0 0 12px', fontSize: 'clamp(28px, 7vw, 30px)', lineHeight: 1.08, overflowWrap: 'anywhere' }}>{title}</h1>
           {description ? <p style={{ margin: '0 0 20px', lineHeight: 1.55, color: '#615648', fontSize: 15 }}>{description}</p> : null}
           {children}
         </SurfaceCard>

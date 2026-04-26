@@ -1,32 +1,33 @@
 import Link from 'next/link';
 import { MotionCard, Pill, PrimaryButton, SectionEyebrow, SurfaceCard } from '../components/ui';
+import { toOptimizedBackgroundImage } from '../lib/optimized-image';
 
 const startSalesProjects = [
   {
     title: 'ЖК Курортный регион',
-    subtitle: 'Новый курортный жилой комплекс в Тульском, Адыгея. Формат город в городе на 20 га, рядом термальные источники и в часе от будущего курорта Лаго-Наки.',
-    location: 'Тульский, Республика Адыгея · 20 га · 20 корпусов',
+    subtitle: 'Новый курортный комплекс в Тульском, рядом термальные источники и будущий курорт Лаго-Наки.',
+    location: 'Тульский, Адыгея · 20 га · 20 корпусов',
     price: 'от 135 000 ₽/м²',
     badge: 'Новый старт',
     eyebrow: 'Адыгея · курортный кластер',
     href: '/quiz/contact?propertyTitle=%D0%96%D0%9A%20%D0%9A%D1%83%D1%80%D0%BE%D1%80%D1%82%D0%BD%D1%8B%D0%B9%20%D1%80%D0%B5%D0%B3%D0%B8%D0%BE%D0%BD',
-    image: '/market/kurortny-region-start-sales.jpg',
+    image: '/market/kurortny-region-start-sales-mobile.jpg',
     imagePosition: '72% center',
   },
   {
     title: 'ЛОК VERA',
-    subtitle: 'Пятизвёздочный лечебно-оздоровительный комплекс с масштабной территорией, медцентром, spa, бассейнами и сильной подачей для предстартовых клиентов.',
-    location: 'Предстарт продаж · 47 000 м² территории · 1 200 номеров',
+    subtitle: 'Пятизвёздочный курортный комплекс с медцентром, spa и сильной подачей для предстартовых клиентов.',
+    location: 'Предстарт · 47 000 м² территории · 1 200 номеров',
     price: 'от 750 000 ₽/м²',
     badge: 'Предстарт продаж',
     eyebrow: 'Новый предстарт · курортный формат',
     href: '/quiz/contact?propertyTitle=%D0%9B%D0%9E%D0%9A%20VERA',
-    image: '/market/vera-start-sales.jpg',
+    image: '/market/vera-start-sales-mobile.jpg',
     imagePosition: 'center center',
   },
   {
     title: 'ГК Mandarin Garden',
-    subtitle: 'Новый комплекс в Сочи с тихой приватной подачей и высоким порогом внимания уже на старте.',
+    subtitle: 'Новый комплекс в Сочи с приватной подачей и высоким порогом внимания уже на старте.',
     location: 'Сочи, ул. Демократическая, 18',
     price: 'от 69,6 млн ₽',
     badge: 'Старт продаж',
@@ -37,13 +38,13 @@ const startSalesProjects = [
   },
   {
     title: 'ЖК Кировъ',
-    subtitle: 'Премиальный жилой квартал в сердце исторической Ялты. Два восьмиэтажных дома, 128 квартир и панорамные виды на море, горы и центр города.',
-    location: 'Ялта, исторический центр, берег Чёрного моря',
+    subtitle: 'Премиальный квартал в исторической Ялте с панорамами на море, горы и центр города.',
+    location: 'Ялта · исторический центр · берег Чёрного моря',
     price: 'от 400 000 ₽/м²',
     badge: 'Скоро старт',
     eyebrow: 'Крым · новая премьера',
     href: '/properties/zhk-kirov?region=crimea&regionName=Крым',
-    image: '/market/kirov-start-sales-cover.png',
+    image: '/market/kirov-start-sales-cover-mobile.jpg',
     imagePosition: 'center center',
   },
 ];
@@ -53,8 +54,8 @@ const markets = [
     key: 'anapa',
     title: 'Анапа',
     kicker: 'Курортный вход',
-    subtitle: 'Новые проекты у моря, стартовые запуски и отдельная витрина для спокойного входа в рынок.',
-    footnote: 'Для тех, кто хочет смотреть Анапу отдельно и без смешения с другими локациями',
+    subtitle: 'Новые проекты у моря и отдельная витрина для спокойного входа в рынок.',
+    footnote: 'Если хочешь смотреть Анапу отдельно',
     badge: 'Новый регион',
     href: '/properties?region=anapa&regionName=Анапа',
     gradient: 'linear-gradient(135deg, rgba(74,47,24,0.12) 0%, rgba(22,15,10,0.72) 100%)',
@@ -67,13 +68,13 @@ const markets = [
     key: 'crimea',
     title: 'Крым',
     kicker: 'Курортный рынок',
-    subtitle: 'Ялта, Алушта, первая линия, резиденции у моря и объекты для спокойного входа в курортную недвижимость',
-    footnote: 'Для тех, кто ищет море, приватность и аккуратную сезонную доходность',
+    subtitle: 'Ялта, Алушта, первая линия и резиденции у моря для курортного сценария.',
+    footnote: 'Море, приватность и сезонная доходность',
     badge: 'Первая линия',
     href: '/properties?region=crimea&regionName=Крым',
     gradient: 'linear-gradient(135deg, rgba(29,53,64,0.12) 0%, rgba(10,16,22,0.72) 100%)',
     accent: 'rgba(157, 223, 248, 0.42)',
-    image: '/market/crimea-cover.jpg',
+    image: '/market/crimea-cover-mobile.jpg',
     size: 'large',
     imagePosition: 'center center',
   },
@@ -81,13 +82,13 @@ const markets = [
     key: 'sochi',
     title: 'Сочи',
     kicker: 'Город у моря',
-    subtitle: 'Премиальные объекты у моря, в центре и в сильных локациях для тех, кто смотрит на ликвидность и аренду',
-    footnote: 'Для входа в рынок с быстрым спросом и сильной динамикой',
+    subtitle: 'Премиальные объекты у моря и в сильных локациях для ликвидности и аренды.',
+    footnote: 'Быстрый спрос и сильная динамика',
     badge: 'Активный рынок',
     href: '/properties?region=sochi&regionName=Сочи',
     gradient: 'linear-gradient(135deg, rgba(24,44,28,0.12) 0%, rgba(10,16,22,0.72) 100%)',
     accent: 'rgba(206, 230, 187, 0.32)',
-    image: '/market/sochi-cover.jpg',
+    image: '/market/sochi-cover-mobile.jpg',
     size: 'large',
     imagePosition: 'center center',
   },
@@ -95,20 +96,20 @@ const markets = [
     key: 'mountains',
     title: 'Горный кластер',
     kicker: 'Красная Поляна · премиальный alpine',
-    subtitle: 'Четыре сильных проекта Красной Поляны и Эсто-Садка, где личное использование сочетается с круглогодичным арендным спросом.',
-    footnote: 'Для тех, кто хочет смотреть горы как отдельный рынок с собственной логикой доходности и сезона',
+    subtitle: 'Сильные проекты Красной Поляны и Эсто-Садка с круглогодичным арендным спросом.',
+    footnote: 'Горы как отдельный рынок со своей логикой',
     badge: 'Круглый год',
     href: '/properties?region=mountains&regionName=Горный%20кластер',
     gradient: 'linear-gradient(135deg, rgba(54,72,85,0.12) 0%, rgba(10,16,22,0.74) 100%)',
     accent: 'rgba(205, 223, 236, 0.34)',
-    image: '/market/mountains-cover.jpg',
+    image: '/market/mountains-cover-mobile.jpg',
     size: 'large',
     imagePosition: 'center center',
   },
   {
     key: 'thailand',
     title: 'Таиланд',
-    subtitle: 'Отдельно проверяем архив и удалённые карточки. В активной витрине объектов пока нет.',
+    subtitle: 'Проверяем архив и удалённые карточки. В активной витрине объектов пока нет.',
     href: '/quiz/scenario',
     gradient: 'linear-gradient(135deg, #9eb8b0 0%, #5f776f 100%)',
     size: 'small',
@@ -122,29 +123,35 @@ const bottomLinks = [
 ];
 
 const premiumSignals = [
-  'Крым, Сочи, Анапа и горный кластер разделены по логике спроса, доходности и образа жизни',
-  'В каталоге только объекты, которые можно уверенно показывать взыскательному клиенту',
-  'Если нужен не просмотр, а решение, переводим сразу в персональный подбор',
+  '4 витрины с разной логикой входа и спроса',
+  'Только сильные объекты для уверенного показа клиенту',
+  'Не просмотр, а решение, сразу переводим в персональный подбор',
 ];
 
 const trustNumbers = [
   { value: '4', label: 'активные витрины' },
-  { value: '24/7', label: 'сопровождение в Telegram' },
-  { value: '72ч', label: 'на точную подборку' },
+  { value: '24/7', label: 'связь в Telegram' },
+  { value: '72ч', label: 'до подборки' },
+];
+
+const trustOutcomes = [
+  '3-5 сильных объектов под бюджет и задачу',
+  'короткий сценарий входа без лишней выдачи',
+  'ответ и подборка в Telegram',
 ];
 
 const conciergeSteps = [
   {
     title: 'Выберите рынок',
-    text: 'Крым, если важны море и приватность. Сочи, если нужен более активный рынок. Анапа, если смотришь ранний курортный вход. Горный кластер, если нужен отдельный сценарий по Красной Поляне.',
+    text: 'Крым для моря и приватности, Сочи для активного спроса, Анапа для раннего входа, горы для отдельного alpine-сценария.',
   },
   {
     title: 'Откройте объекты',
-    text: 'Смотрите уже отобранные лоты с ценой входа, локацией и понятной логикой покупки.',
+    text: 'Смотрите уже отобранные лоты с ценой входа, локацией и логикой покупки.',
   },
   {
-    title: 'Оставьте запрос на подбор',
-    text: 'Если нужен точный сценарий, соберём предложения под бюджет, срок и цель покупки.',
+    title: 'Оставьте запрос',
+    text: 'Если нужен точный сценарий, соберём подборку под бюджет, срок и цель покупки.',
   },
 ];
 
@@ -160,6 +167,7 @@ export default function HomePage() {
         padding: '0 0 18px',
         fontFamily: 'Inter, Arial, sans-serif',
         color: '#f7f1e8',
+        overflowX: 'clip',
         background:
           'radial-gradient(circle at top, rgba(188,156,109,0.12) 0%, rgba(9,13,18,0) 26%), linear-gradient(180deg, #0c1117 0%, #121a21 42%, #181d1b 100%)',
       }}
@@ -172,8 +180,11 @@ export default function HomePage() {
             marginBottom: 10,
             borderRadius: '0 0 34px 34px',
             overflow: 'hidden',
-            backgroundImage:
-              'linear-gradient(180deg, rgba(7,10,14,0.24) 0%, rgba(7,10,14,0.68) 48%, rgba(10,12,15,0.96) 100%), url(/market/sochi-cover.jpg)',
+            backgroundImage: toOptimizedBackgroundImage(
+              '/market/sochi-cover-mobile.jpg',
+              1200,
+              'linear-gradient(180deg, rgba(7,10,14,0.24) 0%, rgba(7,10,14,0.68) 48%, rgba(10,12,15,0.96) 100%)'
+            ),
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             boxShadow: '0 30px 70px rgba(0,0,0,0.34)',
@@ -204,27 +215,29 @@ export default function HomePage() {
                 style={{
                   gap: 8,
                   marginBottom: 18,
+                  padding: '8px 10px',
+                  fontSize: 11,
                   background: 'rgba(255,255,255,0.08)',
                   border: '1px solid rgba(255,255,255,0.12)',
                   color: 'rgba(255,247,231,0.92)',
                   backdropFilter: 'blur(8px)',
                 }}
               >
-                RICH BY FLATHOUSE <span style={{ opacity: 0.7 }}>•</span> закрытый доступ к объектам
+                RICH BY FLATHOUSE <span style={{ opacity: 0.7 }}>•</span> закрытая витрина
               </Pill>
             </div>
 
             <div>
               <SectionEyebrow style={{ color: 'rgba(255,240,219,0.72)', marginBottom: 10 }}>Закрытый доступ</SectionEyebrow>
-              <div style={{ fontSize: 38, fontWeight: 700, lineHeight: 0.98, marginBottom: 16, maxWidth: 420 }}>
-                Недвижимость, которую подбирают под задачу капитала, а не показывают в общей ленте
+              <div style={{ fontSize: 'clamp(32px, 9vw, 38px)', fontWeight: 700, lineHeight: 0.98, marginBottom: 16, maxWidth: 420, overflowWrap: 'anywhere' }}>
+                Недвижимость под задачу капитала, а не под общую ленту
               </div>
 
               <div style={{ color: 'rgba(255,245,232,0.8)', lineHeight: 1.6, fontSize: 16, maxWidth: 420, marginBottom: 20 }}>
-                Крым, Сочи, Анапа и горный кластер открываются как четыре разных инвестиционных сценария. Только сильные объекты, понятная логика входа и короткий путь к решению.
+                Крым, Сочи, Анапа и горный кластер, это четыре разные логики входа. Только сильные объекты и короткий путь к решению.
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 10, marginBottom: 18 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(96px, 1fr))', gap: 10, marginBottom: 18 }}>
                 {trustNumbers.map((item) => (
                   <div
                     key={item.label}
@@ -303,7 +316,39 @@ export default function HomePage() {
                 </Link>
 
                 <div style={{ color: 'rgba(255,245,232,0.68)', fontSize: 13, lineHeight: 1.45, textAlign: 'center' }}>
-                  Если нужен готовый список сильных объектов под бюджет и срок, соберём его персонально.
+                  Соберём сильные варианты под бюджет, срок и цель покупки.
+                </div>
+
+                <div
+                  style={{
+                    borderRadius: 20,
+                    padding: '14px 14px 12px',
+                    background: 'rgba(9,13,18,0.34)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    backdropFilter: 'blur(10px)',
+                  }}
+                >
+                  <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,240,219,0.66)', marginBottom: 8 }}>
+                    Что будет после запроса
+                  </div>
+                  <div style={{ display: 'grid', gap: 8 }}>
+                    {trustOutcomes.map((item) => (
+                      <div key={item} style={{ display: 'flex', gap: 9, alignItems: 'flex-start', color: '#f8f2e7', fontSize: 13, lineHeight: 1.45 }}>
+                        <div
+                          style={{
+                            width: 6,
+                            height: 6,
+                            marginTop: 6,
+                            borderRadius: 999,
+                            background: '#d7bf8f',
+                            boxShadow: '0 0 0 5px rgba(215,191,143,0.1)',
+                            flexShrink: 0,
+                          }}
+                        />
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -329,12 +374,12 @@ export default function HomePage() {
               border: '1px solid rgba(223,210,193,0.92)',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 14 }}>
-              <div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, marginBottom: 14 }}>
+              <div style={{ minWidth: 0 }}>
                 <SectionEyebrow style={{ marginBottom: 6 }}>Как это работает</SectionEyebrow>
-                <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.16, color: '#1d1b18' }}>Не листать десятки карточек, а быстро выйти на сильный вариант</div>
+                <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.16, color: '#1d1b18' }}>Быстро выйти на сильный вариант</div>
               </div>
-              <Pill style={{ flexShrink: 0, background: '#efe4d2', color: '#6d5c49' }}>Частный маршрут</Pill>
+              <Pill style={{ flexShrink: 0, background: '#efe4d2', color: '#6d5c49' }}>Маршрут</Pill>
             </div>
 
             <div style={{ display: 'grid', gap: 10 }}>
@@ -380,16 +425,17 @@ export default function HomePage() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
+              flexWrap: 'wrap',
               gap: 12,
               marginBottom: 14,
               padding: '0 4px',
             }}
           >
-            <div>
-              <SectionEyebrow style={{ marginBottom: 6 }}>Выбор рынка</SectionEyebrow>
-              <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.12, color: '#1d1b18' }}>Сначала рынок, потом объекты</div>
+            <div style={{ minWidth: 0 }}>
+              <SectionEyebrow style={{ marginBottom: 6, color: 'rgba(255,244,221,0.62)' }}>Выбор рынка</SectionEyebrow>
+              <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.12, color: '#f7f1e8' }}>Сначала рынок, потом лоты</div>
             </div>
-            <Pill style={{ flexShrink: 0 }}>3 направления</Pill>
+            <Pill style={{ flexShrink: 0 }}>4 рынка</Pill>
           </div>
 
           <div style={{ display: 'grid', gap: 0, marginBottom: 10 }}>
@@ -414,7 +460,11 @@ export default function HomePage() {
                     padding: 18,
                     color: '#ffffff',
                     background: market.gradient,
-                    backgroundImage: `linear-gradient(180deg, rgba(10,14,18,0.16) 0%, rgba(8,12,16,0.34) 38%, rgba(7,11,15,0.88) 100%), url(${market.image})`,
+                    backgroundImage: toOptimizedBackgroundImage(
+                      market.image,
+                      1080,
+                      'linear-gradient(180deg, rgba(10,14,18,0.16) 0%, rgba(8,12,16,0.34) 38%, rgba(7,11,15,0.88) 100%)'
+                    ),
                     backgroundSize: 'cover',
                     backgroundPosition: market.imagePosition ?? 'center',
                     position: 'relative',
@@ -485,7 +535,7 @@ export default function HomePage() {
                       }}
                     >
                       <SectionEyebrow style={{ color: 'rgba(255,244,221,0.74)', marginBottom: 8 }}>{market.kicker}</SectionEyebrow>
-                      <div style={{ fontSize: 38, fontWeight: 700, letterSpacing: '0.02em', lineHeight: 0.96, marginBottom: 10, textShadow: '0 10px 24px rgba(0,0,0,0.3)' }}>{market.title}</div>
+                      <div style={{ fontSize: 'clamp(30px, 9vw, 38px)', fontWeight: 700, letterSpacing: '0.02em', lineHeight: 0.96, marginBottom: 10, textShadow: '0 10px 24px rgba(0,0,0,0.3)', overflowWrap: 'anywhere' }}>{market.title}</div>
                       <div style={{ maxWidth: 340, fontSize: 14, lineHeight: 1.48, color: 'rgba(255,255,255,0.92)', marginBottom: 12 }}>
                         {market.subtitle}
                       </div>
@@ -511,8 +561,8 @@ export default function HomePage() {
               border: '1px solid rgba(223,210,193,0.92)',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 14 }}>
-              <div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, marginBottom: 14 }}>
+              <div style={{ minWidth: 0 }}>
                 <SectionEyebrow style={{ marginBottom: 6 }}>Старт продаж</SectionEyebrow>
                 <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.14, color: '#1d1b18' }}>Новые комплексы на раннем входе</div>
               </div>
@@ -540,7 +590,11 @@ export default function HomePage() {
                       minHeight: 250,
                       padding: 16,
                       color: '#ffffff',
-                      backgroundImage: `linear-gradient(180deg, rgba(10,14,18,0.14) 0%, rgba(8,12,16,0.3) 28%, rgba(7,11,15,0.92) 100%), url(${project.image})`,
+                      backgroundImage: toOptimizedBackgroundImage(
+                        project.image,
+                        1080,
+                        'linear-gradient(180deg, rgba(10,14,18,0.14) 0%, rgba(8,12,16,0.3) 28%, rgba(7,11,15,0.92) 100%)'
+                      ),
                       backgroundSize: 'cover',
                       backgroundPosition: project.imagePosition ?? 'center',
                       position: 'relative',
@@ -570,7 +624,7 @@ export default function HomePage() {
                         }}
                       >
                         <SectionEyebrow style={{ color: 'rgba(255,244,221,0.78)', marginBottom: 8 }}>{project.eyebrow}</SectionEyebrow>
-                        <div style={{ fontSize: 30, fontWeight: 700, lineHeight: 1.02, marginBottom: 10, textShadow: '0 10px 24px rgba(0,0,0,0.3)' }}>{project.title}</div>
+                        <div style={{ fontSize: 'clamp(26px, 8vw, 30px)', fontWeight: 700, lineHeight: 1.02, marginBottom: 10, textShadow: '0 10px 24px rgba(0,0,0,0.3)', overflowWrap: 'anywhere' }}>{project.title}</div>
                         <div style={{ fontSize: 14, lineHeight: 1.48, color: 'rgba(255,255,255,0.9)', marginBottom: 10, maxWidth: 320 }}>{project.subtitle}</div>
                         <div style={{ fontSize: 13, lineHeight: 1.46, color: 'rgba(255,255,255,0.7)', marginBottom: 12, maxWidth: 300 }}>{project.location}</div>
                         <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: '#fff5dd', fontWeight: 700, fontSize: 14 }}>
@@ -626,10 +680,8 @@ export default function HomePage() {
             }}
           >
             <SectionEyebrow style={{ marginBottom: 8 }}>Почему это удобно</SectionEyebrow>
-            <div style={{ fontWeight: 700, marginBottom: 8 }}>Каждый рынок открыт отдельно, чтобы вы быстрее вышли на свой сценарий</div>
-            <div>
-              Сочи, Крым и Анапа собраны как разные сценарии покупки. Так проще сразу смотреть релевантные объекты, а не тратить внимание на лишнюю выдачу.
-            </div>
+            <div style={{ fontWeight: 700, marginBottom: 8 }}>Каждый рынок открыт отдельно, чтобы быстрее выйти на свой сценарий</div>
+            <div>Так проще сразу смотреть релевантные объекты и не тратить внимание на лишнюю выдачу.</div>
           </div>
 
           <div
@@ -641,7 +693,7 @@ export default function HomePage() {
             }}
           >
             <SectionEyebrow style={{ marginBottom: 10, color: 'rgba(231,221,205,0.7)' }}>Открыть дальше</SectionEyebrow>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: 10 }}>
               {bottomLinks.map((item) => (
                 <Link
                   key={item.title}
